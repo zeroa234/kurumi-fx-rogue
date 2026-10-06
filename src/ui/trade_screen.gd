@@ -62,6 +62,7 @@ var _trail_btn: Button
 var _last_pos_count := -1
 var _tab_dirty := true
 var _hint_lbl: Label
+var _menu_btn: Button
 var _modal_open := false
 
 func _init(s: TradeSession) -> void:
@@ -146,6 +147,14 @@ func _build_top() -> void:
 	_top_goal.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_top_goal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	h.add_child(_top_goal)
+	# 菜单（手机没有 Esc，靠这个按钮打开暂停菜单）
+	_menu_btn = UI.button("菜单", _pause_menu)
+	_menu_btn.custom_minimum_size = Vector2(30, 13)
+	_menu_btn.add_theme_stylebox_override("normal", UI.box(UI.PANEL2, UI.BORDER, 1, 0))
+	_menu_btn.add_theme_stylebox_override("hover", UI.box(Color("3d3060"), UI.BORDER_HI, 1, 0))
+	_menu_btn.add_theme_stylebox_override("pressed", UI.box(Color("4a3a75"), UI.PINK, 1, 0))
+	_menu_btn.tooltip_text = "暂停菜单（Esc）"
+	h.add_child(_menu_btn)
 
 func _build_tf_buttons() -> void:
 	var h := UI.hbox(1)
@@ -595,7 +604,7 @@ func _pause_menu() -> void:
 		UI.close_modal(v)
 		_modal_open = false
 		_pause_menu()))
-	v.add_child(UI.label("快捷键：空格 暂停 · 1~4 速度 · B 买 · S 卖\nC 全平 · Tab 换品种 · 滚轮缩放 · 右键拖动", UI.DIM))
+	v.add_child(UI.label("快捷键：空格 暂停 · 1~4 速度 · B 买 · S 卖\nC 全平 · Tab 换品种 · 滚轮/双指缩放 · 右键或拖空白处平移", UI.DIM))
 	var ex := UI.button(exit_label, func():
 		UI.close_modal(v)
 		_modal_open = false

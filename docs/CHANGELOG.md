@@ -2,6 +2,17 @@
 
 按时间倒序。提交哈希对应仓库 `D:/agent` 的 git 历史（`git log -- projects/kurumi-fx-rogue`）。
 
+## 2026-10-07
+
+### Android 打包与触屏适配
+- 新增 `export_presets.cfg`（Android：arm64-v8a + armeabi-v7a，横屏，debug 签名）；`project.godot` 开启 `textures/vram_compression/import_etc2_astc`（Android 导出的硬性要求）。
+  产物 `output/kurumi-fx-rogue.apk`（59MB，不入库）；构建命令与依赖见 README「打包 Android」、`docs/maintenance.md` §7。
+- 触屏适配（键盘快捷键全部保留）：交易界面顶栏新增「菜单」按钮（等价 Esc——手机原本没有打开暂停菜单的入口，肉鸽交易中无法退出）；
+  图表单指拖动空白处平移（手机没有右键）、双指捧合缩放（`ChartView`）；对话框按住不放快进（等价 Ctrl）。
+- 手机显示与存档安全：`Game._setup_mobile_display()` 在手机上把整数缩放改为小数缩放（桌面不变，仍整数缩放）；
+  退出/返回键时落盘（`NOTIFICATION_WM_CLOSE_REQUEST` / `NOTIFICATION_WM_GO_BACK_REQUEST`）。
+- 回归：compile_check `0 failures`、smoke_ui `SMOKE DONE`、tutorial_driver 各章步骤满、autoplay_check `0 stalled`。
+
 ## 2026-10-06
 
 ### 背景音乐（进行中）

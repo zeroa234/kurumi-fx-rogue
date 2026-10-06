@@ -1,7 +1,8 @@
 class_name ChartView
 extends Control
 ## 像素 K 线图：蜡烛、指标、持仓/止损/止盈线、事件标记、公允价值、止损簇、十字光标。
-## 滚轮缩放，右键拖动平移；拖动持仓的 SL/TP 线可以直接改单。
+## 缩放：滚轮 / 双指捏合；平移：右键拖动，或单指（左键）拖动空白处（手机没有右键）。
+## 拖动持仓的 SL/TP 线可以直接改单。
 
 signal sl_tp_dragged(pos_id: int, which: String, price: float)
 signal price_clicked(price: float)
@@ -29,6 +30,13 @@ var _plot := Rect2()
 var _shake := 0.0
 var _flash := 0.0
 var _flash_color := Color.RED
+# 触屏手势：index -> 位置。双指 = 捏合缩放 + 拖动平移；单指靠触摸模拟的鼠标事件。
+var _touches := {}
+var _multitouch := false
+var _pinch_dist := 0.0
+var _pinch_accum := 1.0
+var _pinch_candle_w := 4
+var _pinch_mid := Vector2.ZERO
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -49,6 +57,17 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		_touch_pressed(event)
+		return
+	if event is InputEventScreenDrag:
+		_touch_moved(event)
+		return
+	if event is InputEventMagnifyGesture:
+		_set_candle_w(int(round(candle_w * event.factor)))
+		return
+	if _multitouch:
+		return # 双指手势期间，忽略触摸模拟出来的鼠标事件
 	if event is InputEventMouseMotion:
 		_mouse = event.position
 		if _drag_pan:
@@ -59,11 +78,9 @@ func _gui_input(event: InputEvent) -> void:
 		queue_redraw()
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			candle_w = mini(10, candle_w + 1)
-			queue_redraw()
+			_set_candle_w(candle_w + 1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			candle_w = maxi(2, candle_w - 1)
-			queue_redraw()
+			_set_candle_w(candle_w - 1)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			_drag_pan = event.pressed
 			_drag_start = event.position
@@ -74,8 +91,75 @@ func _gui_input(event: InputEvent) -> void:
 					price_clicked.emit(_y_to_price(event.position.y))
 					return
 				_drag_line = _line_at(event.position.y)
+				if _drag_line.is_empty():
+					# 空白处按下：拖动平移（手机上等价于右键拖动）
+					_drag_pan = true
+					_drag_start = event.position
+					_drag_scroll = scroll
 			else:
 				_drag_line = {}
+				_drag_pan = false
+
+func _set_candle_w(w: int) -> void:
+	var nw := clampi(w, 2, 10)
+	if nw == candle_w:
+		return
+	candle_w = nw
+	queue_redraw()
+
+# ---------------------------------------------------------------- 触屏手势
+
+func _touch_pressed(e: InputEventScreenTouch) -> void:
+	if e.pressed:
+		_touches[e.index] = e.position
+		_mouse = e.position
+		if _touches.size() >= 2:
+			_begin_pinch()
+	else:
+		_touches.erase(e.index)
+		if _touches.size() < 2:
+			_pinch_dist = 0.0
+		if _touches.is_empty():
+			_multitouch = false
+	queue_redraw()
+
+func _touch_moved(e: InputEventScreenDrag) -> void:
+	if not _touches.has(e.index):
+		return
+	_touches[e.index] = e.position
+	if _touches.size() < 2:
+		return
+	var ks := _touches.keys()
+	var a: Vector2 = _touches[ks[0]]
+	var b: Vector2 = _touches[ks[1]]
+	var gap := a.distance_to(b)
+	var mid := (a + b) * 0.5
+	if _pinch_dist <= 0.0:
+		_begin_pinch()
+		return
+	# 捏合 = 缩放（以右端为锚点，和滚轮一致）
+	_pinch_accum = clampf(_pinch_accum * (gap / maxf(1.0, _pinch_dist)), 0.25, 4.0)
+	_set_candle_w(int(round(_pinch_candle_w * _pinch_accum)))
+	# 双指整体移动 = 平移
+	var dx := mid.x - _pinch_mid.x
+	if absf(dx) >= 1.0:
+		scroll = maxi(0, scroll + int(round(dx / float(candle_w))))
+		_pinch_mid = mid
+	_pinch_dist = gap
+	_mouse = mid
+	queue_redraw()
+
+func _begin_pinch() -> void:
+	var ks := _touches.keys()
+	var a: Vector2 = _touches[ks[0]]
+	var b: Vector2 = _touches[ks[1]]
+	_pinch_dist = a.distance_to(b)
+	_pinch_mid = (a + b) * 0.5
+	_pinch_accum = 1.0
+	_pinch_candle_w = candle_w
+	_multitouch = true
+	_drag_line = {}
+	_drag_pan = false
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_MOUSE_EXIT:

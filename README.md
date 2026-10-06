@@ -16,6 +16,18 @@ $G --path .                        # 运行（或用 Godot 编辑器打开本目
 存档在 `%APPDATA%\Godot\app_userdata\FX战士久留美 同人 · 2000万之路\save.json`。
 测试时可在标题画面按 **Shift+F9** 解锁全部（教程完成 + 全章已读）。
 
+## 打包 Android（手机试玩）
+
+```bash
+G=D:/godot/Godot_v4.7.2-stable_win64_console.exe
+JAVA_HOME=D:/tools/jdk17/jdk-17.0.13+11   # apksigner 需要 JDK17
+cd projects/kurumi-fx-rogue
+$G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
+```
+产物：`output/kurumi-fx-rogue.apk`（arm64-v8a + armeabi-v7a，横屏，debug 签名，不入库）。
+手机安装需开「允许安装未知来源」；插 USB 也可以用 `D:/tools/android-sdk/platform-tools/adb.exe install -r output/kurumi-fx-rogue.apk`。
+依赖（导出模板 / JDK / SDK / 调试签名）的位置见 `docs/maintenance.md` §7。
+
 ## 模式
 - **剧情模式**：跟着漫画逐卷改编，第 1~15 章覆盖原作第 1~53 話。第 1~6 章（原作第 1~10 話）是新手教程，完成后解锁肉鸽。第 11 章复刻 2015-01-15 瑞郎冲击。
 - **肉鸽模式**：3 幕（净资产目标 80 万 → 400 万 → 2000 万），分叉地图上有相場/精英/事件/商店/休息/Boss；手法、道具、诅咒、仲间（萌智子/芽吹/やす子）、FX 业者组成构筑。通关后有无尽模式与挑战度 1~10。
@@ -24,6 +36,9 @@ $G --path .                        # 运行（或用 Godot 编辑器打开本目
 ## 操作
 空格 暂停/继续 · 1~4 速度 · B 买 · S 卖 · C 全部平仓 · Tab 切换品种 · Esc 菜单 · F11 全屏
 图表：滚轮缩放 · 右键拖动 · 左键拖动持仓的 SL/TP 线改单。
+
+**手机（Android）**：每个功能都有屏幕按钮（买卖 / 平此品种 / 全部平仓 / Ⅱ~4 速度 / 品种行切换 / 手数 ± ½ MAX / 止损止盈 ± / 顶栏右上「菜单」= Esc 暂停菜单）。
+图表单指拖动空白处平移、双指捏合缩放、拖 SL/TP 线改单；对话框按住不放快进。手机端显示用小数缩放铺满宽度，非 16:9 屏幕上下留黑边。
 
 ## 文档
 | 文档 | 内容 |

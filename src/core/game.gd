@@ -5,6 +5,7 @@ var params := {}
 var run: RunState = null # 当前肉鸽局（RunState）
 
 func _ready() -> void:
+	_setup_mobile_display()
 	# 调试：-- --shot=res路径/或绝对路径 --shot-delay=秒 [--scene=res://...] 截图后退出
 	var args := OS.get_cmdline_user_args()
 	var shot := ""
@@ -45,3 +46,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_F11 or (event.keycode == KEY_ENTER and event.alt_pressed):
 			var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+## 手机：640x360 视口 + 整数缩放会让 1080p 屏幕只用中间一小块，改成小数缩放铺满宽度（保留黑边不裁切）。
+func _setup_mobile_display() -> void:
+	if not OS.has_feature("mobile"):
+		return
+	var w := get_window()
+	w.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	w.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+
+## 退出 / 被系统回收前落盘（手机上没有“先退出到标题”的机会）。
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		if Save != null:
+			Save.write()
+		if what == NOTIFICATION_WM_CLOSE_REQUEST:
+			get_tree().quit()

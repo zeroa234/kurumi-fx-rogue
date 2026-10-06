@@ -1,7 +1,7 @@
 class_name DialogueBox
 extends Control
 ## 视觉小说式对话框。lines = [{who, face, text, side?, bg?, cg?, sfx?, shake?}]
-## 点击 / 空格 / 回车 前进；打字机效果；Ctrl 快进；Esc 跳过全部（skippable 时）。
+## 点击 / 空格 / 回车 前进；打字机效果；Ctrl 快进（手机：按住不放）；Esc 跳过全部（skippable 时）。
 
 signal finished
 signal line_shown(index: int, line: Dictionary)
@@ -21,6 +21,7 @@ var _box: PanelContainer
 var _arrow: Label
 var _name_panel: PanelContainer
 var _blink := 0.0
+var _hold := false # 触屏按住不放 = 快进
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -83,10 +84,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			_end()
 			get_viewport().set_input_as_handled()
 
+func _input(event: InputEvent) -> void:
+	# 手机没有 Ctrl：按住不放等价于长按 Ctrl 快进
+	if event is InputEventScreenTouch:
+		_hold = event.pressed
+	elif event is InputEventScreenDrag:
+		_hold = true
+
 func _process(delta: float) -> void:
-	var speed := 50.0
-	if Input.is_key_pressed(KEY_CTRL):
-		speed = 2000.0
+	var fast := _hold or Input.is_key_pressed(KEY_CTRL)
+	var speed := 2000.0 if fast else 50.0
 	if _shown < _full.length():
 		_shown = minf(_full.length(), _shown + delta * speed)
 		_text_lbl.visible_characters = int(_shown)
@@ -94,7 +101,7 @@ func _process(delta: float) -> void:
 	else:
 		_blink += delta
 		_arrow.visible = fmod(_blink, 0.8) < 0.5
-		if Input.is_key_pressed(KEY_CTRL):
+		if fast:
 			_next()
 
 func _advance() -> void:

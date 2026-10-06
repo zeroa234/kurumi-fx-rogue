@@ -22,6 +22,7 @@ G=D:/godot/Godot_v4.7.2-stable_win64_console.exe
 cd projects/kurumi-fx-rogue
 $G --headless --path . --import      # 首次 / 新增 class_name 脚本或素材后必须跑（刷新类缓存与导入）
 $G --path .                           # 运行游戏
+$G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk   # 打包手机 APK（依赖见 §7）
 ```
 - 引擎：Godot **4.7.2**，GDScript，渲染器 `gl_compatibility`。视口 640×360，`viewport` 拉伸 + 整数缩放，默认最近邻采样。
 - 字体：Fusion Pixel 12px（`assets/fonts/`，OFL），文字尺寸只用 12 / 24。
@@ -125,6 +126,12 @@ TradeScreen(界面) ──持有── TradeSession
     `output/`、高清原图不入库。仓库 `core.autocrlf=true`，提交时出现 LF/CRLF 警告属正常。
 13. **用 Python 改源码/JSON** 时用 `python -X utf8`，按二进制读写或指定 `encoding='utf-8', newline='\n'`，否则中文与换行会被系统编码破坏。
 14. **剧情事实**：任何章节内容都要能在 `docs/research/manga-reference.md` 找到出处；查不到就写成游戏原创并标注，或者不写。
+15. **触屏输入**：每个功能都要有屏幕按钮或手势，键盘只能当加速器。Godot 默认 `emulate_mouse_from_touch`，
+    所以 `Button` 与 `_gui_input` 里的鼠标事件在手机上直接可用（单指触摸 = 左键）；**右键永远不会被模拟**，
+    所以图表平移不能只写右键（`ChartView` 里单指拖空白区域也平移）。双指手势在 `ChartView._gui_input` 处理
+    `InputEventScreenTouch/Drag`，期间用 `_multitouch` 屏蔽触摸模拟出的鼠标事件，否则会边缩放边改 SL/TP 单。
+    手机端显示在 `Game._setup_mobile_display()` 把 `content_scale_stretch` 切成小数缩放（桌面仍整数缩放，640×360 布局不变）。
+    改输入相关代码后至少跑 `smoke_ui` 与 `tutorial_driver`。
 
 ---
 
@@ -213,7 +220,10 @@ smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤
 | 立绘覆盖 | 新章人物（酒田いなご、善波なな、月森きずな）无立绘；父母为剪影（官网无官方立绘） |
 | 原作资料缺口 | 第 1~30 话无逐话资料；母亲交易澳元/日元仅单一博客来源；漫画柜中文章节标题未抓取（见调研文档 §6） |
 | 平衡 | 只有机器人模拟，缺真人试玩数据 |
-| 导出 | 未配置 export presets（发布前在编辑器里添加 Windows 预设；注意 `scripts/ docs/ config/ output/` 已 .gdignore） |
+| 导出 | 已配置 Android 预设（`export_presets.cfg`）：`$G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk`；Windows/桌面预设仍未加 |
+| 触屏细节 | 图表缩放以右端为锚点（不是捏合中心）；`tooltip_text`（“追”/速度按钮等）在手机上看不到，只能看图标/文字；SL/TP 线命中判定 3 像素，低分辨率大屏上手指偏难点中 |
+| 手机显示 | 用 `CONTENT_SCALE_ASPECT_KEEP`，非 16:9 屏幕上下留黑边；若要撑满可改用 `EXPAND`，但 640×360 的绝对坐标布局会露出空白区，需先改成自适应 |
+| 手机与桌面差异 | 手机无 Ctrl/Space 等键，快捷键提示文案仍挂在暂停菜单里（已在操作说明里列屏幕按钮）；存档只在退出/返回键时额外落盘一次，交易中的行情状态不落盘（切后台太久丢的是当前节点进度） |
 | 每个 tick 的界面刷新 | 已节流为每帧一次；若在低端机卡顿，可降低 `ChartView` 重绘频率或缓存 K 线聚合 |
 
 ---
@@ -227,3 +237,7 @@ smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤
 | Blender 5.x | 金币序列帧 | `scripts/blender_coin.py`（或 Blender MCP） |
 | Python 3 + Pillow | 像素化、音效 | `scripts/*.py` |
 | 官方人设参考图 | IC 生成仲间立绘 | `D:/agent/temp/kurumi-ref/official/`（不入库、不进游戏） |
+| Godot 4.7.2 导出模板 | 打包 Android | `%APPDATA%/Godot/export_templates/4.7.2.stable/`（`android_debug.apk` / `android_release.apk` / `android_source.zip`）。缺模板时 `--export-debug` 会报「缺少模板」 |
+| Temurin JDK 17 | apksigner 签名 / gradle | `D:/tools/jdk17/jdk-17.0.13+11`（编辑器设置 `export/android/java_sdk_path`） |
+| Android SDK | build-tools / platform-tools / platforms | `D:/tools/android-sdk`（`export/android/android_sdk_path`；已装 `build-tools;35.0.0`、`platforms;android-35`、`platform-tools`） |
+| 调试签名 | debug APK | `%APPDATA%/Godot/keystores/debug.keystore`（口令均为 `android`，`export/android/debug_keystore`） |
