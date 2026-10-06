@@ -1,0 +1,19 @@
+{
+  "_doc": "行情单元（货币与资产）。anchor_jpy = x=0 时 1 单位折合日元；vol = 日波动（对数）；betas 对公共因子 risk/usd/commod 的暴露；rate = 政策利率%（掉期）；carry = 每日长期漂移（对数，负数=长期贬值）；mr = 向公允价值回归的日速度；trend = 趋势期日漂移（以 vol 为单位）；jump_rate = 每日自发跳跃次数期望；jump = 跳跃对数标准差。",
+  "units": [
+    {"code": "JPY", "name": "日元",     "anchor_jpy": 1.0,      "vol": 0.0042, "betas": {"risk": -0.0045, "usd": 0.0},    "rate": -0.1, "carry": 0.0,     "mr": 0.02, "trend": 0.30, "jump_rate": 0.02, "jump": 0.004},
+    {"code": "USD", "name": "美元",     "anchor_jpy": 105.0,    "vol": 0.0036, "betas": {"risk": 0.0,     "usd": 0.0040}, "rate": 1.5,  "carry": 0.0,     "mr": 0.02, "trend": 0.32, "jump_rate": 0.02, "jump": 0.004},
+    {"code": "EUR", "name": "欧元",     "anchor_jpy": 130.0,    "vol": 0.0040, "betas": {"risk": 0.0008,  "usd": -0.0010}, "rate": 0.25, "carry": 0.0,    "mr": 0.02, "trend": 0.30, "jump_rate": 0.02, "jump": 0.004},
+    {"code": "GBP", "name": "英镑",     "anchor_jpy": 160.0,    "vol": 0.0050, "betas": {"risk": 0.0015,  "usd": -0.0008}, "rate": 0.75, "carry": 0.0,    "mr": 0.02, "trend": 0.32, "jump_rate": 0.03, "jump": 0.006},
+    {"code": "AUD", "name": "澳元",     "anchor_jpy": 85.0,     "vol": 0.0050, "betas": {"risk": 0.0040,  "usd": -0.0010, "commod": 0.0030}, "rate": 2.5, "carry": 0.0, "mr": 0.02, "trend": 0.32, "jump_rate": 0.02, "jump": 0.005},
+    {"code": "CHF", "name": "瑞郎",     "anchor_jpy": 110.0,    "vol": 0.0038, "betas": {"risk": -0.0030, "usd": -0.0008}, "rate": -0.5, "carry": 0.0,  "mr": 0.02, "trend": 0.28, "jump_rate": 0.02, "jump": 0.005},
+    {"code": "TRY", "name": "土耳其里拉", "anchor_jpy": 40.0,   "vol": 0.0085, "betas": {"risk": 0.0055,  "usd": -0.0010}, "rate": 9.0,  "carry": -0.0004, "mr": 0.01, "trend": 0.35, "jump_rate": 0.06, "jump": 0.015},
+    {"code": "N225", "name": "日经225", "anchor_jpy": 16000.0,  "vol": 0.0105, "betas": {"risk": 0.0080,  "usd": 0.0},    "rate": 0.0,  "carry": 0.0001,  "mr": 0.01, "trend": 0.35, "jump_rate": 0.04, "jump": 0.012},
+    {"code": "XAU", "name": "黄金",     "anchor_jpy": 131250.0, "vol": 0.0085, "betas": {"risk": -0.0030, "usd": -0.0030, "commod": 0.0050}, "rate": 0.0, "carry": 0.0, "mr": 0.01, "trend": 0.33, "jump_rate": 0.03, "jump": 0.010}
+  ],
+  "factors": [
+    {"id": "risk",   "name": "风险偏好", "theta": 0.15, "vol": 0.55},
+    {"id": "usd",    "name": "美元因子", "theta": 0.10, "vol": 0.45},
+    {"id": "commod", "name": "商品因子", "theta": 0.10, "vol": 0.45}
+  ]
+}

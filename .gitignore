@@ -2,3 +2,6 @@
 *.tmp
 /output/
 /logs/
+# 仓库 .git/info/exclude 全局排除了 data/ 与 assets/；本游戏的内容数据与像素素材需要入库
+!data/
+!assets/

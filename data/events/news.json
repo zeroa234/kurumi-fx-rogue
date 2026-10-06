@@ -1,0 +1,185 @@
+{
+  "_doc": "随机新闻/事件模板。kind: news 普通新闻 / disaster 自然灾害 / politics 政治 / speech 要人发言 / rumor 谣言 / cb 央行意外 / market 市场异动。$C = 随机选中的货币（从 pool 里挑），$N = 其中文名。sign:random 时整体方向随机（标题用 title_up / title_down）。effects 的 mag 会乘以 0.6~1.4 的随机系数。target 支持 $C、factor:risk 等。acts = 出现的幕（剧情不用）。weight 相对权重。",
+  "news": [
+    {"id": "quake", "kind": "disaster", "icon": "quake", "weight": 0.6, "acts": [1, 2, 3], "region": "JP",
+     "title": "【速報】日本近海发生强烈地震", "body": "气象厅发布海啸注意报。市场上传出“日本企业将把海外资金汇回国内”的猜测。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": -1.6, "ramp": 3, "dur": 96, "fade": 0.5},
+       {"target": "JPY", "channel": "level", "mag": 0.014, "ramp": 6, "dur": 192, "fade": 0.55},
+       {"target": "N225", "channel": "level", "mag": -0.03, "ramp": 8, "dur": 192, "fade": 0.3},
+       {"target": "*", "channel": "vol", "mag": 1.6, "ramp": 1, "dur": 192},
+       {"target": "*", "channel": "spread", "mag": 2.5, "ramp": 1, "dur": 8}
+     ]},
+    {"id": "typhoon", "kind": "disaster", "icon": "storm", "weight": 0.8, "acts": [1, 2, 3], "region": "JP",
+     "title": "超大型台风直击关东，交通全面瘫痪", "body": "多家工厂停工。影响有限，但东京时段交易清淡。",
+     "effects": [
+       {"target": "N225", "channel": "level", "mag": -0.008, "ramp": 4, "dur": 48, "fade": 0.6},
+       {"target": "JPY", "channel": "vol", "mag": 1.3, "ramp": 1, "dur": 48}
+     ]},
+    {"id": "volcano", "kind": "disaster", "icon": "volcano", "weight": 0.3, "acts": [2, 3], "region": "EU",
+     "title": "欧洲火山大喷发，航空网络停摆", "body": "火山灰扩散，欧洲航班大面积取消。",
+     "effects": [
+       {"target": "EUR", "channel": "level", "mag": -0.006, "ramp": 6, "dur": 96, "fade": 0.4},
+       {"target": "GBP", "channel": "level", "mag": -0.006, "ramp": 6, "dur": 96, "fade": 0.4},
+       {"target": "factor:risk", "channel": "level", "mag": -0.6, "ramp": 4, "dur": 96, "fade": 0.6}
+     ]},
+    {"id": "pandemic", "kind": "disaster", "icon": "virus", "weight": 0.15, "acts": [3], "region": "WORLD",
+     "title": "新型传染病在多国扩散，WHO 召开紧急会议", "body": "各国陆续发布出入境限制。避险情绪急速升温。",
+     "effects": [
+       {"target": "factor:risk", "channel": "drift", "mag": -1.2, "ramp": 1, "dur": 288},
+       {"target": "factor:risk", "channel": "vol", "mag": 1.8, "ramp": 1, "dur": 288},
+       {"target": "XAU", "channel": "level", "mag": 0.02, "ramp": 12, "dur": 192, "fade": 0.2},
+       {"target": "*", "channel": "vol", "mag": 1.7, "ramp": 1, "dur": 288}
+     ]},
+    {"id": "drought_au", "kind": "disaster", "icon": "sun", "weight": 0.4, "acts": [1, 2, 3], "region": "AU",
+     "title": "澳大利亚遭遇百年一遇大旱", "body": "农产品出口预期下修。",
+     "effects": [
+       {"target": "AUD", "channel": "level", "mag": -0.006, "ramp": 8, "dur": 96, "fade": 0.3},
+       {"target": "factor:commod", "channel": "level", "mag": 0.5, "ramp": 8, "dur": 96, "fade": 0.5}
+     ]},
+
+    {"id": "geo_tension", "kind": "politics", "icon": "flag", "weight": 1.0, "acts": [1, 2, 3], "region": "WORLD",
+     "title": "某地区局势骤然紧张，军事冲突一触即发", "body": "避险资金涌向日元、瑞郎与黄金。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": -1.0, "ramp": 3, "dur": 96, "fade": 0.6},
+       {"target": "XAU", "channel": "level", "mag": 0.01, "ramp": 4, "dur": 96, "fade": 0.5}
+     ]},
+    {"id": "geo_calm", "kind": "politics", "icon": "dove", "weight": 0.8, "acts": [1, 2, 3], "region": "WORLD",
+     "title": "停火协议达成，紧张局势缓和", "body": "风险资产全面反弹。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": 0.9, "ramp": 4, "dur": 96, "fade": 0.5}
+     ]},
+    {"id": "election", "kind": "politics", "icon": "vote", "weight": 0.7, "acts": [1, 2, 3], "pool": ["EUR", "GBP", "AUD", "JPY"], "sign": "random",
+     "title_up": "$N 圈选举：市场友好派大胜", "title_down": "$N 圈选举：反建制派出人意料领先",
+     "body": "开票结果超出民调预期，相关货币剧烈波动。",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": 0.009, "ramp": 2, "dur": 96, "fade": 0.3},
+       {"target": "$C", "channel": "vol", "mag": 1.8, "ramp": 1, "dur": 96}
+     ]},
+    {"id": "referendum", "kind": "politics", "icon": "vote", "weight": 0.25, "acts": [2, 3], "pool": ["GBP", "EUR"],
+     "title": "$N 圈公投：「脱离」派意外胜出", "body": "几乎所有民调都猜错了。相关货币创下多年来最大单日跌幅。",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": -0.045, "ramp": 6, "dur": 288, "fade": 0.15},
+       {"target": "factor:risk", "channel": "level", "mag": -1.2, "ramp": 4, "dur": 96, "fade": 0.5},
+       {"target": "$C", "channel": "vol", "mag": 2.5, "ramp": 1, "dur": 288},
+       {"target": "$C", "channel": "spread", "mag": 5.0, "ramp": 1, "dur": 12}
+     ]},
+    {"id": "trade_war", "kind": "politics", "icon": "flag", "weight": 0.6, "acts": [2, 3],
+     "title": "美国宣布对多国加征关税", "body": "贸易摩擦升级，资源货币承压。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": -0.8, "ramp": 4, "dur": 144, "fade": 0.3},
+       {"target": "AUD", "channel": "level", "mag": -0.005, "ramp": 6, "dur": 144, "fade": 0.2}
+     ]},
+    {"id": "tr_politics", "kind": "politics", "icon": "flag", "weight": 0.5, "acts": [1, 2, 3],
+     "title": "土耳其总统批评央行，要求降息", "body": "市场担心央行独立性。",
+     "effects": [
+       {"target": "TRY", "channel": "level", "mag": -0.025, "ramp": 4, "dur": 96, "fade": 0.2},
+       {"target": "TRY", "channel": "vol", "mag": 2.0, "ramp": 1, "dur": 96}
+     ]},
+
+    {"id": "speech_hawk", "kind": "speech", "icon": "mic", "weight": 1.2, "acts": [1, 2, 3], "pool": ["USD", "EUR", "JPY", "GBP", "AUD"], "sign": "random",
+     "title_up": "$N 央行行长：「必要时将毫不犹豫地收紧」", "title_down": "$N 央行行长：「宽松将持续相当长的时间」",
+     "body": "讲话内容被市场解读为政策转向的信号。",
+     "effects": [
+       {"target": "$C", "channel": "drift", "mag": 0.004, "ramp": 1, "dur": 72},
+       {"target": "$C", "channel": "level", "mag": 0.003, "ramp": 2, "dur": 24, "fade": 0.3}
+     ]},
+    {"id": "speech_vague", "kind": "speech", "icon": "mic", "weight": 0.8, "acts": [1, 2, 3], "pool": ["USD", "EUR", "JPY"],
+     "title": "$N 央行行长讲话：「密切关注汇率动向」", "body": "措辞模棱两可，市场一时无所适从。",
+     "effects": [
+       {"target": "$C", "channel": "vol", "mag": 1.6, "ramp": 1, "dur": 24}
+     ]},
+    {"id": "verbal_jp", "kind": "speech", "icon": "mic", "weight": 0.6, "acts": [2, 3],
+     "title": "财务官：「对过度的汇率波动保持高度警惕」", "body": "市场开始警惕日本政府的汇率干预。",
+     "effects": [
+       {"target": "JPY", "channel": "level", "mag": -0.004, "ramp": 2, "dur": 48, "fade": 0.6}
+     ]},
+
+    {"id": "good_data_leak", "kind": "news", "icon": "paper", "weight": 1.2, "acts": [1, 2, 3], "pool": ["USD", "EUR", "GBP", "AUD", "JPY"], "sign": "random",
+     "title_up": "$N 经济：企业盈利大幅好于预期", "title_down": "$N 经济：大型企业接连下调业绩预期",
+     "body": "分析师纷纷修正预测。",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": 0.004, "ramp": 4, "dur": 48, "fade": 0.3},
+       {"target": "$C", "channel": "drift", "mag": 0.002, "ramp": 1, "dur": 96}
+     ]},
+    {"id": "bank_trouble", "kind": "news", "icon": "bank", "weight": 0.5, "acts": [2, 3], "pool": ["EUR", "USD", "GBP"],
+     "title": "$N 圈大型银行传出经营危机", "body": "银行股暴跌，信用风险蔓延。",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": -0.008, "ramp": 4, "dur": 96, "fade": 0.3},
+       {"target": "factor:risk", "channel": "level", "mag": -1.1, "ramp": 4, "dur": 96, "fade": 0.4},
+       {"target": "*", "channel": "vol", "mag": 1.5, "ramp": 1, "dur": 144}
+     ]},
+    {"id": "oil_spike", "kind": "news", "icon": "oil", "weight": 0.7, "acts": [1, 2, 3],
+     "title": "原油价格急升，产油国宣布减产", "body": "资源国货币受益，进口大国承压。",
+     "effects": [
+       {"target": "factor:commod", "channel": "level", "mag": 1.0, "ramp": 6, "dur": 96, "fade": 0.4},
+       {"target": "JPY", "channel": "level", "mag": -0.003, "ramp": 6, "dur": 96, "fade": 0.4}
+     ]},
+    {"id": "stock_rally", "kind": "market", "icon": "chart", "weight": 1.0, "acts": [1, 2, 3],
+     "title": "全球股市齐涨，日经平均站上新高", "body": "风险偏好回升，日元被卖出。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": 0.8, "ramp": 8, "dur": 96, "fade": 0.4}
+     ]},
+    {"id": "stock_crash", "kind": "market", "icon": "chart", "weight": 0.7, "acts": [1, 2, 3],
+     "title": "美股闪电暴跌，道指一度大跌千点", "body": "程序化交易引发连锁抛售。",
+     "effects": [
+       {"target": "factor:risk", "channel": "level", "mag": -1.4, "ramp": 2, "dur": 48, "fade": 0.6},
+       {"target": "*", "channel": "vol", "mag": 1.6, "ramp": 1, "dur": 48},
+       {"target": "*", "channel": "spread", "mag": 2.0, "ramp": 1, "dur": 4}
+     ]},
+    {"id": "flash_crash", "kind": "market", "icon": "bolt", "weight": 0.3, "acts": [2, 3], "pool": ["JPY"],
+     "title": "【閃崩】流动性真空中日元瞬间暴涨", "body": "清晨交易稀薄时段，算法交易引发连锁止损。数分钟内走完平日一周的幅度。",
+     "early_morning": true,
+     "effects": [
+       {"target": "JPY", "channel": "level", "mag": 0.03, "ramp": 1, "dur": 8, "fade": 0.7},
+       {"target": "*", "channel": "spread", "mag": 12.0, "ramp": 1, "dur": 3}
+     ]},
+    {"id": "carry_unwind", "kind": "market", "icon": "chart", "weight": 0.5, "acts": [2, 3],
+     "title": "套息交易大规模平仓，高息货币遭抛售", "body": "对冲基金去杠杆，日元被大量回补。",
+     "effects": [
+       {"target": "TRY", "channel": "level", "mag": -0.03, "ramp": 6, "dur": 96, "fade": 0.3},
+       {"target": "AUD", "channel": "level", "mag": -0.012, "ramp": 6, "dur": 96, "fade": 0.4},
+       {"target": "JPY", "channel": "level", "mag": 0.01, "ramp": 6, "dur": 96, "fade": 0.4}
+     ]},
+    {"id": "gold_buying", "kind": "news", "icon": "gold", "weight": 0.6, "acts": [1, 2, 3],
+     "title": "多国央行大举买入黄金储备", "body": "",
+     "effects": [
+       {"target": "XAU", "channel": "level", "mag": 0.012, "ramp": 8, "dur": 96, "fade": 0.3}
+     ]},
+
+    {"id": "rumor_cb", "kind": "rumor", "icon": "whisper", "weight": 1.0, "acts": [1, 2, 3], "pool": ["USD", "EUR", "JPY", "GBP", "AUD", "CHF"], "sign": "random", "credibility": 0.45,
+     "title_up": "【未确认】$N 央行据称正讨论紧急加息", "title_down": "【未确认】$N 央行据称正准备追加宽松",
+     "body": "消息来源不明。", "denial": "$N 央行发言人：「报道毫无根据」",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": 0.006, "ramp": 3, "dur": 48, "fade": 0.1}
+     ]},
+    {"id": "rumor_fund", "kind": "rumor", "icon": "whisper", "weight": 0.8, "acts": [1, 2, 3], "pool": ["USD", "EUR", "GBP", "AUD"], "credibility": 0.35,
+     "title": "【传闻】大型对冲基金陷入危机，正在抛售 $N 资产", "body": "推特上流传的截图。",
+     "denial": "当事基金否认传闻：「运营一切正常」",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": -0.006, "ramp": 3, "dur": 48, "fade": 0.1}
+     ]},
+    {"id": "rumor_intervention", "kind": "rumor", "icon": "whisper", "weight": 0.5, "acts": [2, 3], "credibility": 0.3,
+     "title": "【传闻】日本财务省正在进行“汇率核查”", "body": "据说是干预的前兆。",
+     "denial": "财务省：「不对市场传闻发表评论」",
+     "effects": [
+       {"target": "JPY", "channel": "level", "mag": -0.005, "ramp": 3, "dur": 48, "fade": 0.1}
+     ]},
+
+    {"id": "cb_surprise_cut", "kind": "cb", "icon": "bank", "weight": 0.25, "acts": [2, 3], "pool": ["AUD", "GBP", "EUR", "USD"],
+     "title": "【速報】$N 央行在例会外紧急降息", "body": "完全出乎市场预期。",
+     "rate_change": -0.5,
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": -0.018, "ramp": 2, "dur": 96, "fade": 0.25},
+       {"target": "$C", "channel": "regime", "mag": 2, "ramp": 1, "dur": 192},
+       {"target": "$C", "channel": "vol", "mag": 2.0, "ramp": 1, "dur": 48}
+     ]},
+    {"id": "cb_qe", "kind": "cb", "icon": "bank", "weight": 0.25, "acts": [2, 3], "pool": ["JPY", "EUR", "USD"],
+     "title": "【速報】$N 央行宣布大规模资产购买计划", "body": "规模远超市场预期。",
+     "effects": [
+       {"target": "$C", "channel": "level", "mag": -0.02, "ramp": 4, "dur": 192, "fade": 0.15},
+       {"target": "$C", "channel": "regime", "mag": 2, "ramp": 1, "dur": 288},
+       {"target": "factor:risk", "channel": "level", "mag": 0.6, "ramp": 4, "dur": 96, "fade": 0.3}
+     ]}
+  ]
+}

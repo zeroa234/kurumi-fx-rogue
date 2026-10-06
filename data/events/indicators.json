@@ -1,0 +1,25 @@
+{
+  "_doc": "预定经济指标（经济日历）。weekday 1=周一…5=周五；hour/minute 为东京时间。chance = 每周出现概率。实际值 = 预测 + N(0, surprise_sd)。z = (实际-预测)/surprise_sd × good；冲击 = sens × z（对数，作用于 unit），risk = 同时作用在风险偏好因子上的系数。kind=rate 为利率决议：选项 hike/hold/cut。",
+  "indicators": [
+    {"id": "us_nfp",  "name": "美国 非农就业人数", "unit": "USD", "stars": 3, "weekday": 5, "hour": 21, "minute": 30, "chance": 0.35, "fmt": "%+.0f万人", "mean": 18.0, "sd": 4.0, "surprise_sd": 6.0, "good": 1, "sens": 0.0055, "risk": 0.35},
+    {"id": "us_cpi",  "name": "美国 消费者物价指数", "unit": "USD", "stars": 3, "weekday": 3, "hour": 21, "minute": 30, "chance": 0.30, "fmt": "%.1f%%", "mean": 2.0, "sd": 0.6, "surprise_sd": 0.2, "good": 1, "sens": 0.0045, "risk": -0.15},
+    {"id": "us_gdp",  "name": "美国 GDP 速报", "unit": "USD", "stars": 2, "weekday": 4, "hour": 21, "minute": 30, "chance": 0.20, "fmt": "%.1f%%", "mean": 2.2, "sd": 0.8, "surprise_sd": 0.5, "good": 1, "sens": 0.0035, "risk": 0.2},
+    {"id": "us_ism",  "name": "美国 ISM 制造业指数", "unit": "USD", "stars": 2, "weekday": 1, "hour": 23, "minute": 0, "chance": 0.30, "fmt": "%.1f", "mean": 52.0, "sd": 2.5, "surprise_sd": 1.5, "good": 1, "sens": 0.0025, "risk": 0.25},
+    {"id": "us_retail","name": "美国 零售销售", "unit": "USD", "stars": 2, "weekday": 3, "hour": 21, "minute": 30, "chance": 0.25, "fmt": "%+.1f%%", "mean": 0.3, "sd": 0.3, "surprise_sd": 0.4, "good": 1, "sens": 0.0028, "risk": 0.2},
+    {"id": "jp_tankan","name": "日银 短观", "unit": "JPY", "stars": 2, "weekday": 1, "hour": 8, "minute": 50, "chance": 0.15, "fmt": "%+.0f", "mean": 5.0, "sd": 5.0, "surprise_sd": 3.0, "good": 1, "sens": 0.0020, "risk": 0.1},
+    {"id": "jp_gdp",  "name": "日本 GDP 速报", "unit": "JPY", "stars": 1, "weekday": 1, "hour": 8, "minute": 50, "chance": 0.15, "fmt": "%.1f%%", "mean": 0.8, "sd": 1.0, "surprise_sd": 0.8, "good": 1, "sens": 0.0015, "risk": 0.05},
+    {"id": "eu_cpi",  "name": "欧元区 HICP", "unit": "EUR", "stars": 2, "weekday": 2, "hour": 19, "minute": 0, "chance": 0.25, "fmt": "%.1f%%", "mean": 1.2, "sd": 0.6, "surprise_sd": 0.2, "good": 1, "sens": 0.0030, "risk": 0.0},
+    {"id": "de_ifo",  "name": "德国 IFO 景气指数", "unit": "EUR", "stars": 2, "weekday": 2, "hour": 18, "minute": 0, "chance": 0.25, "fmt": "%.1f", "mean": 105.0, "sd": 3.0, "surprise_sd": 1.5, "good": 1, "sens": 0.0022, "risk": 0.1},
+    {"id": "uk_cpi",  "name": "英国 CPI", "unit": "GBP", "stars": 2, "weekday": 3, "hour": 18, "minute": 30, "chance": 0.25, "fmt": "%.1f%%", "mean": 2.0, "sd": 0.7, "surprise_sd": 0.25, "good": 1, "sens": 0.0040, "risk": 0.0},
+    {"id": "au_jobs", "name": "澳大利亚 就业人数", "unit": "AUD", "stars": 2, "weekday": 4, "hour": 9, "minute": 30, "chance": 0.30, "fmt": "%+.1f万人", "mean": 1.5, "sd": 1.0, "surprise_sd": 2.0, "good": 1, "sens": 0.0045, "risk": 0.05},
+    {"id": "cn_pmi",  "name": "中国 制造业 PMI", "unit": "AUD", "stars": 2, "weekday": 1, "hour": 10, "minute": 0, "chance": 0.25, "fmt": "%.1f", "mean": 50.5, "sd": 1.0, "surprise_sd": 0.8, "good": 1, "sens": 0.0030, "risk": 0.45},
+    {"id": "tr_cpi",  "name": "土耳其 CPI", "unit": "TRY", "stars": 2, "weekday": 3, "hour": 16, "minute": 0, "chance": 0.20, "fmt": "%.1f%%", "mean": 9.0, "sd": 2.0, "surprise_sd": 1.0, "good": -1, "sens": 0.0080, "risk": 0.0},
+    {"id": "fed",  "kind": "rate", "name": "美联储 FOMC 利率决议", "unit": "USD", "stars": 3, "weekday": 4, "hour": 3, "minute": 0, "chance": 0.12, "step": 0.25, "sens": 0.0090, "risk": -0.4},
+    {"id": "boj",  "kind": "rate", "name": "日本银行 金融政策决定会合", "unit": "JPY", "stars": 3, "weekday": 5, "hour": 12, "minute": 0, "chance": 0.12, "step": 0.10, "sens": 0.0100, "risk": 0.2},
+    {"id": "ecb",  "kind": "rate", "name": "欧洲央行 理事会", "unit": "EUR", "stars": 3, "weekday": 4, "hour": 20, "minute": 45, "chance": 0.12, "step": 0.25, "sens": 0.0080, "risk": 0.0},
+    {"id": "boe",  "kind": "rate", "name": "英格兰银行 利率决议", "unit": "GBP", "stars": 2, "weekday": 4, "hour": 20, "minute": 0, "chance": 0.10, "step": 0.25, "sens": 0.0080, "risk": 0.0},
+    {"id": "rba",  "kind": "rate", "name": "澳洲联储 利率决议", "unit": "AUD", "stars": 2, "weekday": 2, "hour": 12, "minute": 30, "chance": 0.12, "step": 0.25, "sens": 0.0080, "risk": 0.0},
+    {"id": "snb",  "kind": "rate", "name": "瑞士国家银行 利率决议", "unit": "CHF", "stars": 2, "weekday": 4, "hour": 17, "minute": 30, "chance": 0.08, "step": 0.25, "sens": 0.0070, "risk": 0.0},
+    {"id": "tcmb", "kind": "rate", "name": "土耳其央行 利率决议", "unit": "TRY", "stars": 2, "weekday": 4, "hour": 20, "minute": 0, "chance": 0.10, "step": 1.00, "sens": 0.0150, "risk": 0.0}
+  ]
+}

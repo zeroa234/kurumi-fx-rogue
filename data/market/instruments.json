@@ -1,0 +1,14 @@
+{
+  "_doc": "可交易品种。price = anchor(base)/anchor(quote) * exp(x_base - x_quote + offset)。contract = 1 手（枚）的基础货币数量；spread 单位 pips；unlock = 解锁所需标签（空 = 默认可用）。",
+  "instruments": [
+    {"symbol": "USDJPY", "name": "美元/日元", "base": "USD", "quote": "JPY", "kind": "fx",    "digits": 3, "pip": 0.01,   "spread": 0.3, "contract": 10000, "unlock": ""},
+    {"symbol": "EURJPY", "name": "欧元/日元", "base": "EUR", "quote": "JPY", "kind": "fx",    "digits": 3, "pip": 0.01,   "spread": 0.5, "contract": 10000, "unlock": ""},
+    {"symbol": "GBPJPY", "name": "英镑/日元", "base": "GBP", "quote": "JPY", "kind": "fx",    "digits": 3, "pip": 0.01,   "spread": 1.0, "contract": 10000, "unlock": ""},
+    {"symbol": "AUDJPY", "name": "澳元/日元", "base": "AUD", "quote": "JPY", "kind": "fx",    "digits": 3, "pip": 0.01,   "spread": 0.7, "contract": 10000, "unlock": ""},
+    {"symbol": "EURUSD", "name": "欧元/美元", "base": "EUR", "quote": "USD", "kind": "fx",    "digits": 5, "pip": 0.0001, "spread": 0.4, "contract": 10000, "unlock": ""},
+    {"symbol": "EURCHF", "name": "欧元/瑞郎", "base": "EUR", "quote": "CHF", "kind": "fx",    "digits": 5, "pip": 0.0001, "spread": 1.5, "contract": 10000, "unlock": "pair_eurchf"},
+    {"symbol": "TRYJPY", "name": "里拉/日元", "base": "TRY", "quote": "JPY", "kind": "fx",    "digits": 3, "pip": 0.01,   "spread": 3.0, "contract": 10000, "unlock": "pair_tryjpy"},
+    {"symbol": "N225",   "name": "日经225",   "base": "N225", "quote": "JPY", "kind": "index", "digits": 0, "pip": 1.0,   "spread": 5.0, "contract": 10,    "unlock": "pair_n225"},
+    {"symbol": "XAUUSD", "name": "黄金/美元", "base": "XAU", "quote": "USD", "kind": "metal", "digits": 2, "pip": 0.1,    "spread": 4.0, "contract": 10,    "unlock": "pair_xauusd"}
+  ]
+}
