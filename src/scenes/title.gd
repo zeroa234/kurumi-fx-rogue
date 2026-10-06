@@ -42,7 +42,7 @@ func _build_logo() -> void:
 
 func _build_menu() -> void:
 	var v := UI.vbox(4)
-	v.position = Vector2(470, 120)
+	v.position = Vector2(470, 104)
 	add_child(v)
 	var tut: bool = Save.data.story.tutorial_done
 	var items := [
@@ -50,6 +50,7 @@ func _build_menu() -> void:
 		["肉鸽模式", func(): Game.goto("res://src/run/run_hub.tscn"), tut, "完成剧情模式的新手教程后解锁"],
 		["局外养成", func(): Game.goto("res://src/run/meta_screen.tscn"), tut, "完成新手教程后解锁"],
 		["经典战役", func(): Game.goto("res://src/scenes/battles.tscn"), true, ""],
+		["图鉴", func(): Game.goto("res://src/scenes/codex.tscn"), tut, "完成新手教程后解锁"],
 		["设置", func(): Game.goto("res://src/scenes/settings.tscn"), true, ""],
 		["退出", func(): get_tree().quit(), true, ""],
 	]

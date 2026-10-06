@@ -245,6 +245,11 @@ func _draw() -> void:
 		info += "  散户多 %d%%" % int(ins.long_ratio * 100.0)
 	if ins.halted:
 		info += "  【报价停止】"
+	var nxt := session.events.upcoming(48)
+	if not nxt.is_empty():
+		var c0: Dictionary = nxt[0]
+		var left := int(c0.tick) - m.tick
+		info += "  下一指标 %02d:%02d %s%s（%d时%02d分后）" % [int(c0.hour), int(c0.minute), String(c0.name).split(" ")[0], "★".repeat(int(c0.stars)), left / 4, (left % 4) * 15]
 	var head_w := font.get_string_size(head, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 	draw_string(font, Vector2(head_w + 12, 11), info, HORIZONTAL_ALIGNMENT_LEFT, 280 - head_w, 12, UI.DIM if spread_pips < ins.spread_pips * 3.0 else UI.ORANGE)
 	# 十字光标

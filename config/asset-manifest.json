@@ -1,852 +1,861 @@
 {
-  "version": 1,
-  "comfy": {
-    "base_url": "http://127.0.0.1:8188",
-    "client_id": "kurumi-fx-rogue"
+ "version": 1,
+ "comfy": {
+  "base_url": "http://127.0.0.1:8188",
+  "client_id": "kurumi-fx-rogue"
+ },
+ "style": {
+  "quality": "masterpiece, very aesthetic, best quality, highres",
+  "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views"
+ },
+ "kinds": {
+  "portrait": {
+   "template": "anima-t2i",
+   "gen": [
+    1024,
+    1024
+   ],
+   "pixel": [
+    128,
+    128
+   ],
+   "colors": 32,
+   "small": {
+    "pixel": [
+     64,
+     64
+    ],
+    "colors": 24
+   },
+   "bg_remove": "white",
+   "crop": "chest_up",
+   "outline": true,
+   "lora": {
+    "pit": "48",
+    "name": "kurumi.safetensors",
+    "strength": 1.0
+   },
+   "negativeExtra": "bad anatomy, bad eyes, asymmetric eyes, multiple girls"
   },
-  "style": {
-    "quality": "masterpiece, very aesthetic, best quality, highres",
-    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views"
+  "portrait_ref": {
+   "template": "anima-ic",
+   "gen": [
+    1024,
+    1024
+   ],
+   "pixel": [
+    128,
+    128
+   ],
+   "colors": 32,
+   "small": {
+    "pixel": [
+     64,
+     64
+    ],
+    "colors": 24
+   },
+   "bg_remove": "white",
+   "crop": "chest_up",
+   "outline": true
   },
-  "kinds": {
-    "portrait": {
-      "template": "anima-t2i",
-      "gen": [
-        1024,
-        1024
-      ],
-      "pixel": [
-        128,
-        128
-      ],
-      "colors": 32,
-      "small": {
-        "pixel": [
-          64,
-          64
-        ],
-        "colors": 24
-      },
-      "bg_remove": "white",
-      "crop": "chest_up",
-      "outline": true,
-      "lora": {
-        "pit": "48",
-        "name": "kurumi.safetensors",
-        "strength": 1.0
-      },
-      "negativeExtra": "bad anatomy, bad eyes, asymmetric eyes, multiple girls"
-    },
-    "portrait_ref": {
-      "template": "anima-ic",
-      "gen": [
-        1024,
-        1024
-      ],
-      "pixel": [
-        128,
-        128
-      ],
-      "colors": 32,
-      "small": {
-        "pixel": [
-          64,
-          64
-        ],
-        "colors": 24
-      },
-      "bg_remove": "white",
-      "crop": "chest_up",
-      "outline": true
-    },
-    "portrait_sil": {
-      "template": "anima-t2i",
-      "gen": [
-        1024,
-        1024
-      ],
-      "pixel": [
-        128,
-        128
-      ],
-      "colors": 16,
-      "small": {
-        "pixel": [
-          64,
-          64
-        ],
-        "colors": 12
-      },
-      "bg_remove": "white",
-      "crop": "chest_up",
-      "outline": false,
-      "negativeExtra": "bad anatomy, multiple girls"
-    },
-    "bg": {
-      "template": "anima-turbo-t2i",
-      "gen": [
-        1536,
-        864
-      ],
-      "pixel": [
-        320,
-        180
-      ],
-      "colors": 48,
-      "negativeExtra": "1girl, 1boy, people, human, character, face"
-    },
-    "icon": {
-      "template": "anima-turbo-t2i",
-      "gen": [
-        1024,
-        1024
-      ],
-      "pixel": [
-        32,
-        32
-      ],
-      "colors": 16,
-      "bg_remove": "white",
-      "outline": true,
-      "nl_auto": "A single object, centered on a plain white background, full item in frame, no people.",
-      "negativeExtra": "1girl, 1boy, people, hands, text, watermark"
-    },
-    "chibi": {
-      "template": "anima-t2i",
-      "gen": [
-        1024,
-        1024
-      ],
-      "pixel": [
-        48,
-        48
-      ],
-      "colors": 24,
-      "bg_remove": "white",
-      "outline": false,
-      "lora": {
-        "pit": "48",
-        "name": "kurumi.safetensors",
-        "strength": 1.0
-      },
-      "negativeExtra": "bad anatomy, multiple girls"
-    },
-    "cg": {
-      "template": "anima-t2i",
-      "gen": [
-        1536,
-        864
-      ],
-      "pixel": [
-        320,
-        180
-      ],
-      "colors": 48,
-      "lora": {
-        "pit": "48",
-        "name": "kurumi.safetensors",
-        "strength": 1.0
-      },
-      "negativeExtra": "bad anatomy, bad hands, extra fingers, multiple girls"
-    }
+  "portrait_sil": {
+   "template": "anima-t2i",
+   "gen": [
+    1024,
+    1024
+   ],
+   "pixel": [
+    128,
+    128
+   ],
+   "colors": 16,
+   "small": {
+    "pixel": [
+     64,
+     64
+    ],
+    "colors": 12
+   },
+   "bg_remove": "white",
+   "crop": "chest_up",
+   "outline": false,
+   "negativeExtra": "bad anatomy, multiple girls"
   },
-  "assets": [
-    {
-      "id": "kurumi_normal",
-      "kind": "portrait",
-      "label": "久留美·普通",
-      "seed": 46620001,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, looking at viewer",
-      "nl": "A chest-up portrait facing the viewer with a calm friendly closed-mouth smile."
-    },
-    {
-      "id": "kurumi_happy",
-      "kind": "portrait",
-      "label": "久留美·开心",
-      "seed": 46620002,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, open mouth, :d",
-      "nl": "A chest-up portrait beaming happily, big open smile, bright cheerful eyes."
-    },
-    {
-      "id": "kurumi_smug",
-      "kind": "portrait",
-      "label": "久留美·得意",
-      "seed": 46620003,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smirk, grin, looking at viewer",
-      "nl": "A chest-up portrait with a self-satisfied greedy smirk, half-lidded confident eyes."
-    },
-    {
-      "id": "kurumi_focus",
-      "kind": "portrait",
-      "label": "久留美·认真",
-      "seed": 46620004,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, serious, focused",
-      "nl": "A chest-up portrait staring intently ahead with a determined serious expression, studying a chart."
-    },
-    {
-      "id": "kurumi_worried",
-      "kind": "portrait",
-      "label": "久留美·不安",
-      "seed": 46620005,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, worried, frown",
-      "nl": "A chest-up portrait looking anxious and uneasy, brows drawn together, slight cold sweat."
-    },
-    {
-      "id": "kurumi_shock",
-      "kind": "portrait",
-      "label": "久留美·惊恐",
-      "seed": 46620006,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, shocked, open mouth, wide-eyed",
-      "nl": "A chest-up portrait in horrified shock, eyes wide open, gaping, as if watching a chart crash."
-    },
-    {
-      "id": "kurumi_cry",
-      "kind": "portrait",
-      "label": "久留美·哭",
-      "seed": 46620007,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, crying, crying with eyes open, tears",
-      "nl": "A chest-up portrait crying with eyes open, tears streaming down both cheeks, trembling sad mouth."
-    },
-    {
-      "id": "kurumi_angry",
-      "kind": "portrait",
-      "label": "久留美·生气",
-      "seed": 46620008,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, angry",
-      "nl": "A chest-up portrait shouting in anger, furrowed brows and open mouth, frustrated."
-    },
-    {
-      "id": "kurumi_tilt",
-      "kind": "portrait",
-      "label": "久留美·执念暴走",
-      "seed": 46620009,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, empty eyes, constricted pupils, purple aura",
-      "nl": "A chest-up portrait staring straight ahead with blank glassy eyes, tiny constricted pupils, an unsettling obsessed whisper of a smile, dark purple aura behind her."
-    },
-    {
-      "id": "kurumi_sleep",
-      "kind": "portrait",
-      "label": "久留美·困倦",
-      "seed": 46620010,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, sleepy, half-closed eyes",
-      "nl": "A chest-up portrait drowsy and nodding off, eyes drooping half closed, relaxed tired face."
-    },
-    {
-      "id": "kurumi_young",
-      "kind": "portrait",
-      "label": "久留美·初三(2008)",
-      "seed": 46620011,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, serafuku, school uniform, sailor collar, large breasts, solo, upper body, portrait, centered, simple background, white background",
-      "nl": "A chest-up portrait of the same character as a younger middle school girl, more childish round face, wearing a sailor-style school uniform (serafuku with sailor collar)."
-    },
-    {
-      "id": "mochiko_normal",
-      "kind": "portrait_ref",
-      "label": "萌智子·普通",
-      "seed": 46620012,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character with a calm cool neutral expression, facing the viewer, plain white background, same art style.",
-      "ref": "mochiko"
-    },
-    {
-      "id": "mochiko_smile",
-      "kind": "portrait_ref",
-      "label": "萌智子·冷笑",
-      "seed": 46620013,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character with a cold sly smirk, half-lidded eyes, amused as if watching an amusing collapse, plain white background, same art style.",
-      "ref": "mochiko"
-    },
-    {
-      "id": "mochiko_blush",
-      "kind": "portrait_ref",
-      "label": "萌智子·脸红",
-      "seed": 46620014,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character flustered by something cute, soft warm blush on the cheeks, trying to hide delighted excitement, plain white background, same art style.",
-      "ref": "mochiko"
-    },
-    {
-      "id": "mebuki_normal",
-      "kind": "portrait_ref",
-      "label": "芽吹·普通",
-      "seed": 46620015,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character with a cheerful relaxed expression facing the viewer, plain white background, same art style.",
-      "ref": "mebuki"
-    },
-    {
-      "id": "mebuki_happy",
-      "kind": "portrait_ref",
-      "label": "芽吹·开心",
-      "seed": 46620016,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character grinning brightly, open mouth, sparkling excited eyes, hands near her shoulders, plain white background, same art style.",
-      "ref": "mebuki"
-    },
-    {
-      "id": "mebuki_cry",
-      "kind": "portrait_ref",
-      "label": "芽吹·哭",
-      "seed": 46620017,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character crying loudly with eyes open, tears streaming, wailing mouth, plain white background, same art style.",
-      "ref": "mebuki"
-    },
-    {
-      "id": "yasuko_normal",
-      "kind": "portrait_ref",
-      "label": "やす子·普通",
-      "seed": 46620018,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character with a confident smug little smile, facing the viewer, plain white background, same art style.",
-      "ref": "yasuko"
-    },
-    {
-      "id": "yasuko_angry",
-      "kind": "portrait_ref",
-      "label": "やす子·生气",
-      "seed": 46620019,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character pouting angrily with furrowed brows and puffed cheeks, plain white background, same art style.",
-      "ref": "yasuko"
-    },
-    {
-      "id": "yasuko_happy",
-      "kind": "portrait_ref",
-      "label": "やす子·开心",
-      "seed": 46620020,
-      "tags": "",
-      "nl": "Upper body bust portrait of the same character smiling warmly and genuinely happy, soft smile with closed eyes, plain white background, same art style.",
-      "ref": "yasuko"
-    },
-    {
-      "id": "ikuo_normal",
-      "kind": "portrait_sil",
-      "label": "郁夫·普通(剪影)",
-      "seed": 46620021,
-      "tags": "silhouette, solo, featureless dark silhouette, adult man, office worker",
-      "nl": "A fully dark featureless silhouette, chest up, of a middle-aged office-working man in a shirt, standing against a plain white background, no facial features visible."
-    },
-    {
-      "id": "ikuo_angry",
-      "kind": "portrait_sil",
-      "label": "郁夫·生气(剪影)",
-      "seed": 46620022,
-      "tags": "silhouette, solo, featureless dark silhouette, adult man, office worker",
-      "nl": "A fully dark featureless silhouette, chest up, of a middle-aged office-working man leaning forward toward the viewer as if reprimanding, plain white background, no facial features."
-    },
-    {
-      "id": "kozue_normal",
-      "kind": "portrait_sil",
-      "label": "梢·普通(剪影)",
-      "seed": 46620023,
-      "tags": "silhouette, solo, featureless dark silhouette, adult woman",
-      "nl": "A fully dark featureless silhouette, chest up, of a gentle adult woman with shoulder-length hair, plain white background, no facial features."
-    },
-    {
-      "id": "kurumi_chibi",
-      "kind": "chibi",
-      "label": "久留美(地图Q版)",
-      "seed": 46620024,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, chibi, solo, full body, standing, waving hand, simple background, white background, cute, happy",
-      "nl": "A small cute chibi version of the character, big head small body, standing and waving, plain white background."
-    },
-    {
-      "id": "cg_title",
-      "kind": "cg",
-      "label": "CG·标题画面",
-      "seed": 46620025,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, chair, multiple monitors, candlestick charts, dark room, night, pink neon lights, looking back, smile",
-      "nl": "Kurumi sits at her trading desk at night, three monitors showing candlestick charts, turning back toward the viewer with a bright welcoming smile, pink neon light and city lights glowing in the window behind her."
-    },
-    {
-      "id": "cg_shock",
-      "kind": "cg",
-      "label": "CG·崩盘惊恐",
-      "seed": 46620026,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, multiple monitors, red glowing screens, shocked, open mouth, screen glow, night, dark room",
-      "nl": "Kurumi stares in horror at the monitors as the chart plunges, the whole desk bathed in harsh red glow of the crashing screens, her eyes wide, cold sweat on her face."
-    },
-    {
-      "id": "cg_win",
-      "kind": "cg",
-      "label": "CG·大赚钞票",
-      "seed": 46620027,
-      "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, :d, open mouth, excited, flying banknotes, money, sparkle, pink light, night, city lights",
-      "nl": "Kurumi celebrates triumphantly surrounded by a shower of flying banknotes, head thrown back, eyes sparkling with joy, pink neon glow."
-    },
-    {
-      "id": "bg_title",
-      "kind": "bg",
-      "label": "标题·夜间女生房间",
-      "seed": 46620028,
-      "tags": "indoors, night, dark room, window, city night view, multiple monitors, computer screens, candlestick charts, pink neon lights, pink glow, computer desk, gaming desk",
-      "nl": "A girl's bedroom at night lit by several computer monitors showing candlestick trading charts, pink neon light, a large city skyline visible through the window, no people."
-    },
-    {
-      "id": "bg_room_day",
-      "kind": "bg",
-      "label": "房间·白天",
-      "seed": 46620029,
-      "tags": "indoors, day, bedroom, sunlight, window, curtains, computer desk, computer",
-      "nl": "A modest Japanese girl's bedroom in daylight, a desk with a computer and scattered study notes, warm sunlight through the curtains, no people."
-    },
-    {
-      "id": "bg_room_night",
-      "kind": "bg",
-      "label": "房间·夜晚",
-      "seed": 46620030,
-      "tags": "indoors, night, bedroom, dark, monitor light, computer desk, city lights",
-      "nl": "The same modest bedroom at night, dark and quiet, lit only by the soft glow of a computer monitor, city lights outside the window, no people."
-    },
-    {
-      "id": "bg_campus",
-      "kind": "bg",
-      "label": "校园",
-      "seed": 46620031,
-      "tags": "outdoors, day, university, school grounds, trees, walkway, buildings, blue sky",
-      "nl": "A sunny university campus, modern school buildings, trees and a walkway, students' bicycles parked, no people."
-    },
-    {
-      "id": "bg_lecture",
-      "kind": "bg",
-      "label": "阶梯教室",
-      "seed": 46620032,
-      "tags": "indoors, university, lecture hall, auditorium, tiered seats, projection screen, daylight",
-      "nl": "An empty university tiered lecture hall with a large projected slide at the front, rows of seats, no people."
-    },
-    {
-      "id": "bg_yakiniku",
-      "kind": "bg",
-      "label": "烤肉店",
-      "seed": 46620033,
-      "tags": "indoors, restaurant, tabletop grill, charcoal, meat, vegetables, plates, warm lighting",
-      "nl": "The interior of a cozy Japanese yakiniku barbecue restaurant, a small charcoal grill surrounded by plates of meat and vegetables on the table, warm lighting, no people."
-    },
-    {
-      "id": "bg_living",
-      "kind": "bg",
-      "label": "客厅",
-      "seed": 46620034,
-      "tags": "indoors, japanese living room, low table, sofa, television, daylight, home",
-      "nl": "A modest Japanese family living room with a low table, a sofa and a television, soft afternoon light, no people."
-    },
-    {
-      "id": "bg_living_dim",
-      "kind": "bg",
-      "label": "客厅·回忆昏暗",
-      "seed": 46620035,
-      "tags": "indoors, japanese living room, low table, sofa, television, dim, dusk, dark, cold blue light, desaturated",
-      "nl": "The same Japanese living room at dusk, dim and desaturated, fading memory-like tone, cold blue light through the window, no people."
-    },
-    {
-      "id": "bg_cafe",
-      "kind": "bg",
-      "label": "咖啡店",
-      "seed": 46620036,
-      "tags": "indoors, cafe, tables, chairs, coffee, cups, plants, warm light, day",
-      "nl": "The interior of a quiet cafe with wooden tables, cups of coffee and green plants, warm afternoon light through the window, no people."
-    },
-    {
-      "id": "bg_office",
-      "kind": "bg",
-      "label": "小型创业公司办公室",
-      "seed": 46620037,
-      "tags": "indoors, office, small startup office, work desks, computers, plants, whiteboard, daylight",
-      "nl": "A small startup company office with a few work desks, computers, whiteboard and potted plants, bright daylight, no people."
-    },
-    {
-      "id": "bg_city_night",
-      "kind": "bg",
-      "label": "城市夜景",
-      "seed": 46620038,
-      "tags": "outdoors, night, city, cityscape, skyline, skyscrapers, illuminated windows, city lights",
-      "nl": "A Japanese city skyline at night seen from below, skyscrapers with glowing windows under a dark blue sky, no people."
-    },
-    {
-      "id": "bg_konbini",
-      "kind": "bg",
-      "label": "便利店",
-      "seed": 46620039,
-      "tags": "indoors, convenience store, shelves, products, bright fluorescent light, counter",
-      "nl": "The interior of a Japanese convenience store, bright shelves of snacks and drinks, a checkout counter, fluorescent light, no people."
-    },
-    {
-      "id": "bg_park",
-      "kind": "bg",
-      "label": "傍晚公园",
-      "seed": 46620040,
-      "tags": "outdoors, dusk, park, bench, trees, streetlights, sunset, orange sky",
-      "nl": "An empty park at dusk, a single bench under trees, streetlights turning on, orange and purple sunset sky, no people."
-    },
-    {
-      "id": "bg_finance",
-      "kind": "bg",
-      "label": "金融街",
-      "seed": 46620041,
-      "tags": "outdoors, day, financial district, skyscrapers, glass buildings, low angle, blue sky",
-      "nl": "Financial district skyscrapers of glass and steel seen from below under a bright blue sky, no people."
-    },
-    {
-      "id": "bg_storm",
-      "kind": "bg",
-      "label": "暴风雨城市",
-      "seed": 46620042,
-      "tags": "outdoors, storm, cityscape, dark clouds, heavy rain, wind, lightning, dramatic",
-      "nl": "A city skyline in a raging storm, black clouds, sheets of rain and a lightning flash over dark buildings, no people."
-    },
-    {
-      "id": "bg_winter_city",
-      "kind": "bg",
-      "label": "冬季湖畔城市",
-      "seed": 46620043,
-      "tags": "outdoors, winter, snow, lake, european old town, cobblestone plaza, cold light, clear sky",
-      "nl": "A snowy European lakeside old town in winter, snow-covered roofs and a frozen lakeside plaza, cold clear light, no people."
-    },
-    {
-      "id": "bg_tv_studio",
-      "kind": "bg",
-      "label": "新闻演播室",
-      "seed": 46620044,
-      "tags": "indoors, television studio, news desk, cameras, studio lights, large screens, blue lighting",
-      "nl": "A television news studio, a large polished desk, studio cameras and big screens, blue stage lighting, no people."
-    },
-    {
-      "id": "bg_rain_street",
-      "kind": "bg",
-      "label": "雨夜街道",
-      "seed": 46620045,
-      "tags": "outdoors, night, rain, street, neon signs, wet asphalt, reflections, city lights",
-      "nl": "A rainy Japanese street at night, glowing neon signs reflected in wet asphalt, no people."
-    },
-    {
-      "id": "bg_gov_office",
-      "kind": "bg",
-      "label": "政府办事大厅",
-      "seed": 46620046,
-      "tags": "indoors, government office, corridor, hallway, fluorescent lights, notice board, benches, institutional",
-      "nl": "A long clean corridor of a government office building, fluorescent lights, notice boards and rows of plastic benches, no people."
-    },
-    {
-      "id": "energy_drink",
-      "kind": "icon",
-      "label": "功能饮料",
-      "seed": 46620047,
-      "tags": "energy drink can, aluminum can, pull tab",
-      "nl": ""
-    },
-    {
-      "id": "bento",
-      "kind": "icon",
-      "label": "便当",
-      "seed": 46620048,
-      "tags": "bento box, japanese lunch box, chopsticks",
-      "nl": ""
-    },
-    {
-      "id": "passbook",
-      "kind": "icon",
-      "label": "存折",
-      "seed": 46620049,
-      "tags": "bank passbook, savings book, japanese bank book",
-      "nl": ""
-    },
-    {
-      "id": "omamori",
-      "kind": "icon",
-      "label": "护身符",
-      "seed": 46620050,
-      "tags": "omamori, japanese amulet, brocade pouch with tassel",
-      "nl": ""
-    },
-    {
-      "id": "fortune_slip",
-      "kind": "icon",
-      "label": "神签",
-      "seed": 46620051,
-      "tags": "omikuji, paper fortune slip, folded paper strip",
-      "nl": ""
-    },
-    {
-      "id": "calendar_leave",
-      "kind": "icon",
-      "label": "日历",
-      "seed": 46620052,
-      "tags": "calendar, desk calendar, page days",
-      "nl": ""
-    },
-    {
-      "id": "coffee",
-      "kind": "icon",
-      "label": "咖啡",
-      "seed": 46620053,
-      "tags": "coffee cup, hot coffee, steam",
-      "nl": ""
-    },
-    {
-      "id": "eye_mask",
-      "kind": "icon",
-      "label": "眼罩",
-      "seed": 46620054,
-      "tags": "sleep mask, eye mask",
-      "nl": ""
-    },
-    {
-      "id": "black_card",
-      "kind": "icon",
-      "label": "黑信用卡",
-      "seed": 46620055,
-      "tags": "black credit card, sleek black card",
-      "nl": ""
-    },
-    {
-      "id": "tissue_box",
-      "kind": "icon",
-      "label": "纸巾盒",
-      "seed": 46620056,
-      "tags": "tissue box, facial tissue box",
-      "nl": ""
-    },
-    {
-      "id": "econ_calendar",
-      "kind": "icon",
-      "label": "经济日历",
-      "seed": 46620057,
-      "tags": "calendar book, schedule planner, currency symbols on cover",
-      "nl": ""
-    },
-    {
-      "id": "tv",
-      "kind": "icon",
-      "label": "老式电视",
-      "seed": 46620058,
-      "tags": "retro television, old crt tv, antennas",
-      "nl": ""
-    },
-    {
-      "id": "newspaper",
-      "kind": "icon",
-      "label": "报纸",
-      "seed": 46620059,
-      "tags": "newspaper, folded newspaper, headlines",
-      "nl": ""
-    },
-    {
-      "id": "smartphone",
-      "kind": "icon",
-      "label": "智能手机",
-      "seed": 46620060,
-      "tags": "smartphone, mobile phone, glowing screen",
-      "nl": ""
-    },
-    {
-      "id": "binoculars",
-      "kind": "icon",
-      "label": "望远镜",
-      "seed": 46620061,
-      "tags": "binoculars, spyglass binoculars",
-      "nl": ""
-    },
-    {
-      "id": "ruler",
-      "kind": "icon",
-      "label": "尺子",
-      "seed": 46620062,
-      "tags": "ruler, straight measuring ruler",
-      "nl": ""
-    },
-    {
-      "id": "ma_chart",
-      "kind": "icon",
-      "label": "均线图表",
-      "seed": 46620063,
-      "tags": "candlestick chart, line graph, moving average line, framed chart card",
-      "nl": ""
-    },
-    {
-      "id": "bollinger",
-      "kind": "icon",
-      "label": "布林带图表",
-      "seed": 46620064,
-      "tags": "candlestick chart, channel band lines, financial chart card",
-      "nl": ""
-    },
-    {
-      "id": "rsi_gauge",
-      "kind": "icon",
-      "label": "RSI仪表",
-      "seed": 46620065,
-      "tags": "gauge meter, round analog gauge with needle, indicator dial",
-      "nl": ""
-    },
-    {
-      "id": "shield",
-      "kind": "icon",
-      "label": "盾牌",
-      "seed": 46620066,
-      "tags": "shield, heraldic shield, protection",
-      "nl": ""
-    },
-    {
-      "id": "stopwatch",
-      "kind": "icon",
-      "label": "秒表",
-      "seed": 46620067,
-      "tags": "stopwatch, chrome stopwatch",
-      "nl": ""
-    },
-    {
-      "id": "magnifier",
-      "kind": "icon",
-      "label": "放大镜",
-      "seed": 46620068,
-      "tags": "magnifying glass, lens with handle",
-      "nl": ""
-    },
-    {
-      "id": "piggy_bank",
-      "kind": "icon",
-      "label": "存钱罐",
-      "seed": 46620069,
-      "tags": "piggy bank, ceramic pig coin bank",
-      "nl": ""
-    },
-    {
-      "id": "gold_coin",
-      "kind": "icon",
-      "label": "金币",
-      "seed": 46620070,
-      "tags": "shiny gold coin, gold money coin",
-      "nl": ""
-    },
-    {
-      "id": "dice",
-      "kind": "icon",
-      "label": "骰子",
-      "seed": 46620071,
-      "tags": "dice, single die with dots",
-      "nl": ""
-    },
-    {
-      "id": "rocket",
-      "kind": "icon",
-      "label": "火箭",
-      "seed": 46620072,
-      "tags": "rocket, retro rocket ship",
-      "nl": ""
-    },
-    {
-      "id": "anchor",
-      "kind": "icon",
-      "label": "锚",
-      "seed": 46620073,
-      "tags": "ship anchor, metal anchor",
-      "nl": ""
-    },
-    {
-      "id": "umbrella",
-      "kind": "icon",
-      "label": "伞",
-      "seed": 46620074,
-      "tags": "umbrella, open red umbrella",
-      "nl": ""
-    },
-    {
-      "id": "white_cat",
-      "kind": "icon",
-      "label": "白猫",
-      "seed": 46620075,
-      "tags": "white cat, small white cat sitting",
-      "nl": ""
-    },
-    {
-      "id": "bunny_pendant",
-      "kind": "icon",
-      "label": "兔子吊坠",
-      "seed": 46620076,
-      "tags": "rabbit necklace pendant, bunny charm",
-      "nl": ""
-    },
-    {
-      "id": "pillow",
-      "kind": "icon",
-      "label": "枕头",
-      "seed": 46620077,
-      "tags": "pillow, soft white bed pillow",
-      "nl": ""
-    },
-    {
-      "id": "notebook",
-      "kind": "icon",
-      "label": "笔记本",
-      "seed": 46620078,
-      "tags": "notebook, study notebook, pen",
-      "nl": ""
-    },
-    {
-      "id": "laptop",
-      "kind": "icon",
-      "label": "笔记本电脑",
-      "seed": 46620079,
-      "tags": "laptop, open notebook computer",
-      "nl": ""
-    },
-    {
-      "id": "monitors",
-      "kind": "icon",
-      "label": "多屏",
-      "seed": 46620080,
-      "tags": "multiple computer monitors, three monitor setup",
-      "nl": ""
-    },
-    {
-      "id": "headset",
-      "kind": "icon",
-      "label": "耳机",
-      "seed": 46620081,
-      "tags": "headphones, gaming headset",
-      "nl": ""
-    },
-    {
-      "id": "candlestick_gold",
-      "kind": "icon",
-      "label": "金色K线",
-      "seed": 46620082,
-      "tags": "single golden candlestick candle, gold chart candle with wick",
-      "nl": ""
-    },
-    {
-      "id": "crystal_ball",
-      "kind": "icon",
-      "label": "水晶球",
-      "seed": 46620083,
-      "tags": "crystal ball, fortune telling crystal sphere",
-      "nl": ""
-    },
-    {
-      "id": "megaphone",
-      "kind": "icon",
-      "label": "扩音器",
-      "seed": 46620084,
-      "tags": "megaphone, handheld loudhailer",
-      "nl": ""
-    },
-    {
-      "id": "handcuffs_money",
-      "kind": "icon",
-      "label": "借金",
-      "seed": 46620085,
-      "tags": "padlock, money bag with chains and lock, secured money pouch",
-      "nl": ""
-    },
-    {
-      "id": "hourglass",
-      "kind": "icon",
-      "label": "沙漏",
-      "seed": 46620086,
-      "tags": "hourglass, sand timer",
-      "nl": ""
-    }
-  ]
+  "bg": {
+   "template": "anima-turbo-t2i",
+   "gen": [
+    1536,
+    864
+   ],
+   "pixel": [
+    320,
+    180
+   ],
+   "colors": 48,
+   "negativeExtra": "1girl, 1boy, people, human, character, face"
+  },
+  "icon": {
+   "template": "anima-turbo-t2i",
+   "gen": [
+    1024,
+    1024
+   ],
+   "pixel": [
+    32,
+    32
+   ],
+   "colors": 16,
+   "bg_remove": "white",
+   "outline": true,
+   "nl_auto": "A single object, centered on a plain white background, full item in frame, no people.",
+   "negativeExtra": "1girl, 1boy, people, hands, text, watermark"
+  },
+  "chibi": {
+   "template": "anima-t2i",
+   "gen": [
+    1024,
+    1024
+   ],
+   "pixel": [
+    48,
+    48
+   ],
+   "colors": 24,
+   "bg_remove": "white",
+   "outline": false,
+   "lora": {
+    "pit": "48",
+    "name": "kurumi.safetensors",
+    "strength": 1.0
+   },
+   "negativeExtra": "bad anatomy, multiple girls"
+  },
+  "cg": {
+   "template": "anima-t2i",
+   "gen": [
+    1536,
+    864
+   ],
+   "pixel": [
+    320,
+    180
+   ],
+   "colors": 48,
+   "lora": {
+    "pit": "48",
+    "name": "kurumi.safetensors",
+    "strength": 1.0
+   },
+   "negativeExtra": "bad anatomy, bad hands, extra fingers, multiple girls"
+  }
+ },
+ "assets": [
+  {
+   "id": "kurumi_normal",
+   "kind": "portrait",
+   "label": "久留美·普通",
+   "seed": 46620001,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, looking at viewer",
+   "nl": "A chest-up portrait facing the viewer with a calm friendly closed-mouth smile."
+  },
+  {
+   "id": "kurumi_happy",
+   "kind": "portrait",
+   "label": "久留美·开心",
+   "seed": 46620002,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, open mouth, :d",
+   "nl": "A chest-up portrait beaming happily, big open smile, bright cheerful eyes."
+  },
+  {
+   "id": "kurumi_smug",
+   "kind": "portrait",
+   "label": "久留美·得意",
+   "seed": 46620003,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smirk, grin, looking at viewer",
+   "nl": "A chest-up portrait with a self-satisfied greedy smirk, half-lidded confident eyes."
+  },
+  {
+   "id": "kurumi_focus",
+   "kind": "portrait",
+   "label": "久留美·认真",
+   "seed": 46620004,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, serious, focused",
+   "nl": "A chest-up portrait staring intently ahead with a determined serious expression, studying a chart."
+  },
+  {
+   "id": "kurumi_worried",
+   "kind": "portrait",
+   "label": "久留美·不安",
+   "seed": 46620005,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, worried, frown",
+   "nl": "A chest-up portrait looking anxious and uneasy, brows drawn together, slight cold sweat."
+  },
+  {
+   "id": "kurumi_shock",
+   "kind": "portrait",
+   "label": "久留美·惊恐",
+   "seed": 46620006,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, shocked, open mouth, wide-eyed",
+   "nl": "A chest-up portrait in horrified shock, eyes wide open, gaping, as if watching a chart crash."
+  },
+  {
+   "id": "kurumi_cry",
+   "kind": "portrait",
+   "label": "久留美·哭",
+   "seed": 46620007,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, crying, crying with eyes open, tears",
+   "nl": "A chest-up portrait crying with eyes open, tears streaming down both cheeks, trembling sad mouth."
+  },
+  {
+   "id": "kurumi_angry",
+   "kind": "portrait",
+   "label": "久留美·生气",
+   "seed": 46620008,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, angry",
+   "nl": "A chest-up portrait shouting in anger, furrowed brows and open mouth, frustrated."
+  },
+  {
+   "id": "kurumi_tilt",
+   "kind": "portrait",
+   "label": "久留美·执念暴走",
+   "seed": 46620009,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, empty eyes, constricted pupils, purple aura",
+   "nl": "A chest-up portrait staring straight ahead with blank glassy eyes, tiny constricted pupils, an unsettling obsessed whisper of a smile, dark purple aura behind her."
+  },
+  {
+   "id": "kurumi_sleep",
+   "kind": "portrait",
+   "label": "久留美·困倦",
+   "seed": 46620010,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, sleepy, half-closed eyes",
+   "nl": "A chest-up portrait drowsy and nodding off, eyes drooping half closed, relaxed tired face."
+  },
+  {
+   "id": "kurumi_young",
+   "kind": "portrait",
+   "label": "久留美·初三(2008)",
+   "seed": 46620011,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, serafuku, school uniform, sailor collar, large breasts, solo, upper body, portrait, centered, simple background, white background",
+   "nl": "A chest-up portrait of the same character as a younger middle school girl, more childish round face, wearing a sailor-style school uniform (serafuku with sailor collar)."
+  },
+  {
+   "id": "mochiko_normal",
+   "kind": "portrait_ref",
+   "label": "萌智子·普通",
+   "seed": 5102,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer with a calm, composed expression and a faint gentle smile. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mochiko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "mochiko_smile",
+   "kind": "portrait_ref",
+   "label": "萌智子·冷笑",
+   "seed": 5103,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, eyes half-closed, with a cold amused smirk as if watching someone else's misfortune. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mochiko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "mochiko_blush",
+   "kind": "portrait_ref",
+   "label": "萌智子·脸红",
+   "seed": 5104,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, blushing deeply with sparkling eyes and both hands near her cheeks, flustered as if she just saw something adorable. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mochiko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "mebuki_normal",
+   "kind": "portrait_ref",
+   "label": "芽吹·普通",
+   "seed": 5201,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer with a cheerful, relaxed expression and a small smile. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mebuki",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "mebuki_happy",
+   "kind": "portrait_ref",
+   "label": "芽吹·开心",
+   "seed": 5202,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, very happy with a wide open-mouth grin and one fist raised in excitement. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mebuki",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "mebuki_cry",
+   "kind": "portrait_ref",
+   "label": "芽吹·哭",
+   "seed": 5203,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, crying with tears streaming down her cheeks and her mouth open in panic. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "mebuki",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "yasuko_normal",
+   "kind": "portrait_ref",
+   "label": "やす子·普通",
+   "seed": 5301,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer with a neutral, slightly grumpy expression. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "yasuko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "yasuko_angry",
+   "kind": "portrait_ref",
+   "label": "やす子·生气",
+   "seed": 5302,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, annoyed and scolding with angry eyebrows, mouth open as she shouts. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "yasuko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "yasuko_happy",
+   "kind": "portrait_ref",
+   "label": "やす子·开心",
+   "seed": 5303,
+   "tags": "",
+   "nl": "The same girl standing and facing the viewer, happy and smiling brightly with her eyes closed. Plain white background, clean anime cel shading, bold outlines.",
+   "ref": "yasuko",
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+  },
+  {
+   "id": "ikuo_normal",
+   "kind": "portrait_sil",
+   "label": "郁夫·普通(剪影)",
+   "seed": 46620021,
+   "tags": "silhouette, solo, featureless dark silhouette, adult man, office worker",
+   "nl": "A fully dark featureless silhouette, chest up, of a middle-aged office-working man in a shirt, standing against a plain white background, no facial features visible."
+  },
+  {
+   "id": "ikuo_angry",
+   "kind": "portrait_sil",
+   "label": "郁夫·生气(剪影)",
+   "seed": 46620022,
+   "tags": "silhouette, solo, featureless dark silhouette, adult man, office worker",
+   "nl": "A fully dark featureless silhouette, chest up, of a middle-aged office-working man leaning forward toward the viewer as if reprimanding, plain white background, no facial features."
+  },
+  {
+   "id": "kozue_normal",
+   "kind": "portrait_sil",
+   "label": "梢·普通(剪影)",
+   "seed": 46620023,
+   "tags": "silhouette, solo, featureless dark silhouette, adult woman",
+   "nl": "A fully dark featureless silhouette, chest up, of a gentle adult woman with shoulder-length hair, plain white background, no facial features."
+  },
+  {
+   "id": "kurumi_chibi",
+   "kind": "chibi",
+   "label": "久留美(地图Q版)",
+   "seed": 46620024,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, chibi, solo, full body, standing, waving hand, simple background, white background, cute, happy",
+   "nl": "A small cute chibi version of the character, big head small body, standing and waving, plain white background."
+  },
+  {
+   "id": "cg_title",
+   "kind": "cg",
+   "label": "CG·标题画面",
+   "seed": 46620025,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, chair, multiple monitors, candlestick charts, dark room, night, pink neon lights, looking back, smile",
+   "nl": "Kurumi sits at her trading desk at night, three monitors showing candlestick charts, turning back toward the viewer with a bright welcoming smile, pink neon light and city lights glowing in the window behind her."
+  },
+  {
+   "id": "cg_shock",
+   "kind": "cg",
+   "label": "CG·崩盘惊恐",
+   "seed": 46620026,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, multiple monitors, red glowing screens, shocked, open mouth, screen glow, night, dark room",
+   "nl": "Kurumi stares in horror at the monitors as the chart plunges, the whole desk bathed in harsh red glow of the crashing screens, her eyes wide, cold sweat on her face."
+  },
+  {
+   "id": "cg_win",
+   "kind": "cg",
+   "label": "CG·大赚钞票",
+   "seed": 46620027,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, :d, open mouth, excited, flying banknotes, money, sparkle, pink light, night, city lights",
+   "nl": "Kurumi celebrates triumphantly surrounded by a shower of flying banknotes, head thrown back, eyes sparkling with joy, pink neon glow."
+  },
+  {
+   "id": "bg_title",
+   "kind": "bg",
+   "label": "标题·夜间女生房间",
+   "seed": 46620028,
+   "tags": "indoors, night, dark room, window, city night view, multiple monitors, computer screens, candlestick charts, pink neon lights, pink glow, computer desk, gaming desk",
+   "nl": "A girl's bedroom at night lit by several computer monitors showing candlestick trading charts, pink neon light, a large city skyline visible through the window, no people."
+  },
+  {
+   "id": "bg_room_day",
+   "kind": "bg",
+   "label": "房间·白天",
+   "seed": 46620029,
+   "tags": "indoors, day, bedroom, sunlight, window, curtains, computer desk, computer",
+   "nl": "A modest Japanese girl's bedroom in daylight, a desk with a computer and scattered study notes, warm sunlight through the curtains, no people."
+  },
+  {
+   "id": "bg_room_night",
+   "kind": "bg",
+   "label": "房间·夜晚",
+   "seed": 46620030,
+   "tags": "indoors, night, bedroom, dark, monitor light, computer desk, city lights",
+   "nl": "The same modest bedroom at night, dark and quiet, lit only by the soft glow of a computer monitor, city lights outside the window, no people."
+  },
+  {
+   "id": "bg_campus",
+   "kind": "bg",
+   "label": "校园",
+   "seed": 46620031,
+   "tags": "outdoors, day, university, school grounds, trees, walkway, buildings, blue sky",
+   "nl": "A sunny university campus, modern school buildings, trees and a walkway, students' bicycles parked, no people."
+  },
+  {
+   "id": "bg_lecture",
+   "kind": "bg",
+   "label": "阶梯教室",
+   "seed": 46620032,
+   "tags": "indoors, university, lecture hall, auditorium, tiered seats, projection screen, daylight",
+   "nl": "An empty university tiered lecture hall with a large projected slide at the front, rows of seats, no people."
+  },
+  {
+   "id": "bg_yakiniku",
+   "kind": "bg",
+   "label": "烤肉店",
+   "seed": 46620033,
+   "tags": "indoors, restaurant, tabletop grill, charcoal, meat, vegetables, plates, warm lighting",
+   "nl": "The interior of a cozy Japanese yakiniku barbecue restaurant, a small charcoal grill surrounded by plates of meat and vegetables on the table, warm lighting, no people."
+  },
+  {
+   "id": "bg_living",
+   "kind": "bg",
+   "label": "客厅",
+   "seed": 46620034,
+   "tags": "indoors, japanese living room, low table, sofa, television, daylight, home",
+   "nl": "A modest Japanese family living room with a low table, a sofa and a television, soft afternoon light, no people."
+  },
+  {
+   "id": "bg_living_dim",
+   "kind": "bg",
+   "label": "客厅·回忆昏暗",
+   "seed": 46620035,
+   "tags": "indoors, japanese living room, low table, sofa, television, dim, dusk, dark, cold blue light, desaturated",
+   "nl": "The same Japanese living room at dusk, dim and desaturated, fading memory-like tone, cold blue light through the window, no people."
+  },
+  {
+   "id": "bg_cafe",
+   "kind": "bg",
+   "label": "咖啡店",
+   "seed": 46620036,
+   "tags": "indoors, cafe, tables, chairs, coffee, cups, plants, warm light, day",
+   "nl": "The interior of a quiet cafe with wooden tables, cups of coffee and green plants, warm afternoon light through the window, no people."
+  },
+  {
+   "id": "bg_office",
+   "kind": "bg",
+   "label": "小型创业公司办公室",
+   "seed": 46620037,
+   "tags": "indoors, office, small startup office, work desks, computers, plants, whiteboard, daylight",
+   "nl": "A small startup company office with a few work desks, computers, whiteboard and potted plants, bright daylight, no people."
+  },
+  {
+   "id": "bg_city_night",
+   "kind": "bg",
+   "label": "城市夜景",
+   "seed": 46620038,
+   "tags": "outdoors, night, city, cityscape, skyline, skyscrapers, illuminated windows, city lights",
+   "nl": "A Japanese city skyline at night seen from below, skyscrapers with glowing windows under a dark blue sky, no people."
+  },
+  {
+   "id": "bg_konbini",
+   "kind": "bg",
+   "label": "便利店",
+   "seed": 46620039,
+   "tags": "indoors, convenience store, shelves, products, bright fluorescent light, counter",
+   "nl": "The interior of a Japanese convenience store, bright shelves of snacks and drinks, a checkout counter, fluorescent light, no people."
+  },
+  {
+   "id": "bg_park",
+   "kind": "bg",
+   "label": "傍晚公园",
+   "seed": 46620040,
+   "tags": "outdoors, dusk, park, bench, trees, streetlights, sunset, orange sky",
+   "nl": "An empty park at dusk, a single bench under trees, streetlights turning on, orange and purple sunset sky, no people."
+  },
+  {
+   "id": "bg_finance",
+   "kind": "bg",
+   "label": "金融街",
+   "seed": 46620041,
+   "tags": "outdoors, day, financial district, skyscrapers, glass buildings, low angle, blue sky",
+   "nl": "Financial district skyscrapers of glass and steel seen from below under a bright blue sky, no people."
+  },
+  {
+   "id": "bg_storm",
+   "kind": "bg",
+   "label": "暴风雨城市",
+   "seed": 46620042,
+   "tags": "outdoors, storm, cityscape, dark clouds, heavy rain, wind, lightning, dramatic",
+   "nl": "A city skyline in a raging storm, black clouds, sheets of rain and a lightning flash over dark buildings, no people."
+  },
+  {
+   "id": "bg_winter_city",
+   "kind": "bg",
+   "label": "冬季湖畔城市",
+   "seed": 46620043,
+   "tags": "outdoors, winter, snow, lake, european old town, cobblestone plaza, cold light, clear sky",
+   "nl": "A snowy European lakeside old town in winter, snow-covered roofs and a frozen lakeside plaza, cold clear light, no people."
+  },
+  {
+   "id": "bg_tv_studio",
+   "kind": "bg",
+   "label": "新闻演播室",
+   "seed": 46620044,
+   "tags": "indoors, television studio, news desk, cameras, studio lights, large screens, blue lighting",
+   "nl": "A television news studio, a large polished desk, studio cameras and big screens, blue stage lighting, no people."
+  },
+  {
+   "id": "bg_rain_street",
+   "kind": "bg",
+   "label": "雨夜街道",
+   "seed": 46620045,
+   "tags": "outdoors, night, rain, street, neon signs, wet asphalt, reflections, city lights",
+   "nl": "A rainy Japanese street at night, glowing neon signs reflected in wet asphalt, no people."
+  },
+  {
+   "id": "bg_gov_office",
+   "kind": "bg",
+   "label": "政府办事大厅",
+   "seed": 46620046,
+   "tags": "indoors, government office, corridor, hallway, fluorescent lights, notice board, benches, institutional",
+   "nl": "A long clean corridor of a government office building, fluorescent lights, notice boards and rows of plastic benches, no people."
+  },
+  {
+   "id": "energy_drink",
+   "kind": "icon",
+   "label": "功能饮料",
+   "seed": 46620047,
+   "tags": "energy drink can, aluminum can, pull tab",
+   "nl": ""
+  },
+  {
+   "id": "bento",
+   "kind": "icon",
+   "label": "便当",
+   "seed": 46620048,
+   "tags": "bento box, japanese lunch box, chopsticks",
+   "nl": ""
+  },
+  {
+   "id": "passbook",
+   "kind": "icon",
+   "label": "存折",
+   "seed": 46620049,
+   "tags": "bank passbook, savings book, japanese bank book",
+   "nl": ""
+  },
+  {
+   "id": "omamori",
+   "kind": "icon",
+   "label": "护身符",
+   "seed": 46620050,
+   "tags": "omamori, japanese amulet, brocade pouch with tassel",
+   "nl": ""
+  },
+  {
+   "id": "fortune_slip",
+   "kind": "icon",
+   "label": "神签",
+   "seed": 46620051,
+   "tags": "omikuji, paper fortune slip, folded paper strip",
+   "nl": ""
+  },
+  {
+   "id": "calendar_leave",
+   "kind": "icon",
+   "label": "日历",
+   "seed": 46620052,
+   "tags": "calendar, desk calendar, page days",
+   "nl": ""
+  },
+  {
+   "id": "coffee",
+   "kind": "icon",
+   "label": "咖啡",
+   "seed": 46620053,
+   "tags": "coffee cup, hot coffee, steam",
+   "nl": ""
+  },
+  {
+   "id": "eye_mask",
+   "kind": "icon",
+   "label": "眼罩",
+   "seed": 46620054,
+   "tags": "sleep mask, eye mask",
+   "nl": ""
+  },
+  {
+   "id": "black_card",
+   "kind": "icon",
+   "label": "黑信用卡",
+   "seed": 46620055,
+   "tags": "black credit card, sleek black card",
+   "nl": ""
+  },
+  {
+   "id": "tissue_box",
+   "kind": "icon",
+   "label": "纸巾盒",
+   "seed": 46620056,
+   "tags": "tissue box, facial tissue box",
+   "nl": ""
+  },
+  {
+   "id": "econ_calendar",
+   "kind": "icon",
+   "label": "经济日历",
+   "seed": 46620057,
+   "tags": "calendar book, schedule planner, currency symbols on cover",
+   "nl": ""
+  },
+  {
+   "id": "tv",
+   "kind": "icon",
+   "label": "老式电视",
+   "seed": 46620058,
+   "tags": "retro television, old crt tv, antennas",
+   "nl": ""
+  },
+  {
+   "id": "newspaper",
+   "kind": "icon",
+   "label": "报纸",
+   "seed": 46620059,
+   "tags": "newspaper, folded newspaper, headlines",
+   "nl": ""
+  },
+  {
+   "id": "smartphone",
+   "kind": "icon",
+   "label": "智能手机",
+   "seed": 46620060,
+   "tags": "smartphone, mobile phone, glowing screen",
+   "nl": ""
+  },
+  {
+   "id": "binoculars",
+   "kind": "icon",
+   "label": "望远镜",
+   "seed": 46620061,
+   "tags": "binoculars, spyglass binoculars",
+   "nl": ""
+  },
+  {
+   "id": "ruler",
+   "kind": "icon",
+   "label": "尺子",
+   "seed": 46620062,
+   "tags": "ruler, straight measuring ruler",
+   "nl": ""
+  },
+  {
+   "id": "ma_chart",
+   "kind": "icon",
+   "label": "均线图表",
+   "seed": 46620063,
+   "tags": "candlestick chart, line graph, moving average line, framed chart card",
+   "nl": ""
+  },
+  {
+   "id": "bollinger",
+   "kind": "icon",
+   "label": "布林带图表",
+   "seed": 46620064,
+   "tags": "candlestick chart, channel band lines, financial chart card",
+   "nl": ""
+  },
+  {
+   "id": "rsi_gauge",
+   "kind": "icon",
+   "label": "RSI仪表",
+   "seed": 46620065,
+   "tags": "gauge meter, round analog gauge with needle, indicator dial",
+   "nl": ""
+  },
+  {
+   "id": "shield",
+   "kind": "icon",
+   "label": "盾牌",
+   "seed": 46620066,
+   "tags": "shield, heraldic shield, protection",
+   "nl": ""
+  },
+  {
+   "id": "stopwatch",
+   "kind": "icon",
+   "label": "秒表",
+   "seed": 46620067,
+   "tags": "stopwatch, chrome stopwatch",
+   "nl": ""
+  },
+  {
+   "id": "magnifier",
+   "kind": "icon",
+   "label": "放大镜",
+   "seed": 46620068,
+   "tags": "magnifying glass, lens with handle",
+   "nl": ""
+  },
+  {
+   "id": "piggy_bank",
+   "kind": "icon",
+   "label": "存钱罐",
+   "seed": 46620069,
+   "tags": "piggy bank, ceramic pig coin bank",
+   "nl": ""
+  },
+  {
+   "id": "gold_coin",
+   "kind": "icon",
+   "label": "金币",
+   "seed": 46620070,
+   "tags": "shiny gold coin, gold money coin",
+   "nl": ""
+  },
+  {
+   "id": "dice",
+   "kind": "icon",
+   "label": "骰子",
+   "seed": 46620071,
+   "tags": "dice, single die with dots",
+   "nl": ""
+  },
+  {
+   "id": "rocket",
+   "kind": "icon",
+   "label": "火箭",
+   "seed": 46620072,
+   "tags": "rocket, retro rocket ship",
+   "nl": ""
+  },
+  {
+   "id": "anchor",
+   "kind": "icon",
+   "label": "锚",
+   "seed": 46620073,
+   "tags": "ship anchor, metal anchor",
+   "nl": ""
+  },
+  {
+   "id": "umbrella",
+   "kind": "icon",
+   "label": "伞",
+   "seed": 46620074,
+   "tags": "umbrella, open red umbrella",
+   "nl": ""
+  },
+  {
+   "id": "white_cat",
+   "kind": "icon",
+   "label": "白猫",
+   "seed": 46620075,
+   "tags": "white cat, small white cat sitting",
+   "nl": ""
+  },
+  {
+   "id": "bunny_pendant",
+   "kind": "icon",
+   "label": "兔子吊坠",
+   "seed": 46620076,
+   "tags": "rabbit necklace pendant, bunny charm",
+   "nl": ""
+  },
+  {
+   "id": "pillow",
+   "kind": "icon",
+   "label": "枕头",
+   "seed": 46620077,
+   "tags": "pillow, soft white bed pillow",
+   "nl": ""
+  },
+  {
+   "id": "notebook",
+   "kind": "icon",
+   "label": "笔记本",
+   "seed": 46620078,
+   "tags": "notebook, study notebook, pen",
+   "nl": ""
+  },
+  {
+   "id": "laptop",
+   "kind": "icon",
+   "label": "笔记本电脑",
+   "seed": 46620079,
+   "tags": "laptop, open notebook computer",
+   "nl": ""
+  },
+  {
+   "id": "monitors",
+   "kind": "icon",
+   "label": "多屏",
+   "seed": 46620080,
+   "tags": "multiple computer monitors, three monitor setup",
+   "nl": ""
+  },
+  {
+   "id": "headset",
+   "kind": "icon",
+   "label": "耳机",
+   "seed": 46620081,
+   "tags": "headphones, gaming headset",
+   "nl": ""
+  },
+  {
+   "id": "candlestick_gold",
+   "kind": "icon",
+   "label": "金色K线",
+   "seed": 46620082,
+   "tags": "single golden candlestick candle, gold chart candle with wick",
+   "nl": ""
+  },
+  {
+   "id": "crystal_ball",
+   "kind": "icon",
+   "label": "水晶球",
+   "seed": 46620083,
+   "tags": "crystal ball, fortune telling crystal sphere",
+   "nl": ""
+  },
+  {
+   "id": "megaphone",
+   "kind": "icon",
+   "label": "扩音器",
+   "seed": 46620084,
+   "tags": "megaphone, handheld loudhailer",
+   "nl": ""
+  },
+  {
+   "id": "handcuffs_money",
+   "kind": "icon",
+   "label": "借金",
+   "seed": 46620085,
+   "tags": "padlock, money bag with chains and lock, secured money pouch",
+   "nl": ""
+  },
+  {
+   "id": "hourglass",
+   "kind": "icon",
+   "label": "沙漏",
+   "seed": 46620086,
+   "tags": "hourglass, sand timer",
+   "nl": ""
+  }
+ ]
 }
