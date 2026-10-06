@@ -1,0 +1,88 @@
+{
+  "id": "ch06",
+  "order": 6,
+  "title": "第6章 萌智子与芽吹",
+  "manga": "第8〜10話",
+  "period": "2014年",
+  "source": "manga-reference.md §2.1、§3.1 第8〜10話（S2 动画官网角色介绍、S11 日文维基）：同校的投资达人小金萌智子（大学二年级资产已超1000万円）看穿了久留美的贪欲（称她为「強欲の雌豚」）；萌智子把朋友山師芽吹介绍给久留美——芽吹因为「不想工作」开始FX，几乎零知识；久留美认为「芽吹的行情预测大体都是错的」，按反方向指点，芽吹连战连胜，这成了久留美重回FX的契机。",
+  "original": "经济日历/散户情绪的教学为游戏原创；本章指标数值为虚构；芽吹账户金额为游戏设定。",
+  "tutorial": true,
+  "tutorial_complete": true,
+  "requires": ["ch05"],
+  "unlock_on_clear": ["roguelike", "friend_mochiko", "friend_mebuki"],
+  "scenes": [
+    {"type": "title_card", "text": "第6章", "sub": "萌智子与芽吹", "hold": 1.4},
+    {"type": "dialogue", "bg": "bg_campus", "lines": [
+      {"who": "mochiko", "face": "normal", "text": "福賀久留美同学？听说你在做FX。"},
+      {"who": "kurumi", "face": "worried", "text": "……已经不做了。"},
+      {"who": "mochiko", "face": "smile", "text": "是吗。可你的眼睛不是这么说的。"},
+      {"who": "narrator", "text": "小金萌智子。和久留美同一所大学的同学，从高中就开始投资，资产已经超过1000万円。"},
+      {"who": "mochiko", "face": "smile", "text": "我见过很多人。你这种眼神——是「強欲の雌豚」的眼神哦。"},
+      {"who": "kurumi", "face": "angry", "text": "谁、谁是雌豚啊！"},
+      {"who": "mochiko", "face": "normal", "text": "介绍个人给你认识吧。我的朋友，最近刚开始FX。"},
+      {"who": "mebuki", "face": "happy", "text": "你好——！我是芽吹！我不想工作，所以想靠FX躺着赚钱！"},
+      {"who": "kurumi", "face": "shock", "text": "动机也太直白了吧！？"},
+      {"who": "mebuki", "face": "normal", "text": "久留美学姐是投资的前辈吧？教教我嘛～"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20140613, "start_date": "2014-06-13", "days": 2, "warmup_days": 6, "balance": 200000,
+       "broker": {"name": "芽吹的账户（海外FX）", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8},
+       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false,
+       "market_params": {"hunt_prob": 0.0},
+       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
+       "overrides": {"start_prices": {"USDJPY": 102.0, "EURJPY": 138.5, "AUDJPY": 95.5}},
+       "mental": 80, "end_on_broken": false, "affi": false,
+       "goal_text": "【教学】指标与散户情绪"
+     },
+     "mods": {"show_sentiment": 1, "show_fair": 1, "calendar_days": 2},
+     "steps": [
+       {"lock": ["buy", "sell", "close", "speed"],
+        "script": [
+          {"t": 0, "do": "indicator", "id": "us_nfp", "day": 0, "forced": {"forecast": 21.5, "actual": 9.8, "previous": 21.7, "surprise": -1.95, "hint": -1}},
+          {"t": 0, "do": "effect", "target": "pair:USDJPY", "channel": "drift", "mag": 0.0012, "dur": 50}
+        ],
+        "dialog": [
+          {"who": "mochiko", "face": "normal", "text": "先教你看一样东西。下面的「经济日历」标签。"}
+        ],
+        "objective": "点开下方的 [color=#ffd166]「经济日历」[/color] 标签", "highlight": "tabs", "until": {"type": "tab", "index": 1}},
+       {"msg": "[color=#ffd166]【笔记⑦　经济指标】[/color]\n各国会在固定时间公布经济数据（就业、物价、GDP……）和利率决议。\n\n· [color=#ffd166]★越多[/color]越重要；「预测」是市场事先的共识。\n· 公布时，[color=#ffd166]实际值和预测的差（惊喜）[/color]决定价格往哪跳、跳多远。\n· 公布前后业者会[color=#ff9f43]扩大点差[/color]，价格可能瞬间跳过你的止损（滑点）。\n· 今晚 21:30 有[color=#ff5d73]美国非农就业[/color]（★★★）。重要指标前游戏会自动暂停。"},
+       {"dialog": [
+          {"who": "mebuki", "face": "happy", "text": "非农！我知道我知道！美国经济很好，所以肯定是好数字！美元一定涨！"},
+          {"who": "mebuki", "face": "happy", "text": "我要全力买美元/日元！"},
+          {"who": "kurumi", "face": "focus", "text": "（……芽吹的行情预测，大体上都是错的。）"},
+          {"who": "kurumi", "face": "focus", "text": "（再看看右上角的「散户多」比例——大家都在买。）"},
+          {"who": "kurumi", "face": "normal", "text": "芽吹，这次听我的。我们反过来，卖美元/日元。"},
+          {"who": "mebuki", "face": "normal", "text": "诶——？好吧，学姐说的话我就照做！"}
+        ],
+        "msg": "[color=#ffd166]【笔记⑧　散户情绪】[/color]\n图表上方的「散户多 xx%」显示散户的持仓方向。散户往往在高处追买、在低处割肉，[color=#ffd166]极端一边倒的时候，反着做常常更有利[/color]。\n图上紫色虚线是萌智子眼中的「公允价」——价格偏离太远时容易被拉回。\n\n指标公布前，先建好仓位。",
+        "unlock": ["sell", "close"], "highlight": "sell",
+        "script": [{"t": 0, "do": "sns", "who": "@ドル円しか勝たん", "text": "非农绝对是好数字，美元起飞！全力多！"}],
+        "objective": "在 21:30 前 [color=#3ddc97]卖出[/color] 美元/日元（芽吹的反方向）", "until": {"type": "open", "side": -1, "symbol": "USDJPY"}},
+       {"unlock": ["speed"], "speed": 2,
+        "objective": "等待 21:30 非农公布", "until": {"type": "time", "day": 0, "hour": 21, "minute": 45}},
+       {"dialog": [
+          {"who": "mebuki", "face": "cry", "text": "诶？诶？？数字好差！美元在暴跌！"},
+          {"who": "mebuki", "face": "happy", "text": "……等一下，我们是卖的！赚了！赚了啊学姐！"},
+          {"who": "mochiko", "face": "smile", "text": "呵呵。"}
+        ],
+        "objective": "把利润落袋（平仓）", "until": {"type": "close", "profit": true}},
+       {"finish": true}
+     ],
+     "win": {"steps": true},
+     "on_win": [
+       {"who": "mebuki", "face": "happy", "text": "学姐太厉害了！下次也教我！"},
+       {"who": "narrator", "text": "之后，按久留美反着指点的芽吹，连战连胜。"},
+       {"who": "kurumi", "face": "worried", "text": "……别人用我的判断，赚着钱。"},
+       {"who": "kurumi", "face": "tilt", "text": "那我自己来做的话——"},
+       {"who": "mochiko", "face": "smile", "text": "（看吧。强欲的雌豚，是关不住的。）"},
+       {"who": "narrator", "text": "久留美，回到了FX的战场。"}
+     ],
+     "on_lose": [
+       {"who": "note", "text": "提示：在公布前卖出美元/日元，等公布后价格下跌再平仓。"}
+     ]
+    },
+    {"type": "unlock", "title": "新手教程完成！", "tutorial_done": true, "unlocks": ["roguelike", "friend_mochiko", "friend_mebuki"],
+     "text": "[color=#ffd166]肉鸽模式[/color] 已解锁！\n\n· 在标题画面选择「肉鸽模式」，从30万円开始，挑战2000万円。\n· 「局外养成」会让久留美一局比一局更强。\n· 仲间 [color=#b48cff]萌智子[/color]、[color=#ffd166]芽吹[/color] 可以在肉鸽中同行。\n\n剧情模式也可以继续——后面是漫画中的经典战役。"}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ch05",
+  "order": 5,
+  "title": "第5章 父亲的眼泪",
+  "manga": "第6〜7話",
+  "period": "2014年",
+  "source": "manga-reference.md §1.7、§2.2、§3.1 第6〜7話（S11 日文维基・郁夫条目）：出差归来的父亲发现存款被动过，得知女儿为了替母亲复仇动用了家里的钱，含泪痛斥；久留美决定引退FX，尝试培养其他兴趣，却忘不掉大钱到手的快感。",
+  "original": "台词为转述。",
+  "tutorial": true,
+  "requires": ["ch04"],
+  "scenes": [
+    {"type": "title_card", "text": "第5章", "sub": "父亲的眼泪", "hold": 1.4},
+    {"type": "dialogue", "bg": "bg_living", "lines": [
+      {"who": "narrator", "text": "父亲·郁夫出差回来了。"},
+      {"who": "narrator", "text": "他很快就发现，壁橱里的存款被人动过。"},
+      {"who": "ikuo", "face": "angry", "text": "久留美……这是怎么回事。"},
+      {"who": "kurumi", "face": "worried", "text": "我……我只是借用了一下……而且已经赚回来了，比原来还多……"},
+      {"who": "ikuo", "face": "angry", "text": "你在做……FX？"},
+      {"who": "narrator", "text": "那是夺走了妻子的东西。"},
+      {"who": "kurumi", "face": "cry", "text": "我想把妈妈输掉的2000万円拿回来……我想替妈妈……"},
+      {"who": "ikuo", "face": "normal", "text": "……我已经失去了你妈妈。我不想再失去你了。"},
+      {"who": "narrator", "text": "父亲流着泪斥责了她。那是久留美第一次看见父亲哭。"}
+    ]},
+    {"type": "dialogue", "bg": "bg_room_day", "lines": [
+      {"who": "kurumi", "face": "normal", "text": "……我不做FX了。"},
+      {"who": "narrator", "text": "久留美删掉了交易软件，开始尝试别的爱好。"},
+      {"who": "narrator", "text": "读书、散步、和同学出去玩——普通大学生的生活。"},
+      {"who": "kurumi", "face": "worried", "text": "……可是，为什么呢。"},
+      {"who": "kurumi", "face": "worried", "text": "不管做什么，都没有那种感觉。屏幕上的数字一下子跳起来的那种感觉。"},
+      {"who": "narrator", "text": "在极短时间里拿到大钱的快感，并没有那么容易忘掉。"}
+    ]}
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "ch03",
+  "order": 3,
+  "title": "第3章 30万円，出击",
+  "manga": "第3話",
+  "period": "2014年2月",
+  "source": "manga-reference.md §1.6、§3.1 第3話（S11 日文维基、S12、S15）：2014年，20岁的大学生久留美用打工攒下的30万円作为本金，在超高杠杆的海外FX开户；起初细水长流、小赢不断。",
+  "original": "海外业者的具体杠杆倍数原作未核实，本游戏设定为888倍；杠杆/维持率的教学段为游戏原创；行情为算法生成，起始价位参考当时大致水平。",
+  "tutorial": true,
+  "requires": ["ch02"],
+  "scenes": [
+    {"type": "title_card", "text": "2014年 2月", "sub": "久留美，二十岁", "hold": 1.6},
+    {"type": "dialogue", "bg": "bg_campus", "lines": [
+      {"who": "narrator", "text": "2014年。久留美二十岁，是一名大学二年级的特待生。"},
+      {"who": "kurumi", "face": "normal", "text": "打工攒下的钱，一共30万円。"},
+      {"who": "kurumi", "face": "focus", "text": "国内业者的杠杆最高只有25倍……30万円的话，太慢了。"},
+      {"who": "kurumi", "face": "happy", "text": "所以我选了海外FX！超高杠杆，而且有「零cut」——就算亏了，也不会亏得比入金更多。"},
+      {"who": "kurumi", "face": "smug", "text": "杠杆在手，没问题的♪"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20140203, "start_date": "2014-02-03", "days": 3, "warmup_days": 6, "balance": 300000,
+       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
+       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false,
+       "market_params": {"trend_mult": 1.4, "regime_days": 3.0, "hunt_prob": 0.004},
+       "overrides": {"start_prices": {"USDJPY": 102.0, "EURJPY": 138.0, "AUDJPY": 91.0}},
+       "mental": 80, "end_on_broken": false,
+       "goal": {"equity": 330000},
+       "goal_text": "【教学】赚到 3万円"
+     },
+     "steps": [
+       {"lock": ["buy", "sell", "close", "speed", "sl", "tp"],
+        "msg": "[color=#ffd166]【笔记⑤　杠杆与保证金（证拠金）】[/color]\n开仓不需要付全部金额，只要押上 [color=#ffd166]名义金额 ÷ 杠杆[/color] 的保证金。\n\n· 美元/日元 1 枚 ≈ 102万円，888倍杠杆时保证金只要 [color=#ffd166]约1150円[/color]。\n· 30万円理论上能开 [color=#ff5d73]200枚以上[/color]——但每动1円就是 ±200万円。\n\n右栏下方的 [color=#ffd166]维持率[/color] = 净值 ÷ 已用保证金。跌到业者的[color=#ff5d73]强平线[/color]（这里是20%）时，持仓会被强制平仓（ロスカット）。"},
+       {"objective": "用「+」把手数调到 [color=#ffd166]5枚[/color] 以上，然后买入或卖出", "unlock": ["buy", "sell"], "highlight": "lots",
+        "until": {"type": "open", "min_lots": 5}},
+       {"msg": "看右下角：维持率是一个很大的数字。\n[color=#ffd166]手数越大，维持率越低，越接近强平线。[/color]\n\n高杠杆的意思不是「能赚更多」，而是「同样的波动，你的账户会被放大」。\n\n现在让时间流动吧。目标：把30万円变成 [color=#ffd166]33万円[/color]（3天内）。觉得不妙就随时平仓。",
+        "unlock": ["close", "speed"], "speed": 1,
+        "objective": "3天内净值达到 [color=#ffd166]33万円[/color]（可自由交易）", "until": {"type": "equity", "value": 330000}},
+       {"msg": "[color=#ffd166]达成！[/color]\n这就是久留美最初的样子：小赢、再小赢，一点一点往上走。\n\n「零cut」的意思是：海外业者在你被强平后如果账户变成负数，会帮你清零。[color=#ff5d73]但国内业者没有这个制度[/color]——这一点，以后会变得非常重要。",
+        "finish": true}
+     ],
+     "win": {"equity": 330000},
+     "on_win": [
+       {"who": "kurumi", "face": "happy", "text": "赚了……！真的赚了！"},
+       {"who": "kurumi", "face": "smug", "text": "这样一点一点积累下去，2000万円也不是梦！"}
+     ],
+     "on_lose": [
+       {"who": "kurumi", "face": "worried", "text": "唔……没那么简单啊。"},
+       {"who": "note", "text": "提示：手数小一点、顺着趋势方向（看4小时图）交易，亏损时及时平仓。"}
+     ]
+    }
+  ]
+}

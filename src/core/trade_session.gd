@@ -68,6 +68,22 @@ func _init(config: Dictionary, shared_mods: Mods = null) -> void:
 	events.random_news = false
 	market.warmup(warm)
 	events.random_news = bool(cfg.get("random_news", true))
+	# 起始价：预热结束后把价格校准到指定值，历史整体等比缩放（图表不会断层）
+	var sp: Dictionary = cfg.get("overrides", {}).get("start_prices", {})
+	for sym in sp:
+		var ins: MarketSim.Instrument = market.get_ins(sym)
+		if ins == null:
+			continue
+		var f: float = float(sp[sym]) / ins.mid
+		ins.offset += log(f)
+		for k in ins.c.size():
+			ins.o[k] *= f
+			ins.h[k] *= f
+			ins.l[k] *= f
+			ins.c[k] *= f
+		ins.mid = market.price_of(ins)
+		if not ins.peg.is_empty():
+			ins.peg.pressure = 0.0
 	# 预热用掉的账户历史清零
 	account.stats.max_equity = account.equity()
 	day0 = market.day_index()
@@ -117,7 +133,11 @@ func _build_script() -> void:
 
 func _run_script() -> void:
 	while not timeline.is_empty() and int(timeline[0].at) <= market.tick:
-		var e: Dictionary = timeline.pop_front()
+		run_now(timeline.pop_front())
+
+## 立即执行一条时间线动作
+func run_now(e: Dictionary) -> void:
+	if true:
 		match String(e.get("do", "")):
 			"news":
 				var def: Dictionary = e.get("def", {})
@@ -155,6 +175,14 @@ func _run_script() -> void:
 				events.schedule_indicator(e.id, int(e.get("day", session_day())) + day0, e.get("forced", {}))
 			"rate":
 				market.units[e.unit].rate = float(e.value)
+			"deposit":
+				account.deposit(float(e.amount))
+				if e.has("note"):
+					events.post_text(e.note, "news", "coin", 1)
+			"mental":
+				kurumi.change(float(e.value))
+			"finish":
+				_finish(e.get("reason", "goal"))
 			_:
 				script_signal.emit(String(e.get("do", "")), e)
 

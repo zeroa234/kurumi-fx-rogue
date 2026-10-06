@@ -377,6 +377,7 @@ func _connect() -> void:
 	session.finished.connect(_on_finished)
 	session.script_pause.connect(_on_script_pause)
 	session.script_dialog.connect(_on_script_dialog)
+	session.script_signal.connect(_on_script_signal)
 	session.events.news_posted.connect(_on_news)
 	session.events.sns_posted.connect(func(_i): if _tabbar.current_tab == 3: _tab_dirty = true)
 	session.events.calendar_updated.connect(func(): _tab_dirty = true)
@@ -403,12 +404,12 @@ func _on_alert(kind: String, text: String) -> void:
 			chart.flash(UI.ORANGE)
 			Sfx.play("alarm")
 			if Save.setting("auto_pause_margin", true):
-				_set_speed(0)
+				_set_speed(0, true)
 		"stopout":
 			chart.flash(UI.UP)
 			chart.shake(5.0)
 			Sfx.play("crash")
-			_set_speed(0)
+			_set_speed(0, true)
 		"sl":
 			chart.flash(UI.ORANGE)
 		"tp":
@@ -433,7 +434,7 @@ func _on_news(item: Dictionary) -> void:
 		chart.shake(3.0)
 		Sfx.play("news")
 		if Save.setting("auto_pause_news", true):
-			_set_speed(0)
+			_set_speed(0, true)
 
 func _on_said(text: String, face: String) -> void:
 	_bubble_lbl.text = text
@@ -443,21 +444,34 @@ func _on_said(text: String, face: String) -> void:
 	_set_face(face)
 
 func _on_script_pause(text: String) -> void:
-	_set_speed(0)
+	_set_speed(0, true)
 	if text != "":
 		show_message(text)
 
 func _on_script_dialog(lines: Array) -> void:
-	_set_speed(0)
+	_set_speed(0, true)
 	var dlg := DialogueBox.new()
 	dlg.lines = lines
 	dlg.finished.connect(func(): _modal_open = false)
 	_modal_open = true
 	_popup_layer.add_child(dlg)
 
+func _on_script_signal(name_: String, e: Dictionary) -> void:
+	match name_:
+		"lock": lock(e.get("names", []), true)
+		"unlock": lock(e.get("names", []), false)
+		"objective": set_objective(e.get("text", ""))
+		"highlight": highlight(e.get("name", ""))
+		"select": _select_symbol(e.get("symbol", selected))
+		"tf": _set_tf(int(e.get("index", 1)))
+		"speed": _set_speed(int(e.get("value", 1)), true)
+		"shake": chart.shake(float(e.get("amount", 4.0)))
+		"flash": chart.flash(Color(String(e.get("color", "ff5d73"))))
+		"sfx": Sfx.play(e.get("name", "news"))
+
 func _on_finished(result: Dictionary) -> void:
 	finished = true
-	_set_speed(0)
+	_set_speed(0, true)
 	if auto_close_on_finish:
 		session.close_out()
 		result.equity = session.account.equity()
@@ -525,7 +539,7 @@ func _pre_tick_checks() -> void:
 		for c in session.events.upcoming(1):
 			if int(c.stars) >= 2 and c.tick == session.market.tick and not c.get("_paused", false):
 				c["_paused"] = true
-				_set_speed(0)
+				_set_speed(0, true)
 				_toast("指标即将发布：%s" % c.name, UI.CYAN)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -549,8 +563,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_: return
 	get_viewport().set_input_as_handled()
 
-func _set_speed(i: int) -> void:
-	if locked.get("speed", false) and i > 0 and hold_for_objective:
+func _set_speed(i: int, force := false) -> void:
+	if locked.get("speed", false) and not force:
+		_toast("现在请先完成当前步骤", UI.DIM)
 		return
 	speed = i
 	if i > 0:
@@ -657,6 +672,20 @@ func _close_symbol() -> void:
 	for p in session.account.positions.duplicate():
 		if p.symbol == selected:
 			session.account.close_position(p)
+	_refresh_all()
+
+func _apply_sltp(p: Account.Position) -> void:
+	var ins := session.market.get_ins(p.symbol)
+	var px := session.account.exit_price(p)
+	if sl_pips > 0.0:
+		p.sl = px - p.side * sl_pips * ins.pip
+		objective_event.emit("set_sl", {"pos": p})
+	if tp_pips > 0.0:
+		p.tp = px + p.side * tp_pips * ins.pip
+		objective_event.emit("set_tp", {"pos": p})
+	if sl_pips <= 0.0 and tp_pips <= 0.0:
+		_toast("先在下单面板设定止损/止盈的 pips", UI.DIM)
+	_tab_dirty = true
 	_refresh_all()
 
 func close_pos(p: Account.Position) -> void:
@@ -794,6 +823,9 @@ func _tab_positions() -> void:
 		sl.custom_minimum_size.x = 76
 		sl.clip_text = true
 		h.add_child(sl)
+		var ap := _small_btn("设", _apply_sltp.bind(p))
+		ap.tooltip_text = "把下单面板的止损/止盈 pips 设到这笔持仓上（以现价为基准）"
+		h.add_child(ap)
 		var b := _small_btn("平", close_pos.bind(p))
 		h.add_child(b)
 		_tab_body.add_child(h)
@@ -922,7 +954,7 @@ func _toast(text: String, col: Color) -> void:
 
 ## 剧情/教学用：显示一段说明并暂停，点击继续
 func show_message(text: String, on_close: Callable = Callable()) -> void:
-	_set_speed(0)
+	_set_speed(0, true)
 	_modal_open = true
 	var dim := ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.45)
@@ -960,8 +992,16 @@ func set_objective(bb: String) -> void:
 func lock(names: Array, on := true) -> void:
 	for n in names:
 		locked[n] = on
-		if controls.has(n) and controls[n] is Control:
-			controls[n].modulate = Color(1, 1, 1, 0.35) if on else Color(1, 1, 1, 1)
+		var targets: Array = [n]
+		if n == "close":
+			targets = ["close_all", "close_symbol"]
+		elif n == "speed":
+			targets = []
+			for b in _speed_btns:
+				b.modulate = Color(1, 1, 1, 0.35) if on else Color(1, 1, 1, 1)
+		for t in targets:
+			if controls.has(t) and controls[t] is Control:
+				controls[t].modulate = Color(1, 1, 1, 0.35) if on else Color(1, 1, 1, 1)
 
 func highlight(name_: String, on := true) -> void:
 	if not controls.has(name_):
@@ -975,7 +1015,7 @@ func highlight(name_: String, on := true) -> void:
 func _on_impulse(kind: String) -> void:
 	if finished:
 		return
-	_set_speed(0)
+	_set_speed(0, true)
 	_modal_open = true
 	var acc := session.account
 	var worst: Account.Position = null

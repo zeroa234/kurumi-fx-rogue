@@ -15,7 +15,11 @@ func _ready() -> void:
 		elif a.begins_with("--shot-delay="):
 			delay = float(a.substr(13))
 		elif a.begins_with("--scene="):
-			goto(a.substr(8))
+			goto(a.substr(8), params)
+		elif a.begins_with("--chapter="):
+			params["chapter"] = a.substr(10)
+		elif a.begins_with("--scene-index="):
+			params["scene_index"] = int(a.substr(14))
 	if shot != "":
 		_take_shot(shot, delay)
 

@@ -1,0 +1,55 @@
+{
+  "id": "ch02",
+  "order": 2,
+  "title": "第2章 久留美的FX笔记",
+  "manga": "第2話",
+  "period": "2009〜2013年（学习期）",
+  "source": "manga-reference.md §3.1 第2話（S5 评论区、S10）：久留美为FX埋头学习、在电视上看到「杠杆」的介绍，五年间几乎没有普通少女的生活。",
+  "original": "【游戏原创教学】用模拟账户练习买卖的情节为本游戏为教学而加，原作未有此描写。",
+  "tutorial": true,
+  "requires": ["ch01"],
+  "scenes": [
+    {"type": "title_card", "text": "第2章", "sub": "久留美的FX笔记", "hold": 1.4},
+    {"type": "dialogue", "bg": "bg_room_night", "lines": [
+      {"who": "narrator", "text": "那之后的五年，久留美把所有时间都给了学习。"},
+      {"who": "narrator", "text": "没有社团，没有约会，没有普通少女的生活。只有书、图表，和一本越写越厚的笔记。"},
+      {"who": "tv", "text": "「……FX的魅力在于『杠杆』。只要很少的保证金，就能交易数十倍金额的外汇……」"},
+      {"who": "kurumi", "face": "young", "text": "杠杆……用少量的钱，动大量的钱……"},
+      {"who": "note", "text": "（以下是游戏原创的教学段落：久留美在模拟账户上练习。）"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20110606, "start_date": "2011-06-06", "days": 2, "warmup_days": 5, "balance": 1000000,
+       "broker": {"name": "模拟账户", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": true},
+       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false, "calendar": false,
+       "market_params": {"vol_mult": 0.8, "hunt_prob": 0.0},
+       "overrides": {"start_prices": {"USDJPY": 80.0, "EURJPY": 115.0, "AUDJPY": 85.0}},
+       "mental": 80, "end_on_broken": false,
+       "goal_text": "【教学】模拟账户"
+     },
+     "steps": [
+       {"lock": ["buy", "sell", "close", "lots", "sl", "tp", "speed", "tabs", "watch"],
+        "msg": "[color=#ffd166]【久留美的FX笔记①　什么是FX】[/color]\nFX = 外汇保证金交易，买卖的是「两种货币的兑换比率」。\n\n· [color=#ffd166]美元/日元 80.000[/color] 的意思是：1美元 = 80日元。\n· 觉得美元会[color=#ff5d73]涨[/color] → [color=#ff5d73]买[/color]（做多）；觉得会[color=#3ddc97]跌[/color] → [color=#3ddc97]卖[/color]（做空）。\n· 右边的「卖 / 买」按钮上显示的是卖价(Bid)和买价(Ask)，两者之差叫[color=#ffd166]点差[/color]，是交易成本。"},
+       {"objective": "按右侧的 [color=#ff5d73]「买」[/color] 买入 1 枚 美元/日元", "unlock": ["buy"], "highlight": "buy", "lots": 1.0, "until": {"type": "open", "side": 1}},
+       {"msg": "[color=#ffd166]【笔记②　损益】[/color]\n1 枚 = 1万单位货币。美元/日元每涨 [color=#ffd166]1円[/color]，1 枚就赚 [color=#ff5d73]1万円[/color]；每涨 0.01円（1 pip）赚 100円。\n\n刚买入时会因为点差小亏一点，这很正常。\n现在按 [color=#ffd166]空格[/color] 或顶栏的 [color=#ffd166]1~4[/color] 让时间流动，看看价格怎么走。",
+        "unlock": ["speed"], "speed": 1,
+        "script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 80.32, "ticks": 24}],
+        "objective": "让时间流动，观察持仓的损益（约6小时）", "until": {"type": "ticks", "n": 24}},
+       {"objective": "在下方「持仓」栏点 [color=#ffd166]「平」[/color]（或按「全部平仓」）把利润落袋", "unlock": ["close"], "highlight": "close_all", "until": {"type": "close", "profit": true}},
+       {"msg": "[color=#ffd166]【笔记③　卖出（做空）】[/color]\nFX 里也可以先「卖」：价格[color=#3ddc97]下跌[/color]时赚钱。\n这就是外汇和普通存款最大的不同——涨跌都有机会。\n\n这次试着[color=#3ddc97]卖出[/color] 1 枚。",
+        "lock": ["buy"], "unlock": ["sell"], "highlight": "sell", "speed": 0,
+        "objective": "按 [color=#3ddc97]「卖」[/color] 卖出 1 枚 美元/日元", "until": {"type": "open", "side": -1}},
+       {"script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 80.05, "ticks": 24}], "speed": 1,
+        "objective": "等价格下跌后平仓获利", "until": {"type": "close", "profit": true}},
+       {"unlock": ["buy", "tabs", "watch", "lots"], "speed": 0,
+        "msg": "[color=#ffd166]【笔记④　看图表】[/color]\n· 图表上方 [color=#ffd166]15分/1时/4时/日[/color] 切换每根K线的时间。\n· [color=#ffd166]鼠标滚轮[/color]缩放，[color=#ffd166]右键拖动[/color]看历史。\n· 右上角列表可以切换货币对，[color=#ffd166]Tab[/color] 键也行。\n· 快捷键：B 买 / S 卖 / C 全部平仓 / 空格 暂停。\n\n模拟练习到这里。真正的战场，要等到她二十岁那年。",
+        "finish": true}
+     ],
+     "win": {"steps": true},
+     "on_win": [
+       {"who": "kurumi", "face": "young", "text": "……模拟账户里赚了钱，也不会变成真的钱。"},
+       {"who": "kurumi", "face": "young", "text": "等我成年了——就用真的钱来战斗。"}
+     ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "_doc": "FX 业者（账户类型）。剧情与肉鸽共用。leverage 杠杆；stopout 强平维持率%；margin_call 告警维持率%；zero_cut 负余额清零；spread_mult 点差倍率；swap_mult 掉期倍率；swap_fee 业者掉期抽成（年化名义比例）；slip_mult 滑点倍率；bonus 首次入金赠金比例（仅肉鸽）。unlock 为空表示默认可用。",
+  "brokers": [
+    {"id": "overseas", "name": "海外FX", "desc": "最高 888 倍杠杆、零 cut（亏损不会超过入金），但点差和滑点更大。久留美最初开户的就是海外高杠杆业者。", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "swap_mult": 0.7, "swap_fee": 0.006, "slip_mult": 1.6, "bonus": 0.5, "unlock": ""},
+    {"id": "domestic", "name": "国内大手FX", "desc": "法定上限 25 倍。点差窄、滑点小，但没有零 cut：跳空打穿时，亏损超过保证金的部分会变成「不足金」（借金）。", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.0, "swap_mult": 1.0, "swap_fee": 0.003, "slip_mult": 1.0, "bonus": 0.0, "unlock": ""},
+    {"id": "swap", "name": "掉期特化证券", "desc": "高息货币掉期最优，开局解锁里拉/日元。点差偏宽。", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.3, "swap_mult": 1.5, "swap_fee": 0.001, "slip_mult": 1.0, "bonus": 0.0, "unlock": "broker_swap", "grant": ["pair_tryjpy"]},
+    {"id": "pro", "name": "专业 ECN 账户", "desc": "100 倍、零 cut、点差极窄，强平线 50%。适合短线。", "leverage": 100.0, "stopout": 50.0, "margin_call": 80.0, "zero_cut": true, "spread_mult": 0.5, "swap_mult": 0.8, "swap_fee": 0.004, "slip_mult": 0.8, "bonus": 0.0, "unlock": "broker_pro"}
+  ]
+}
