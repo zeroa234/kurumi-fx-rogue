@@ -1,0 +1,22 @@
+{
+  "bg_title": {
+    "file": "bg/bg_title.png",
+    "files": {
+      "bg/bg_title.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620028,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, night, dark room, window, city night view, multiple monitors, computer screens, candlestick charts, pink neon lights, pink glow, computer desk, gaming desk, A girl's bedroom at night lit by several computer monitors showing candlestick trading charts, pink neon light, a large city skyline visible through the window, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T20:54:06",
+    "rev": 1
+  }
+}

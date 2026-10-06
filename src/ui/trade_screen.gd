@@ -560,8 +560,43 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_TAB:
 			var i := session.symbols.find(selected)
 			_select_symbol(session.symbols[(i + 1) % session.symbols.size()])
+		KEY_ESCAPE:
+			_pause_menu()
 		_: return
 	get_viewport().set_input_as_handled()
+
+## Esc 菜单。exit_label/exit_cb 由上层场景设置（剧情：返回章节选择；肉鸽：保存并退出）
+var exit_label := "返回标题"
+var exit_cb: Callable = func(): Game.goto("res://src/scenes/title.tscn")
+
+func _pause_menu() -> void:
+	_set_speed(0, true)
+	_modal_open = true
+	var v := UI.modal(_popup_layer, UI.BORDER_HI, 220)
+	v.add_child(UI.label("暂停", UI.PINK))
+	v.add_child(UI.button("继续", func():
+		UI.close_modal(v)
+		_modal_open = false))
+	v.add_child(UI.button("设置：新闻自动暂停 " + ("开" if Save.setting("auto_pause_news", true) else "关"), func():
+		Save.data.settings.auto_pause_news = not Save.setting("auto_pause_news", true)
+		Save.write()
+		UI.close_modal(v)
+		_modal_open = false
+		_pause_menu()))
+	v.add_child(UI.label("快捷键：空格 暂停 · 1~4 速度 · B 买 · S 卖\nC 全平 · Tab 换品种 · 滚轮缩放 · 右键拖动", UI.DIM))
+	var ex := UI.button(exit_label, func():
+		UI.close_modal(v)
+		_modal_open = false
+		exit_cb.call())
+	ex.add_theme_color_override("font_color", UI.ORANGE)
+	v.add_child(ex)
+
+## 额外的信息页（上层场景注入）：{name, build: Callable(VBoxContainer)}
+var extra_tabs: Array = []
+
+func add_extra_tab(tab_name: String, build: Callable) -> void:
+	extra_tabs.append({"name": tab_name, "build": build})
+	_tabbar.add_tab(tab_name)
 
 func _set_speed(i: int, force := false) -> void:
 	if locked.get("speed", false) and not force:
@@ -792,6 +827,14 @@ func _refresh_tab() -> void:
 		2: _tab_news()
 		3: _tab_sns()
 		4: _tab_history()
+		_:
+			var k := _tabbar.current_tab - 5
+			if k >= 0 and k < extra_tabs.size():
+				extra_tabs[k].build.call(_tab_body)
+
+func refresh_tab_now() -> void:
+	_tab_dirty = true
+	_refresh_tab()
 
 func _row(text: String, col: Color = UI.TEXT) -> Label:
 	var l := UI.label(text, col)

@@ -1,0 +1,68 @@
+{
+  "id": "ch12",
+  "order": 12,
+  "title": "第12章 最后的100万円",
+  "manga": "第36〜40話（8巻）",
+  "period": "2015年2月",
+  "source": "manga-reference.md §3.1 第36〜40話、§3.0 8巻（S6 8巻宣传语「１億円を取り返すために必死になったくるみちゃんだったけど、まさかの大負け……！」；S13 中文维基：用剩余资金（含本为缴纳所得税准备的约100万円存款）转回海外FX高杠杆翻本——一度回血、最终强制ロスカット，最后的资金也蒸发；税务问题恶化为现实危机（不缴税=不能破产）；精神到达极限、整理身の回り并产生轻生念头；S5 评论区「前回手持ちが100万円」）。",
+  "original": "『约100万円』为原作记载、仓位（EUR/JPY 多260枚·888倍）与其余行情为游戏设定（算法生成+引导）；『一度回血→最终强平』的骨架来自原作。自杀相关情节刻意淡化，仅描写「整理身边之物」；本章及下一章末尾设有求助提示。",
+  "tutorial": false,
+  "requires": ["ch11"],
+  "scenes": [
+    {"type": "title_card", "text": "第12章", "sub": "最后的100万円", "bg": "bg_room_night", "hold": 1.6},
+    {"type": "dialogue", "bg": "bg_room_night", "lines": [
+      {"who": "narrator", "text": "账户被清零了。但债没有清零——不足金1億円超，白纸黑字。"},
+      {"who": "kurumi", "face": "angry", "text": "还没有结束。只要翻个倍……不，翻十倍，就能……"},
+      {"who": "narrator", "text": "她手头上，还有一笔钱。那是当年为了缴税，一点一点攒下的约100万円存款。"},
+      {"who": "kurumi", "face": "tilt", "text": "税金的事……之后再想办法。现在，先翻本。"},
+      {"who": "kurumi", "face": "focus", "text": "还是海外FX。888倍杠杆的话——一次，就够了。"},
+      {"who": "narrator", "text": "她把这最后的钱，全部转进了海外账户。"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20150219, "start_date": "2015-02-19", "days": 2, "warmup_days": 5, "balance": 1000000,
+       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
+       "symbols": ["EURJPY", "USDJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
+       "market_params": {"hunt_prob": 0.0, "vol_mult": 0.8},
+       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
+       "overrides": {"start_prices": {"EURJPY": 134.5, "USDJPY": 119.5}},
+       "mental": 35, "end_on_broken": false, "end_on_bust": true,
+       "goal_text": "最后的一发",
+       "script": [
+         {"day": 0, "hour": 9, "minute": 30, "do": "guide", "symbol": "EURJPY", "price": 135.4, "ticks": 8},
+         {"day": 0, "hour": 15, "minute": 50, "do": "pause", "text": "……手，在抖。平仓的话，税金能拿回来。可是——"}
+       ]
+     },
+     "positions": [{"symbol": "EURJPY", "side": 1, "lots": 260, "entry": 134.72}],
+     "intro": [
+       {"who": "narrator", "text": "（欧元/日元 多 260枚——名义约3.5億円。888倍。她把最后的一切，押在了一根分钟线上。）"}
+     ],
+     "steps": [
+       {"lock": ["buy", "sell", "close", "lots", "sl", "tp", "speed", "tabs", "watch"], "speed": 2,
+        "dialog": [
+          {"who": "narrator", "text": "上午。行情向上爬。浮盈，回到了+170万。"},
+          {"who": "kurumi", "face": "happy", "text": "……回来了。看，只要杠杆够大，1億万円也是几分钟的事。"},
+          {"who": "kurumi", "face": "tilt", "text": "现在收手，才不叫翻本。再等一下。"}
+        ],
+        "objective": "[color=#a89cc8]看着。她不会收手的。[/color]", "until": {"type": "time", "day": 0, "hour": 15, "minute": 45}},
+       {"dialog": [
+          {"who": "kurumi", "face": "focus", "text": "……好。下一次回调，就是全部。"},
+          {"who": "narrator", "text": "——没有下一次。"}
+        ],
+        "script": [{"t": 0, "do": "guide", "symbol": "EURJPY", "price": 132.7, "ticks": 2}, {"t": 0, "do": "mental", "value": -25}],
+        "objective": "", "until": {"type": "ticks", "n": 8}},
+       {"finish": true}
+     ],
+     "win": {"always": true},
+     "lose_continues": true,
+     "on_win": [
+       {"who": "narrator", "text": "强制平仓。最后的钱，在几分钟里消失了。零cut业者把负数清成零——可税金，是用真实的货币、真实的日期记着的。"},
+       {"who": "kurumi", "face": "cry", "text": "……什么，都没有了。"},
+       {"who": "narrator", "text": "那几天，她开始整理身边之物。把用不着的东西，一件一件收进纸箱。"},
+       {"who": "mochiko", "face": "normal", "text": "（发出去的消息，一条都没有回。）……不对劲。"},
+       {"who": "narrator", "text": "——下一章，是她离悬崖最近、也是被拉住最紧的时刻。"},
+       {"who": "narrator", "text": "※如果你也正被债务或精神压力困扰：请把话说给身边的人听，或向心理支持、法律援助等专业机构求助。不要一个人扛。"}
+     ]
+    }
+  ]
+}

@@ -51,27 +51,64 @@ func _intro() -> void:
 # ---------------------------------------------------------------- 仲间
 
 func _add_friend_buttons() -> void:
-	var box := screen._hint_lbl.get_parent()
+	for f in run.friends:
+		_charges[f] = int(run.friend_def(f).get("active", {}).get("charges", 1))
+	screen.add_extra_tab("仲间/道具", _build_tab)
+	screen.exit_label = "保存并退出（本节点作废）"
+	screen.exit_cb = func():
+		run.save()
+		Game.goto("res://src/scenes/title.tscn")
+
+func _build_tab(box: VBoxContainer) -> void:
+	if run.friends.is_empty() and run.items.is_empty():
+		box.add_child(UI.label("没有同行的仲间，也没有道具。", UI.DIM))
 	for f in run.friends:
 		var fd := run.friend_def(f)
 		var act: Dictionary = fd.get("active", {})
-		_charges[f] = int(act.get("charges", 1))
-		var b := Button.new()
-		b.text = act.get("name", "")
-		b.focus_mode = Control.FOCUS_NONE
-		b.custom_minimum_size = Vector2(68, 12)
-		b.add_theme_font_size_override("font_size", 12)
-		b.add_theme_stylebox_override("normal", UI.box(Color(String(fd.color)).darkened(0.7), Color(String(fd.color)), 1, 0))
-		b.add_theme_stylebox_override("hover", UI.box(Color(String(fd.color)).darkened(0.5), Color(String(fd.color)), 1, 0))
-		b.tooltip_text = "%s：%s（剩 %d 次）" % [fd.name, act.get("desc", ""), _charges[f]]
-		b.pressed.connect(_use_friend.bind(f, b))
-		box.add_child(b)
+		var h := UI.hbox(4)
+		var b := UI.button("%s（%d）" % [act.get("name", ""), int(_charges.get(f, 0))], _use_friend.bind(f, null), 96)
+		b.disabled = int(_charges.get(f, 0)) <= 0
+		h.add_child(b)
+		var l := UI.label("%s：%s" % [fd.name, act.get("desc", "")], Color(String(fd.color)))
+		l.custom_minimum_size.x = 270
+		l.clip_text = true
+		l.tooltip_text = "%s
+被动：%s" % [fd.bio, fd.passive_desc]
+		l.mouse_filter = Control.MOUSE_FILTER_PASS
+		h.add_child(l)
+		box.add_child(h)
+	for i in run.items.size():
+		var it := run.item_def(run.items[i])
+		if not it.get("use", "map") in ["trade", "both"]:
+			continue
+		var h2 := UI.hbox(4)
+		h2.add_child(UI.button("用：" + it.get("name", ""), _use_item.bind(i), 96))
+		var l2 := UI.label(it.get("desc", ""), UI.DIM)
+		l2.custom_minimum_size.x = 270
+		l2.clip_text = true
+		h2.add_child(l2)
+		box.add_child(h2)
+
+func _use_item(i: int) -> void:
+	if i >= run.items.size():
+		return
+	var it := run.item_def(run.items[i])
+	var eff: Dictionary = it.get("effect", {})
+	if eff.has("mental"):
+		session.kurumi.change(float(eff.mental))
+	if eff.has("cure_tilt"):
+		session.kurumi.change(maxf(0.0, float(eff.cure_tilt) - session.kurumi.mental))
+	run.items.remove_at(i)
+	Sfx.play("ok")
+	session.kurumi.say_text("（%s）" % it.get("name", ""), "happy")
+	screen.refresh_tab_now()
 
 func _use_friend(f: String, b: Button) -> void:
 	if int(_charges.get(f, 0)) <= 0 or screen.finished:
 		return
 	_charges[f] = int(_charges[f]) - 1
-	b.disabled = _charges[f] <= 0
+	if b:
+		b.disabled = _charges[f] <= 0
 	Sfx.play("ok")
 	match f:
 		"mochiko":
@@ -100,6 +137,7 @@ func _use_friend(f: String, b: Button) -> void:
 			ins.long_ratio = clampf(ins.long_ratio + 0.15 * dir, 0.08, 0.92)
 			session.events.post_sns("@あふぃちゃん", "【あふぃちゃん】%s 现在就是%s的好时机！大家跟上♪" % [ins.name, "买" if dir > 0 else "卖"])
 	screen._refresh_all()
+	screen.refresh_tab_now()
 
 # ---------------------------------------------------------------- 每日/每 tick
 

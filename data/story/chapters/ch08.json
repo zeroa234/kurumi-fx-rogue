@@ -1,0 +1,71 @@
+{
+  "id": "ch08",
+  "order": 8,
+  "title": "第8章 四人的决斗",
+  "manga": "第16〜20話（4巻）",
+  "period": "2014年秋〜冬",
+  "source": "manga-reference.md §3.1 第16〜20話（S11 日文维基・芽吹条目：嫌久留美太观望、宣布「单方面独立交易」；S5 评论区：萌智子式的『恶魔低语』贷款谈判出现——「Win-Win()」「悪魔は笑顔で近付いてくる」；S11 やす子条目：联盟广告博客因巨亏退出、竞赛早退的伏笔）。四人FX竞赛成形（S11/S15/S18）。",
+  "original": "竞赛规则、比分与行情为游戏设定（原作未记载具体数字与规则）；台词为转述；本章资金（560万円）为游戏设定。",
+  "tutorial": false,
+  "requires": ["ch07"],
+  "scenes": [
+    {"type": "title_card", "text": "第8章", "sub": "四人的决斗", "bg": "bg_cafe", "hold": 1.4},
+    {"type": "dialogue", "bg": "bg_cafe", "lines": [
+      {"who": "mochiko", "face": "normal", "text": "那么，提议。四人各自用自己的账户，比一个月的损益率。"},
+      {"who": "yasuko", "face": "angry", "text": "我有说不的权利吗。"},
+      {"who": "mebuki", "face": "happy", "text": "没有！"},
+      {"who": "mochiko", "face": "smile", "text": "有趣。我参加。"},
+      {"who": "kurumi", "face": "focus", "text": "……我也要参加。每赢一次，2000万円就更近一步。"},
+      {"who": "narrator", "text": "FX投资竞赛，开始了。四个账户，四条曲线，一条暗流。"},
+      {"who": "yasuko", "face": "normal", "text": "我早就受过市场的毒打……这次安全地小赚就退场，当个裁判。"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20141006, "start_date": "2014-10-06", "days": 3, "warmup_days": 6, "balance": 5600000,
+       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
+       "symbols": ["USDJPY", "EURJPY", "GBPJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
+       "market_params": {"hunt_prob": 0.003, "vol_mult": 1.0},
+       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
+       "overrides": {"start_prices": {"USDJPY": 108.5, "EURJPY": 139.5, "GBPJPY": 171.0}},
+       "mental": 88, "end_on_broken": false, "end_on_bust": false,
+       "goal": {"equity_early": 6100000},
+       "goal_text": "竞赛第一回合"
+     },
+     "mods": {"show_sentiment": 1, "show_fair": 1},
+     "steps": [
+       {"lock": ["close", "speed", "sl", "tp"],
+        "dialog": [
+          {"who": "narrator", "text": "（竞赛第一回合。久留美的账户——560万円。其他三人的结果，用聊天里的战报代替。）"},
+          {"who": "mebuki", "face": "happy", "text": "我开了！英日！理由？直觉！"},
+          {"who": "yasuko", "face": "angry", "text": "理由是直觉啊……"}
+        ],
+        "unlock": ["buy", "sell", "lots"], "highlight": "lots",
+        "objective": "开仓参赛（[color=#ffd166]10枚[/color] 以上，方向自定）", "until": {"type": "open", "min_lots": 10}},
+       {"unlock": ["close", "speed"], "speed": 1,
+        "script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 109.3, "ticks": 45}],
+        "objective": "3天内净值达到 [color=#ffd166]610万円（+50万）[/color]", "until": {"type": "equity", "value": 6100000}},
+       {"finish": true}
+     ],
+     "win": {"equity": 6100000},
+     "lose_continues": true,
+     "on_win": [
+       {"who": "kurumi", "face": "happy", "text": "第一回合，领先。"},
+       {"who": "mochiko", "face": "normal", "text": "恭喜。——那么，下一个话题。"},
+       {"who": "mochiko", "face": "smile", "text": "缺钱的话，可以借你。利息很公道，对彼此都是Win-Win……应该是。"},
+       {"who": "kurumi", "face": "worried", "text": "（……这个人，总在别人亏钱的瞬间，眼睛最亮。）"},
+       {"who": "narrator", "text": "恶魔，笑着靠近。"}
+     ],
+     "on_lose": [
+       {"who": "mebuki", "face": "happy", "text": "诶嘿嘿，这回合是我拿冠军？"},
+       {"who": "kurumi", "face": "angry", "text": "……下次绝对翻过来。"},
+       {"who": "note", "text": "提示：竞赛比的是损益率。仓位控制比方向更重要。"}
+     ]},
+    {"type": "dialogue", "bg": "bg_campus", "lines": [
+      {"who": "mebuki", "face": "normal", "text": "久留美学姐，我决定了。我要一个人交易。这种一寸一寸磨的打法，不适合我。"},
+      {"who": "kurumi", "face": "worried", "text": "……芽吹，稍微再观望一下，"},
+      {"who": "mebuki", "face": "happy", "text": "观望就是输！看好了，我要一口气冲上去！"},
+      {"who": "yasuko", "face": "normal", "text": "（……那孩子，真的开始跑起来了。）"},
+      {"who": "narrator", "text": "竞赛还在继续。而萌智子的视线，从这一刻起，落在了每个人的账户上。"}
+    ]}
+  ]
+}

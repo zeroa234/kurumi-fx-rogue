@@ -1,0 +1,51 @@
+{
+  "id": "ch13",
+  "order": 13,
+  "title": "第13章 坦白与破产",
+  "manga": "第41〜45話（9巻）",
+  "period": "2015年〜2017年",
+  "source": "manga-reference.md §3.1 第41〜45話、§3.0 9巻（S6 8巻/9巻宣传语「萌智子ちゃんに助けられて持ち直したくるみちゃん！お父さんとも話し合って」；S13 中文维基：萌智子识破轻生念头、正面逼问并将其推向坦白与破产；自己破産获准后除税金外债务免除（法院公告后约2015-11、S13/S21中置信）；当年赢利时的税金无力缴纳、由父亲接管工资持续偿还；S19 第43話前後向父亲全部坦白（负债1億+、破产决意）、父女破冰（郁夫亦有『当年没与妻子好好谈』的悔恨）、第44話破産后的日常（与伙伴たこ焼きparty等）；S18/S13 第45話时间跳到约1年半后（≈2017）、酒田いなご登场、面试进入萌智子创业的「株式会社もちもち企画」。",
+  "original": "对白为转述；破产手续为游戏化示意（省略流程细节）；职场/company 命名沿用原作记载；きずな以外的新角色（酒田いなご）暂无立绘，以叙述者+显示名呈现。",
+  "tutorial": false,
+  "requires": ["ch12"],
+  "scenes": [
+    {"type": "title_card", "text": "第13章", "sub": "坦白与破产", "bg": "bg_room_night", "hold": 1.6},
+    {"type": "dialogue", "bg": "bg_living_dim", "lines": [
+      {"who": "mochiko", "face": "normal", "text": "——门，开着。"},
+      {"who": "kurumi", "face": "normal", "text": "……有事吗。"},
+      {"who": "mochiko", "face": "normal", "text": "纸箱。这么多。要搬家？"},
+      {"who": "kurumi", "face": "normal", "text": "……嗯。"},
+      {"who": "mochiko", "face": "normal", "text": "我再说一遍。你不是会收拾箱子的人。福賀久留美。——看着我，说清楚：你打算去哪里。"},
+      {"who": "kurumi", "face": "cry", "text": "……哪里，都——"},
+      {"who": "mochiko", "face": "normal", "text": "住口。"},
+      {"who": "mochiko", "face": "normal", "text": "负债是数字。数字我可以给你算清楚：破産的手续、能免的、免不掉的税金——一件一件来。先坐下。"},
+      {"who": "narrator", "text": "萌智子没有安慰她。她只是把『接下来要做的事』，一件一件摆在她的面前。"},
+      {"who": "mochiko", "face": "normal", "text": "还有——给你父亲打电话。这件事，必须由你本人开口。"},
+      {"who": "kurumi", "face": "cry", "text": "……嗯。"}
+    ]},
+    {"type": "dialogue", "bg": "bg_living", "lines": [
+      {"who": "narrator", "text": "几天后。久留美，把一切摊开在父亲面前。"},
+      {"who": "kurumi", "face": "cry", "text": "爸爸。我欠的债，超过1億円。……还有，妈妈的事，我从中学开始，就……"},
+      {"who": "ikuo", "face": "normal", "text": "……我都知道了。"},
+      {"who": "ikuo", "face": "normal", "text": "你妈妈的事……我也有错。那时总想着，等这边的工作忙完再好好谈。等来等去，就没有机会了。"},
+      {"who": "ikuo", "face": "normal", "text": "——手续，我陪你办。至于还钱和工资的事，之后再说。先，吃饭吧。"},
+      {"who": "narrator", "text": "郁夫没有再斥责她。"},
+      {"who": "kurumi", "face": "cry", "text": "……嗯。"}
+    ]},
+    {"type": "dialogue", "bg": "bg_gov_office", "lines": [
+      {"who": "narrator", "text": "手续很漫长，也很平静。材料的整理、免責許可、法院的公告——"},
+      {"who": "narrator", "text": "公告发出来之后：除了税金以外的债务，免除了。"},
+      {"who": "ikuo", "face": "normal", "text": "至于税金——那是你赢钱那几年的账，免不掉。所以从现在起，你的工资由我来管，一起还。"},
+      {"who": "kurumi", "face": "normal", "text": "……嗯。对不起。谢谢。"},
+      {"who": "narrator", "text": "那天晚上，伙伴们聚在一起，围着一盘章鱼烧，说着没营养的话。久留美哭了很久，也笑了很久。"},
+      {"who": "kurumi", "face": "happy", "text": "(……还活着。活着，就能翻到下一页。)"}
+    ]},
+    {"type": "dialogue", "bg": "bg_city_night", "lines": [
+      {"who": "narrator", "text": "——那之后的约1年半。2017年。"},
+      {"who": "narrator", "text": "萌智子创办了自己的公司：「株式会社もちもち企画」。"},
+      {"who": "mochiko", "face": "smile", "text": "面试的合格通知，发出去吧。……酒田さん那边。"},
+      {"who": "narrator", "text": "新人·酒田いなご——农家出身、2017年春毕业。新的故事，就要开始。"},
+      {"who": "narrator", "text": "※债务与破产不是终点。如果你正身处类似的艰难时刻——请向身边的人、法律或心理支持机构求助。活着，才能看到下一章。"}
+    ]}
+  ]
+}

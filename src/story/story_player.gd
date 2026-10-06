@@ -162,6 +162,8 @@ func _play_trade(s: Dictionary) -> void:
 			(r as Account.Position).entry = float(p.entry)
 	trade_screen = TradeScreen.new(session)
 	trade_screen.auto_close_on_finish = bool(s.get("close_at_end", true))
+	trade_screen.exit_label = "返回章节选择"
+	trade_screen.exit_cb = func(): Game.goto("res://src/scenes/chapter_select.tscn")
 	layer.add_child(trade_screen)
 	trade_screen._set_speed(int(s.get("speed", 0)), true)
 	director = TutorialDirector.new(trade_screen, s.get("steps", []))
