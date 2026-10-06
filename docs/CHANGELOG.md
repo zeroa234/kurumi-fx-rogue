@@ -4,6 +4,9 @@
 
 ## 2026-10-06
 
+### 背景音乐（进行中）
+- YuE2 纯器乐 BGM 计划：24 首曲目清单 `config/bgm-cues.json`、生成管线 `scripts/gen_bgm.py`、QA `scripts/bgm_qa.py`、播放器 `src/ui/bgm.gd`（未接入）。进度见 `docs/bgm.md` §5。
+
 ### 文档
 - 新增维护手册 `docs/maintenance.md`、数据字段参考 `docs/data-reference.md`、本变更记录；重写 `docs/story-format.md`；GDD 与实现同步并列出未实现项；README 加文档索引与全部测试。
 
