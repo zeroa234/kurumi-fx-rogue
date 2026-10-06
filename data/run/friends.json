@@ -1,0 +1,22 @@
+{
+  "_doc": "仲间。人物设定以 docs/research/manga-reference.md §2 为准。passive 为常驻 mods；active 每个交易节点可用 charges 次；special 由代码实现。unlock = 解锁标签（剧情章节通关时获得）。",
+  "friends": [
+    {"id": "mochiko", "name": "小金萌智子", "unlock": "friend_mochiko", "color": "b48cff",
+     "bio": "同校的投资达人，资产1000万円以上。冷静、毒舌，喜欢看别人破灭，却对可爱的东西没有抵抗力。",
+     "passive_desc": "看穿行情：显示「公允价」，指标预感 +20%。",
+     "passive": {"show_fair": 1, "forecast_acc": 0.2},
+     "active": {"id": "cold_eye", "name": "冷眼分析", "charges": 1, "desc": "接下来 1 天：显示隐藏趋势与止损簇。"}},
+    {"id": "mebuki", "name": "山師芽吹", "unlock": "friend_mebuki", "color": "ffd166",
+     "bio": "萌智子的朋友。因为「不想工作」开始FX，乐观又冒失。久留美说过：芽吹的行情预测，大体都是错的。",
+     "passive_desc": "芽吹的预言：每个交易日她会在 FX民 时间线上喊单——大约 3/4 的时候是反的。",
+     "passive": {},
+     "special": "mebuki_prophecy",
+     "active": {"id": "loan", "name": "一起去借钱", "charges": 1, "desc": "立刻借入当前净值 50% 的资金（年利 109.5%，计入借金）。"}},
+    {"id": "yasuko", "name": "高根やす子", "unlock": "friend_yasuko", "color": "ff5d73",
+     "bio": "以「あふぃちゃん」之名写FX博客的投资博主，嘴毒但会照顾朋友。吃过FX的大亏，深知行情的可怕。",
+     "passive_desc": "联盟博客：每个交易日 +4 FP；更不容易暴走（暴走线 -5）。",
+     "passive": {"tilt_resist": 5},
+     "special": "affi_income",
+     "active": {"id": "hype", "name": "博客煽动", "charges": 1, "desc": "在博客上喊单：当前品种按你最近一次开仓方向被推一把（散户跟风），并让散户情绪倒向那边。"}}
+  ]
+}

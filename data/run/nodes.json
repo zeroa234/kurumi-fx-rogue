@@ -1,0 +1,328 @@
+{
+ "_doc": "肉鸽节点定义。acts: 每幕的行情/事件参数与 Boss 目标；elites: 精英修正；bosses: Boss 规则（script 里的 day 为交易日序号，可用 rand_day:[a,b] 随机）。目标 target 为「净资产」（资金 − 借金）。",
+ "acts": [
+  {
+   "act": 1,
+   "name": "第一年 · 新手的春天",
+   "target": 800000,
+   "start_date": "2014-04-07",
+   "days_trade": 3,
+   "days_boss": 5,
+   "market": {
+    "trend_mult": 2.0,
+    "regime_days": 3.5,
+    "range_bias": 0.3,
+    "vol_mult": 0.95,
+    "hunt_prob": 0.006,
+    "jump_mult": 0.8
+   },
+   "events": {
+    "news_per_day": 1.6,
+    "disaster_mult": 0.5,
+    "rumor_mult": 0.6,
+    "min_indicators_week": 3
+   },
+   "goal_pct": 0.08
+  },
+  {
+   "act": 2,
+   "name": "第二年 · 欲望的夏天",
+   "target": 4000000,
+   "start_date": "2015-06-01",
+   "days_trade": 3,
+   "days_boss": 5,
+   "market": {
+    "trend_mult": 1.7,
+    "regime_days": 2.8,
+    "range_bias": 0.4,
+    "vol_mult": 1.1,
+    "hunt_prob": 0.012,
+    "jump_mult": 1.1
+   },
+   "events": {
+    "news_per_day": 2.4,
+    "disaster_mult": 1.0,
+    "rumor_mult": 1.2,
+    "min_indicators_week": 3
+   },
+   "goal_pct": 0.1
+  },
+  {
+   "act": 3,
+   "name": "第三年 · 审判的冬天",
+   "target": 20000000,
+   "start_date": "2016-10-03",
+   "days_trade": 3,
+   "days_boss": 5,
+   "market": {
+    "trend_mult": 1.45,
+    "regime_days": 2.2,
+    "range_bias": 0.45,
+    "vol_mult": 1.25,
+    "hunt_prob": 0.018,
+    "jump_mult": 1.4
+   },
+   "events": {
+    "news_per_day": 3.0,
+    "disaster_mult": 1.6,
+    "rumor_mult": 1.5,
+    "min_indicators_week": 4
+   },
+   "goal_pct": 0.12
+  }
+ ],
+ "endless": {
+  "target_mult": 4.0,
+  "vol_step": 0.08
+ },
+ "elites": [
+  {
+   "id": "news_storm",
+   "name": "新闻风暴",
+   "desc": "新闻量 ×3，谣言 ×2。",
+   "events": {
+    "news_per_day": 3.0,
+    "rumor_mult": 2.0
+   },
+   "mult": true
+  },
+  {
+   "id": "stop_hunt",
+   "name": "猎杀止损的周",
+   "desc": "价格频繁扫过散户止损簇。",
+   "market": {
+    "hunt_prob": 5.0
+   },
+   "mult": true
+  },
+  {
+   "id": "high_vol",
+   "name": "剧烈波动",
+   "desc": "整体波动 ×1.6。",
+   "market": {
+    "vol_mult": 1.6
+   },
+   "mult": true
+  },
+  {
+   "id": "thin",
+   "name": "流动性枯竭",
+   "desc": "点差 ×2.5，跳空更多。",
+   "market": {
+    "spread_mult": 2.5,
+    "jump_mult": 2.0
+   },
+   "mult": true
+  },
+  {
+   "id": "indicator_week",
+   "name": "超级指标周",
+   "desc": "每天都有重要指标，惊喜更大。",
+   "events": {
+    "indicator_mult": 3.0,
+    "min_indicators_week": 6,
+    "news_scale": 1.5
+   },
+   "mult": true
+  },
+  {
+   "id": "carry_crash",
+   "name": "高息货币危机",
+   "desc": "里拉与澳元不稳，套息交易随时崩盘。",
+   "script": [
+    {
+     "rand_day": [
+      0,
+      2
+     ],
+     "hour": 9,
+     "do": "news",
+     "template": "carry_unwind"
+    },
+    {
+     "rand_day": [
+      0,
+      2
+     ],
+     "hour": 15,
+     "do": "news",
+     "template": "tr_politics"
+    }
+   ],
+   "symbols_add": [
+    "TRYJPY"
+   ]
+  }
+ ],
+ "bosses": [
+  {
+   "id": "nfp_night",
+   "act": 1,
+   "name": "雇用统计之夜",
+   "desc": "本周有非农和CPI，数字会大幅偏离预期。指标公布前点差会扩大。",
+   "script": [
+    {
+     "day": 2,
+     "do": "indicator",
+     "id": "us_cpi",
+     "forced_surprise": 2.2
+    },
+    {
+     "day": 4,
+     "do": "indicator",
+     "id": "us_nfp",
+     "forced_surprise": 2.8
+    }
+   ],
+   "events": {
+    "news_scale": 1.3
+   }
+  },
+  {
+   "id": "boj_surprise",
+   "act": 1,
+   "name": "日银的意外",
+   "desc": "日本银行会合上可能出现意外决定。",
+   "script": [
+    {
+     "day": 3,
+     "do": "indicator",
+     "id": "boj",
+     "forced_surprise": 2.5
+    }
+   ],
+   "market": {
+    "vol_mult": 1.1
+   }
+  },
+  {
+   "id": "intervention",
+   "act": 2,
+   "name": "汇率干预",
+   "desc": "日元单边急升。政府随时可能出手干预，价格瞬间反转。",
+   "script": [
+    {
+     "day": 0,
+     "hour": 9,
+     "do": "effect",
+     "target": "JPY",
+     "channel": "regime",
+     "mag": 1,
+     "dur": 400
+    },
+    {
+     "day": 0,
+     "hour": 10,
+     "do": "news",
+     "template": "verbal_jp"
+    }
+   ],
+   "market": {
+    "intervention": true,
+    "vol_mult": 1.2
+   },
+   "intervene_prob": 4.0
+  },
+  {
+   "id": "flash_crash",
+   "act": 2,
+   "name": "清晨的闪崩",
+   "desc": "清晨流动性真空时段，日元可能瞬间暴涨。止损单会被以远离设定的价格成交。",
+   "script": [
+    {
+     "rand_day": [
+      1,
+      3
+     ],
+     "hour": 6,
+     "minute": 30,
+     "do": "news",
+     "template": "flash_crash"
+    },
+    {
+     "rand_day": [
+      3,
+      4
+     ],
+     "hour": 7,
+     "minute": 15,
+     "do": "news",
+     "template": "flash_crash"
+    }
+   ],
+   "market": {
+    "spread_mult": 1.3
+   }
+  },
+  {
+   "id": "black_thursday",
+   "act": 3,
+   "name": "黑色星期四",
+   "desc": "某央行一直死守着欧元/瑞郎的下限……「绝对不会被打破」——真的吗？",
+   "pegs": {
+    "EURCHF": 1.2
+   },
+   "start_prices": {
+    "EURCHF": 1.205
+   },
+   "symbols_add": [
+    "EURCHF"
+   ],
+   "script": [
+    {
+     "day": 0,
+     "hour": 8,
+     "do": "effect",
+     "target": "CHF",
+     "channel": "drift",
+     "mag": 0.004,
+     "dur": 480
+    },
+    {
+     "rand_day": [
+      2,
+      4
+     ],
+     "hour": 18,
+     "minute": 30,
+     "do": "peg_break_news"
+    }
+   ],
+   "events": {
+    "disaster_mult": 1.5
+   }
+  },
+  {
+   "id": "lehman_moment",
+   "act": 3,
+   "name": "金融危机",
+   "desc": "大型金融机构接连倒下，风险资产与高息货币遭到无差别抛售。",
+   "script": [
+    {
+     "day": 1,
+     "hour": 9,
+     "do": "news",
+     "template": "bank_trouble"
+    },
+    {
+     "day": 1,
+     "hour": 9,
+     "do": "effect",
+     "target": "factor:risk",
+     "channel": "drift",
+     "mag": -1.5,
+     "dur": 300
+    },
+    {
+     "day": 3,
+     "hour": 21,
+     "do": "news",
+     "template": "cb_surprise_cut"
+    }
+   ],
+   "market": {
+    "vol_mult": 1.35
+   }
+  }
+ ]
+}

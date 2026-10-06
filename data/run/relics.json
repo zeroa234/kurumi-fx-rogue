@@ -1,0 +1,347 @@
+{
+ "_doc": "手法（局内永久遗物）。mods 叠加到 Mods（*_mult 相乘，其余相加）。rarity: common/uncommon/rare。tag 用于构筑：info 情报 / risk 风控 / gamble 赌徒 / swap 掉期 / news 消息 / econ 经济。unlock 为空表示默认在卡池；否则需要局外养成解锁。icon 对应 assets/sprites/icons/<icon>.png（缺图时用像素占位）。",
+ "relics": [
+  {
+   "id": "econ_calendar",
+   "name": "经济日历PRO",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "econ_calendar",
+   "desc": "经济日历可多看 2 天；指标「预感」准确率 +30%。",
+   "mods": {
+    "calendar_days": 2,
+    "forecast_acc": 0.3
+   }
+  },
+  {
+   "id": "newspaper",
+   "name": "经济新闻订阅",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "newspaper",
+   "desc": "指标「预感」准确率 +40%。",
+   "mods": {
+    "forecast_acc": 0.4
+   }
+  },
+  {
+   "id": "smartphone",
+   "name": "FX民雷达",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "smartphone",
+   "desc": "图表显示散户多空比例。散户一边倒时，反着做往往更有利。",
+   "mods": {
+    "show_sentiment": 1
+   }
+  },
+  {
+   "id": "ma_chart",
+   "name": "移动平均线",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "ma_chart",
+   "desc": "图表显示 20/75 均线。趋势行情中顺势更容易赚。",
+   "mods": {
+    "ind_ma": 1
+   }
+  },
+  {
+   "id": "bollinger",
+   "name": "布林带",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "bollinger",
+   "desc": "图表显示 ±2σ 布林带。震荡行情中触及边缘常会回归。",
+   "mods": {
+    "ind_bb": 1
+   }
+  },
+  {
+   "id": "rsi_gauge",
+   "name": "RSI 仪表",
+   "rarity": "common",
+   "tag": "info",
+   "icon": "rsi_gauge",
+   "desc": "图表下方显示 RSI(14)。",
+   "mods": {
+    "ind_rsi": 1
+   }
+  },
+  {
+   "id": "magnifier",
+   "name": "止损簇探测",
+   "rarity": "uncommon",
+   "tag": "info",
+   "icon": "magnifier",
+   "desc": "图表标出散户止损单聚集的价位——那里常被「猎杀」。",
+   "mods": {
+    "show_clusters": 1
+   }
+  },
+  {
+   "id": "tv",
+   "name": "电视速报",
+   "rarity": "uncommon",
+   "tag": "news",
+   "icon": "tv",
+   "desc": "突发新闻提前 1 tick 显示（比价格更快）。",
+   "mods": {
+    "news_lead": 1
+   },
+   "unlock": "pool_info"
+  },
+  {
+   "id": "binoculars",
+   "name": "望远镜",
+   "rarity": "uncommon",
+   "tag": "info",
+   "icon": "binoculars",
+   "desc": "经济日历可多看 3 天。",
+   "mods": {
+    "calendar_days": 3
+   },
+   "unlock": "pool_info"
+  },
+  {
+   "id": "crystal_ball",
+   "name": "趋势水晶",
+   "rarity": "rare",
+   "tag": "info",
+   "icon": "crystal_ball",
+   "desc": "图表显示两种货币各自的隐藏趋势状态（上升/下跌/震荡）。",
+   "mods": {
+    "show_trend": 1
+   },
+   "unlock": "pool_info"
+  },
+  {
+   "id": "white_cat",
+   "name": "白猫的直觉",
+   "rarity": "uncommon",
+   "tag": "info",
+   "icon": "white_cat",
+   "desc": "图表显示「公允价」虚线：剔除噪音后的合理价位。",
+   "mods": {
+    "show_fair": 1
+   }
+  },
+  {
+   "id": "anchor",
+   "name": "止损之锚",
+   "rarity": "common",
+   "tag": "risk",
+   "icon": "anchor",
+   "desc": "止损单滑点 -70%。",
+   "mods": {
+    "sl_slip_mult": 0.3
+   }
+  },
+  {
+   "id": "shield",
+   "name": "风控手册",
+   "rarity": "uncommon",
+   "tag": "risk",
+   "icon": "shield",
+   "desc": "所有亏损 -10%。",
+   "mods": {
+    "loss_mult": 0.9
+   }
+  },
+  {
+   "id": "umbrella",
+   "name": "亏损保险",
+   "rarity": "uncommon",
+   "tag": "risk",
+   "icon": "umbrella",
+   "desc": "每天第一笔亏损返还 30%。",
+   "mods": {
+    "insurance": 0.3
+   }
+  },
+  {
+   "id": "stopwatch",
+   "name": "追踪止损",
+   "rarity": "common",
+   "tag": "risk",
+   "icon": "stopwatch",
+   "desc": "解锁「追」按钮：止损线会跟着有利方向移动。",
+   "mods": {
+    "trailing": 1
+   }
+  },
+  {
+   "id": "notebook",
+   "name": "久留美的FX笔记",
+   "rarity": "common",
+   "tag": "risk",
+   "icon": "notebook",
+   "desc": "メンタル损失 -20%。",
+   "mods": {
+    "mental_loss_mult": 0.8
+   }
+  },
+  {
+   "id": "pillow",
+   "name": "好梦枕头",
+   "rarity": "common",
+   "tag": "risk",
+   "icon": "pillow",
+   "desc": "每天メンタル额外 +3。",
+   "mods": {
+    "mental_regen": 3
+   }
+  },
+  {
+   "id": "headset",
+   "name": "降噪耳机",
+   "rarity": "common",
+   "tag": "risk",
+   "icon": "headset",
+   "desc": "更不容易暴走（暴走线 -10）。",
+   "mods": {
+    "tilt_resist": 10
+   }
+  },
+  {
+   "id": "hourglass",
+   "name": "零cut券",
+   "rarity": "uncommon",
+   "tag": "risk",
+   "icon": "hourglass",
+   "desc": "下一次账户被打成负数时，负余额清零（一次）。",
+   "mods": {
+    "zero_cut": 1
+   }
+  },
+  {
+   "id": "rocket",
+   "name": "火箭杠杆",
+   "rarity": "rare",
+   "tag": "gamble",
+   "icon": "rocket",
+   "desc": "杠杆 ×2，但亏损 +10%。",
+   "mods": {
+    "leverage_mult": 2.0,
+    "loss_mult": 1.1
+   },
+   "unlock": "pool_gamble"
+  },
+  {
+   "id": "dice",
+   "name": "赌徒骰子",
+   "rarity": "uncommon",
+   "tag": "gamble",
+   "icon": "dice",
+   "desc": "盈利与亏损都 ×1.25。",
+   "mods": {
+    "profit_mult": 1.25,
+    "loss_mult": 1.25
+   }
+  },
+  {
+   "id": "black_card",
+   "name": "黑卡",
+   "rarity": "uncommon",
+   "tag": "gamble",
+   "icon": "black_card",
+   "desc": "单笔手数上限 ×3，持仓数 +1。",
+   "mods": {
+    "max_lot_mult": 3.0,
+    "max_positions": 1
+   }
+  },
+  {
+   "id": "candlestick_gold",
+   "name": "黄金K线",
+   "rarity": "rare",
+   "tag": "gamble",
+   "icon": "candlestick_gold",
+   "desc": "顺着隐藏趋势方向平仓的盈利 +30%。",
+   "mods": {
+    "trend_profit": 0.3
+   },
+   "unlock": "pool_gamble"
+  },
+  {
+   "id": "ruler",
+   "name": "ナンピン定规",
+   "rarity": "uncommon",
+   "tag": "gamble",
+   "icon": "ruler",
+   "desc": "对亏损中的同向持仓加仓时，成交价改善 15% 的差距。",
+   "mods": {
+    "nanpin": 0.15
+   }
+  },
+  {
+   "id": "megaphone",
+   "name": "消息交易术",
+   "rarity": "uncommon",
+   "tag": "news",
+   "icon": "megaphone",
+   "desc": "新闻/指标发布后 2 小时内开的仓，盈利 +40%。",
+   "mods": {
+    "event_profit": 0.4
+   }
+  },
+  {
+   "id": "piggy_bank",
+   "name": "掉期存钱罐",
+   "rarity": "common",
+   "tag": "swap",
+   "icon": "piggy_bank",
+   "desc": "掉期收入 ×2（支付也 ×2）。",
+   "mods": {
+    "swap_mult": 2.0
+   }
+  },
+  {
+   "id": "gold_coin",
+   "name": "复利金币",
+   "rarity": "common",
+   "tag": "swap",
+   "icon": "gold_coin",
+   "desc": "掉期 ×1.5，FP 获得 +10%。",
+   "mods": {
+    "swap_mult": 1.5,
+    "fp_mult": 1.1
+   }
+  },
+  {
+   "id": "laptop",
+   "name": "第二台电脑",
+   "rarity": "common",
+   "tag": "econ",
+   "icon": "laptop",
+   "desc": "可同时持有的仓位 +2。",
+   "mods": {
+    "max_positions": 2
+   }
+  },
+  {
+   "id": "monitors",
+   "name": "多屏战斗站",
+   "rarity": "uncommon",
+   "tag": "econ",
+   "icon": "monitors",
+   "desc": "FP 获得 +30%。",
+   "mods": {
+    "fp_mult": 1.3
+   }
+  },
+  {
+   "id": "bunny_pendant",
+   "name": "兔子吊坠",
+   "rarity": "uncommon",
+   "tag": "econ",
+   "icon": "bunny_pendant",
+   "desc": "FP 获得 +20%；アルバイト收入 +50%。",
+   "mods": {
+    "fp_mult": 1.2,
+    "work_pay_mult": 1.5
+   },
+   "unlock": "friend_yasuko"
+  }
+ ]
+}

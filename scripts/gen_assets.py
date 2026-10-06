@@ -179,7 +179,7 @@ def prompt_negative(m, a, kind):
     return prompt, negative
 
 
-def graph_t2i(m, a, kind, seed):
+def graph_t2i(m, a, kind, seed, comfy=None):
     g = _tpl(kind["template"] + ".json")
     prompt, negative = prompt_negative(m, a, kind)
     g["19"]["inputs"]["text"] = prompt
@@ -191,11 +191,36 @@ def graph_t2i(m, a, kind, seed):
         g["10"]["inputs"]["steps"] = kind["steps"]
     if "cfg" in kind:
         g["10"]["inputs"]["cfg"] = kind["cfg"]
-    lora = kind.get("lora")
-    if lora:
-        pit = g[lora["pit"]]["inputs"]
-        pit["lora_name"] = lora["name"]
-        pit["strength_model"] = lora.get("strength", 1.0)
+    # 填 LoRA 坑（重接链，未用的坑直接从图中删除，避免空名验证失败）
+    lora = kind.get("lora") or {}
+    if m["kinds"].get("_lora_pits"):
+        chain = m["kinds"]["_lora_pits"]["chain"]
+    else:
+        chain = ["48", "49", "50", "51", "52"] if kind["template"] == "anima-t2i" else ["48", "29"]
+    if lora and lora.get("pit") not in chain:
+        raise ValueError(f"LoRA pit {lora.get('pit')} 不在模板链 {chain} 中")
+    for pit in chain:
+        if pit in g and lora.get("pit") == pit:
+            g[pit]["inputs"]["lora_name"] = lora["name"]
+            g[pit]["inputs"]["strength_model"] = lora.get("strength", 1.0)
+    used = [p for p in chain if p in g and g[p]["inputs"].get("lora_name")]
+    for p in chain:  # 未用的坑：断開并删除
+        if p in g and p not in used:
+            del g[p]
+    if used:
+        for i, p in enumerate(used):
+            base = ["11", 0] if i == 0 else [used[i - 1], 0]
+            g[p]["inputs"]["model"] = base
+            if "clip" in g[p]["inputs"]:
+                g[p]["inputs"]["clip"] = ["5", 0] if i == 0 else [used[i - 1], 1]
+        last_clip = next((p for p in reversed(used) if "clip" in g[p]["inputs"]), None)
+        g["10"]["inputs"]["model"] = [used[-1], 0]
+        clip_out = [last_clip, 1] if last_clip else ["5", 0]
+    else:
+        g["10"]["inputs"]["model"] = ["11", 0]
+        clip_out = ["5", 0]
+    for cu in ("19", "47"):
+        g[cu]["inputs"]["clip"] = clip_out
     g["3"]["inputs"]["filename_prefix"] = f"kurumi-fx-rogue/hi_{a['id']}"
     return g, prompt, negative
 

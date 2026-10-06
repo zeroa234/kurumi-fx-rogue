@@ -1,0 +1,22 @@
+{
+  "_doc": "消耗道具。use: map（地图上使用）/ trade（交易中使用）/ both。effect 字段由 RunState.use_item 解释：mental, money(按幕缩放), money_flat, curse, temp_mods(下一个交易节点生效), skip_node, cure_tilt。",
+  "items": [
+    {"id": "energy_drink", "name": "能量饮料", "icon": "energy_drink", "price": 25, "use": "both", "desc": "メンタル +25。", "effect": {"mental": 25}},
+    {"id": "bento", "name": "便利店便当", "icon": "bento", "price": 15, "use": "both", "desc": "メンタル +12。", "effect": {"mental": 12}},
+    {"id": "coffee", "name": "黑咖啡", "icon": "coffee", "price": 30, "use": "map", "desc": "下一个交易节点：新闻提前 1 tick、指标预感 +30%。", "effect": {"temp_mods": {"news_lead": 1, "forecast_acc": 0.3}}},
+    {"id": "tissue_box", "name": "纸巾盒", "icon": "tissue_box", "price": 20, "use": "both", "desc": "哭一场。解除暴走（メンタル至少回到 40）。", "effect": {"cure_tilt": 40}},
+    {"id": "omamori", "name": "护身符", "icon": "omamori", "price": 40, "use": "map", "desc": "下一个交易节点：负余额清零一次、止损滑点 -50%。", "effect": {"temp_mods": {"zero_cut": 1, "sl_slip_mult": 0.5}}},
+    {"id": "fortune_slip", "name": "神签", "icon": "fortune_slip", "price": 35, "use": "map", "desc": "下一个交易节点：看见隐藏趋势。", "effect": {"temp_mods": {"show_trend": 1}}},
+    {"id": "calendar_leave", "name": "有给休假", "icon": "calendar_leave", "price": 45, "use": "map", "desc": "跳过下一个普通交易节点（拿基础 FP，不承担风险）。", "effect": {"skip_node": true}},
+    {"id": "eye_mask", "name": "眼罩", "icon": "eye_mask", "price": 30, "use": "map", "desc": "好好睡一觉：メンタル +40。", "effect": {"mental": 40}},
+    {"id": "passbook", "name": "父亲的存折", "icon": "passbook", "price": 999, "use": "map", "shop": false, "desc": "立刻获得 300万円……但会背上「罪恶感」，メンタル -30。", "effect": {"money_flat": 3000000, "mental": -30, "curse": "guilt"}},
+    {"id": "black_card_loan", "name": "闇金名片", "icon": "handcuffs_money", "price": 999, "use": "map", "shop": false, "desc": "借入当前资金 50% 的钱（年利 109.5%，计入借金）。", "effect": {"loan_ratio": 0.5}}
+  ],
+  "curses": [
+    {"id": "guilt", "name": "罪恶感", "icon": "passbook", "desc": "每天メンタル回复 -3。", "mods": {"mental_regen": -3}},
+    {"id": "posipos", "name": "ポジポジ病", "icon": "dice", "desc": "空仓时メンタル缓慢下降。（交易时间里没有持仓，每天 -6）", "mods": {}},
+    {"id": "insomnia", "name": "睡眠不足", "icon": "eye_mask", "desc": "メンタル损失 +25%。", "mods": {"mental_loss_mult": 1.25}},
+    {"id": "tax", "name": "滞纳的税金", "icon": "handcuffs_money", "desc": "每个交易节点结束时，扣除当节点盈利的 20%。", "mods": {}},
+    {"id": "greed", "name": "强欲", "icon": "candlestick_gold", "desc": "暴走线 +10（更容易暴走）。", "mods": {"tilt_resist": -10}}
+  ]
+}

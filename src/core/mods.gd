@@ -52,6 +52,9 @@ func set_layer(source: String, values: Dictionary) -> void:
 func remove_layer(source: String) -> void:
 	_layers.erase(source)
 
+func layer_names() -> Array:
+	return _layers.keys()
+
 func has_layer(source: String) -> bool:
 	return _layers.has(source)
 

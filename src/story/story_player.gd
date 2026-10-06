@@ -34,11 +34,19 @@ func _ready() -> void:
 		return
 	scenes = chapter.get("scenes", [])
 	idx = int(Game.params.get("scene_index", 0)) - 1
+	battle_only = bool(Game.params.get("battle_only", false))
+	battle_idx = idx + 1
 	_next()
+
+var battle_only := false
+var battle_idx := 0
 
 func _next() -> void:
 	idx += 1
 	_clear_layer()
+	if battle_only and idx > battle_idx:
+		Game.goto("res://src/scenes/battles.tscn")
+		return
 	if idx >= scenes.size():
 		_chapter_done()
 		return

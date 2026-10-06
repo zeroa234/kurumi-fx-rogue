@@ -1,0 +1,114 @@
+{
+  "_doc": "肉鸽文字事件。who/face 为立绘；requires_friend = 需要该仲间已解锁；acts 为出现的幕。choice.effects: mental, fp, money_act(×幕基数 5万/20万/80万), money_pct(按当前资金比例，负数为支出), relic(\"random\"|\"random_info\"|id), item(id|\"random\"), curse, remove_curse, loan_pct, gamble{chance, win{}, lose{}}, req{money_pct_min, fp}。",
+  "events": [
+    {"id": "exam_week", "title": "考试周", "bg": "bg_lecture", "who": "kurumi", "face": "worried", "acts": [1, 2],
+     "text": "期末考试就在下周。久留美可是特待生——成绩掉下去的话，学费减免就没了。\n可是图表上，美元/日元正在走出漂亮的趋势……",
+     "choices": [
+       {"text": "通宵复习（メンタル -8，FP +20）", "effects": {"mental": -8, "fp": 20}},
+       {"text": "边复习边盯盘（获得诅咒「睡眠不足」，FP +35）", "effects": {"curse": "insomnia", "fp": 35}},
+       {"text": "老老实实睡觉（メンタル +10）", "effects": {"mental": 10}}
+     ]},
+    {"id": "mochiko_cafe", "title": "萌智子的邀请", "bg": "bg_cafe", "who": "mochiko", "face": "normal", "acts": [1, 2, 3], "requires_friend": "mochiko",
+     "text": "「最近亏得很惨吧？表情都写在脸上了。」\n萌智子搅着咖啡，嘴角带着一点看好戏的笑。「要听听我的建议吗？当然——不保证对你有好处。」",
+     "choices": [
+       {"text": "听她的建议（获得一个随机情报手法）", "effects": {"relic": "random_info", "mental": -5}},
+       {"text": "只是喝咖啡聊天（メンタル +15）", "effects": {"mental": 15}}
+     ]},
+    {"id": "cat_cafe", "title": "猫咖", "bg": "bg_cafe", "who": "mochiko", "face": "blush", "acts": [1, 2, 3], "requires_friend": "mochiko",
+     "text": "路过一家猫咖。一向冷静的萌智子，盯着橱窗里的小猫，脚步怎么也挪不动了。",
+     "choices": [
+       {"text": "拉她进去（メンタル +20，资金 -1%）", "effects": {"mental": 20, "money_pct": -0.01}},
+       {"text": "假装没看见（FP +10）", "effects": {"fp": 10}}
+     ]},
+    {"id": "mebuki_borrow", "title": "芽吹的请求", "bg": "bg_campus", "who": "mebuki", "face": "cry", "acts": [1, 2, 3], "requires_friend": "mebuki",
+     "text": "「学姐……能借我一点钱吗？就一点点！下周一定翻倍还你！我这次真的看准了！」",
+     "choices": [
+       {"text": "借给她（资金 -5%，50%概率她赚了还你 15%）", "effects": {"money_pct": -0.05, "gamble": {"chance": 0.5, "win": {"money_pct": 0.15, "mental": 5}, "lose": {"mental": -5}}}},
+       {"text": "拒绝：「你的预测大体都是反的」（メンタル -3，FP +15）", "effects": {"mental": -3, "fp": 15}}
+     ]},
+    {"id": "affi_blog", "title": "あふぃちゃん的联盟广告", "bg": "bg_room_night", "who": "yasuko", "face": "happy", "acts": [1, 2, 3], "requires_friend": "yasuko",
+     "text": "「这个海外业者现在开户送赠金哦——当然我拿推荐费就是了。要不要？」",
+     "choices": [
+       {"text": "开个副账户（FP +40，获得诅咒「强欲」）", "effects": {"fp": 40, "curse": "greed"}},
+       {"text": "帮她写一篇文章（FP +15，メンタル +5）", "effects": {"fp": 15, "mental": 5}}
+     ]},
+    {"id": "father_call", "title": "父亲的电话", "bg": "bg_room_day", "who": "ikuo", "face": "normal", "acts": [1, 2, 3],
+     "text": "「最近怎么样？……没在做那个了吧？」\n电话那头，父亲的声音有一点小心翼翼。",
+     "choices": [
+       {"text": "「嗯，没有了。」（撒谎：メンタル -10，FP +15）", "effects": {"mental": -10, "fp": 15}},
+       {"text": "随便聊聊学校的事（メンタル +12）", "effects": {"mental": 12}}
+     ]},
+    {"id": "seminar", "title": "高价FX讲座", "bg": "bg_finance", "who": "narrator", "acts": [1, 2, 3],
+     "text": "「月入百万的秘诀，全部传授！」——讲座门票不便宜。",
+     "choices": [
+       {"text": "参加（资金 -3%，获得一个随机手法）", "effects": {"money_pct": -0.03, "relic": "random"}, "req": {"money_pct_min": 0.03}},
+       {"text": "这种东西一看就是骗人的（FP +8）", "effects": {"fp": 8}}
+     ]},
+    {"id": "ea_sale", "title": "神奇的自动交易EA", "bg": "bg_room_night", "who": "narrator", "acts": [1, 2, 3],
+     "text": "网上有人在卖「胜率95%」的自动交易程序。评论区一片好评——全都是同一天注册的账号。",
+     "choices": [
+       {"text": "买来试试（FP -30：50% 获得稀有手法，50% 获得诅咒「ポジポジ病」）", "effects": {"fp": -30, "gamble": {"chance": 0.5, "win": {"relic": "random_rare"}, "lose": {"curse": "posipos"}}}, "req": {"fp": 30}},
+       {"text": "关掉网页", "effects": {}}
+     ]},
+    {"id": "tax_notice", "title": "税务署的信", "bg": "bg_gov_office", "who": "narrator", "acts": [2, 3],
+     "text": "FX 的盈利是要交税的。信封里是一张金额不小的通知书。",
+     "choices": [
+       {"text": "老实缴纳（资金 -6%）", "effects": {"money_pct": -0.06}},
+       {"text": "先拖着（获得诅咒「滞纳的税金」）", "effects": {"curse": "tax"}}
+     ]},
+    {"id": "midnight_urge", "title": "深夜的冲动", "bg": "bg_room_night", "who": "kurumi", "face": "tilt", "acts": [1, 2, 3],
+     "text": "凌晨三点。睡不着。手机上的报价一直在跳。\n「……就开一单。就一单。」",
+     "choices": [
+       {"text": "开！（50%：资金 +8%；50%：资金 -8%，メンタル -10）", "effects": {"gamble": {"chance": 0.5, "win": {"money_pct": 0.08, "mental": 5}, "lose": {"money_pct": -0.08, "mental": -10}}}},
+       {"text": "把手机扔到房间另一头（メンタル +5）", "effects": {"mental": 5}}
+     ]},
+    {"id": "blogger_meltdown", "title": "爆仓直播", "bg": "bg_room_night", "who": "narrator", "acts": [1, 2, 3],
+     "text": "一位人气FX主播在直播中被强平，几千万円在镜头前蒸发。弹幕在刷「草」。",
+     "choices": [
+       {"text": "认真复盘他的错误（FP +25，メンタル -5）", "effects": {"fp": 25, "mental": -5}},
+       {"text": "关掉直播（メンタル +3）", "effects": {"mental": 3}}
+     ]},
+    {"id": "loan_flyer", "title": "可疑的传单", "bg": "bg_rain_street", "who": "narrator", "acts": [1, 2, 3],
+     "text": "「当日放款！无需审核！」\n年利一栏的小字写着：109.5%。",
+     "choices": [
+       {"text": "借（借入当前资金 50%，计入借金）", "effects": {"loan_pct": 0.5}},
+       {"text": "撕掉", "effects": {"mental": 2}}
+     ]},
+    {"id": "doujin", "title": "同人即卖会", "bg": "bg_city_night", "who": "yasuko", "face": "happy", "acts": [1, 2, 3], "requires_friend": "yasuko",
+     "text": "やす子在同人即卖会上摆摊，原创角色的本子卖得出乎意料地好。「来帮忙！报酬是庆功宴！」",
+     "choices": [
+       {"text": "去帮忙（メンタル +15，资金 +1 幕基数）", "effects": {"mental": 15, "money_act": 1}},
+       {"text": "我要盯盘……（FP +10）", "effects": {"fp": 10}}
+     ]},
+    {"id": "library", "title": "图书馆", "bg": "bg_lecture", "who": "kurumi", "face": "focus", "acts": [1, 2, 3],
+     "text": "图书馆角落里有一排没人借的投资书。久留美认真地读了起来。",
+     "choices": [
+       {"text": "读技术分析（获得：移动平均线 / 布林带 / RSI 之一）", "effects": {"relic": "random_chart"}},
+       {"text": "读风险管理（获得一个随机风控手法）", "effects": {"relic": "random_risk"}}
+     ]},
+    {"id": "old_note", "title": "妈妈的信", "bg": "bg_living_dim", "who": "kurumi", "face": "cry", "acts": [2, 3],
+     "text": "整理房间时，翻出了那封信。久留美没有再读一遍，只是把它放回了抽屉最里面。",
+     "choices": [
+       {"text": "「2000万円……我一定会拿回来。」（获得诅咒「强欲」，FP +30）", "effects": {"curse": "greed", "fp": 30}},
+       {"text": "「……我不会变成那样的。」（メンタル +15，移除一个诅咒）", "effects": {"mental": 15, "remove_curse": true}}
+     ]},
+    {"id": "konbini_shift", "title": "便利店的夜班", "bg": "bg_konbini", "who": "kurumi", "face": "sleep", "acts": [1, 2, 3],
+     "text": "店长打来电话：今晚有人请假，能不能来代个夜班？",
+     "choices": [
+       {"text": "去（资金 +1 幕基数，メンタル -6）", "effects": {"money_act": 1, "mental": -6}},
+       {"text": "拒绝（メンタル +4）", "effects": {"mental": 4}}
+     ]},
+    {"id": "rumor_tip", "title": "内部消息？", "bg": "bg_cafe", "who": "narrator", "acts": [2, 3],
+     "text": "邻桌的西装男压低声音：「下周那个央行要出大招……」\n这是真的情报，还是想让人上钩？",
+     "choices": [
+       {"text": "记下来（获得道具「神签」，メンタル -3）", "effects": {"item": "fortune_slip", "mental": -3}},
+       {"text": "当作没听见（FP +5）", "effects": {"fp": 5}}
+     ]},
+    {"id": "passbook_again", "title": "壁橱", "bg": "bg_living", "who": "kurumi", "face": "worried", "acts": [1, 2, 3],
+     "text": "家里没人。壁橱的门半开着。\n里面，是父亲的存折。",
+     "choices": [
+       {"text": "拿走（获得道具「父亲的存折」）", "effects": {"item": "passbook"}},
+       {"text": "关上壁橱（メンタル +8）", "effects": {"mental": 8}}
+     ]}
+  ]
+}

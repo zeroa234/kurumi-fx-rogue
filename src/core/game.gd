@@ -20,6 +20,11 @@ func _ready() -> void:
 			params["chapter"] = a.substr(10)
 		elif a.begins_with("--scene-index="):
 			params["scene_index"] = int(a.substr(14))
+		elif a == "--newrun":
+			# 调试：用当前存档开一局（不写盘）
+			run = RunState.create({"broker": "overseas", "friends": ["mochiko", "mebuki"], "seed": 777})
+		elif a.begins_with("--node="):
+			params["node"] = a.substr(7)
 	if shot != "":
 		_take_shot(shot, delay)
 

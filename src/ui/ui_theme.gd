@@ -166,6 +166,37 @@ func spacer() -> Control:
 	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return c
 
+## 居中弹窗：返回内容 VBox；UI.close_modal(vbox) 关闭
+func modal(parent: Node, border: Color = BORDER_HI, width := 380, dim_alpha := 0.55) -> VBoxContainer:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	parent.add_child(root)
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, dim_alpha)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(dim)
+	var p := PanelContainer.new()
+	p.add_theme_stylebox_override("panel", box(Color("201838"), border, 1, 6))
+	root.add_child(p)
+	var v := vbox(6)
+	v.custom_minimum_size.x = width
+	p.add_child(v)
+	v.set_meta("root", root)
+	p.resized.connect(func(): p.position = ((Vector2(640, 360) - p.size) / 2.0).floor())
+	return v
+
+func close_modal(v: Control) -> void:
+	if is_instance_valid(v) and v.has_meta("root"):
+		v.get_meta("root").queue_free()
+
+## 图标：优先 assets/sprites/icons/<id>.png，没有则用像素占位
+func icon(id: String, fallback := "star") -> Texture2D:
+	var t := tex("res://assets/sprites/icons/%s.png" % id)
+	if t:
+		return t
+	return PixelIcons.get_icon(fallback, 3)
+
 func hex(c: Color) -> String:
 	return c.to_html(false)
 

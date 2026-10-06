@@ -129,6 +129,12 @@ func _add_indicator(day: int, ind: Dictionary, forced := {}) -> Dictionary:
 		item.surprise = (float(item.actual) - float(item.forecast)) / float(ind.surprise_sd) * float(ind.good)
 	for k in forced:
 		item[k] = forced[k]
+	# 只指定了惊喜值时，反推实际值，保持显示一致
+	if forced.has("surprise") and not forced.has("actual"):
+		if item.kind == "rate":
+			item.actual = float(item.forecast) + float(forced.surprise) * float(ind.step)
+		else:
+			item.actual = float(item.forecast) + float(forced.surprise) * float(ind.surprise_sd) * float(ind.good)
 	item.def = ind
 	# 预测精度：给出“上振/下振”倾向提示，准确率随精度上升
 	var acc: float = 0.5 + 0.45 * clampf(mods.get_v("forecast_acc"), 0.0, 1.0)

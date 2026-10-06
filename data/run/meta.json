@@ -1,0 +1,38 @@
+{
+  "_doc": "局外养成「相場勘」。cost 为每一级的价格数组（长度 = 最大等级）。effect: start_money(每级+円) / mods(每级叠加) / unlock(标签) / special。requires: 需要先有的节点 id。",
+  "nodes": [
+    {"id": "money1", "name": "打工存钱", "desc": "起始资金 +5万円/级。", "cost": [15, 25, 40, 60, 85, 120], "effect": {"start_money": 50000}},
+    {"id": "mental1", "name": "心理建设", "desc": "メンタル上限 +10/级。", "cost": [15, 30, 50, 80], "effect": {"mods": {"mental_max": 10}}},
+    {"id": "regen1", "name": "规律作息", "desc": "每天メンタル回复 +1/级。", "cost": [20, 40, 70], "effect": {"mods": {"mental_regen": 1}}},
+    {"id": "fp1", "name": "复盘习惯", "desc": "FP 获得 +10%/级。", "cost": [20, 35, 55, 80, 110], "effect": {"mods": {"fp_mult": 1.1}}},
+    {"id": "work1", "name": "高时薪打工", "desc": "アルバイト收入 +40%/级。", "cost": [15, 30, 50], "effect": {"mods": {"work_pay_mult": 1.4}}},
+    {"id": "calendar1", "name": "看日历的习惯", "desc": "经济日历可多看 1 天/级。", "cost": [15, 30], "effect": {"mods": {"calendar_days": 1}}},
+    {"id": "forecast1", "name": "数据直觉", "desc": "指标预感准确率 +10%/级。", "cost": [25, 45, 70], "effect": {"mods": {"forecast_acc": 0.1}}, "requires": ["calendar1"]},
+    {"id": "slots_item", "name": "大号书包", "desc": "道具栏 +1/级（初始 3）。", "cost": [30, 60], "effect": {"special": "item_slot"}},
+    {"id": "slots_friend", "name": "交友圈", "desc": "仲间位 +1/级（初始 1）。", "cost": [40, 90], "effect": {"special": "friend_slot"}},
+    {"id": "shop1", "name": "砍价达人", "desc": "商店价格 -8%/级。", "cost": [25, 45, 70], "effect": {"mods": {"shop_discount": 0.08}}},
+    {"id": "reroll1", "name": "货比三家", "desc": "商店每次免费刷新 +1/级。", "cost": [30, 60], "effect": {"special": "free_reroll"}},
+    {"id": "start_relic", "name": "开局手法", "desc": "开局从 3 个普通手法中选 1 个。", "cost": [45], "effect": {"special": "start_relic"}},
+    {"id": "insurance1", "name": "心理准备", "desc": "每局第一次被强平时，返还亏损的 30%。", "cost": [50], "effect": {"special": "first_stopout_refund"}},
+    {"id": "pair_eurchf", "name": "研究：欧元/瑞郎", "desc": "交易品种加入 EUR/CHF。", "cost": [20], "effect": {"unlock": "pair_eurchf"}},
+    {"id": "pair_tryjpy", "name": "研究：里拉/日元", "desc": "交易品种加入 TRY/JPY（高掉期、高风险）。", "cost": [25], "effect": {"unlock": "pair_tryjpy"}},
+    {"id": "pair_n225", "name": "研究：日经225", "desc": "交易品种加入日经225 CFD。", "cost": [30], "effect": {"unlock": "pair_n225"}},
+    {"id": "pair_xau", "name": "研究：黄金", "desc": "交易品种加入黄金 CFD（避险）。", "cost": [30], "effect": {"unlock": "pair_xauusd"}},
+    {"id": "broker_swap", "name": "开户：掉期特化证券", "desc": "解锁业者「掉期特化证券」。", "cost": [40], "effect": {"unlock": "broker_swap"}, "requires": ["pair_tryjpy"]},
+    {"id": "broker_pro", "name": "开户：专业 ECN", "desc": "解锁业者「专业 ECN 账户」（100倍、零cut、点差极窄）。", "cost": [80], "effect": {"unlock": "broker_pro"}},
+    {"id": "pool_info", "name": "情报网", "desc": "稀有情报手法（趋势水晶、望远镜、电视速报）进入卡池。", "cost": [60], "effect": {"unlock": "pool_info"}},
+    {"id": "pool_gamble", "name": "赌徒的门路", "desc": "稀有赌徒手法（火箭杠杆、黄金K线）进入卡池。", "cost": [60], "effect": {"unlock": "pool_gamble"}}
+  ],
+  "ascension": [
+    {"level": 1, "desc": "Boss 目标 +15%"},
+    {"level": 2, "desc": "起始メンタル -10"},
+    {"level": 3, "desc": "点差 +20%"},
+    {"level": 4, "desc": "商店价格 +15%"},
+    {"level": 5, "desc": "新闻对你的提前量 -1（更晚看到）"},
+    {"level": 6, "desc": "Boss 目标再 +15%"},
+    {"level": 7, "desc": "猎杀止损更频繁"},
+    {"level": 8, "desc": "休息节点减少"},
+    {"level": 9, "desc": "每幕开始获得诅咒「强欲」"},
+    {"level": 10, "desc": "最终目标 3000万円"}
+  ]
+}
