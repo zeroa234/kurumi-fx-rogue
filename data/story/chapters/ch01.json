@@ -1,68 +1,255 @@
 {
-  "id": "ch01",
-  "order": 1,
-  "title": "第1章 母亲的2000万円",
-  "manga": "第1話",
-  "period": "2008年秋",
-  "source": "manga-reference.md §1.2–1.5、§3.1 第1話（S10 ナタリー、S15、S20）。母亲交易的货币对「豪ドル円」仅单一博客来源（中置信）。",
-  "original": "2008年行情回放为示意走势（参考2008年10月澳元/日元暴跌），价位非真实历史数据；台词为转述。",
-  "tutorial": true,
-  "requires": [],
-  "scenes": [
-    {"type": "title_card", "text": "2008年 秋", "sub": "雷曼危机", "hold": 1.8},
-    {"type": "dialogue", "bg": "bg_living_dim", "lines": [
-      {"who": "narrator", "text": "2008年秋。美国投资银行雷曼兄弟破产，金融危机席卷了全世界。"},
-      {"who": "narrator", "text": "那时，福賀久留美还是一名初三学生。她还不知道「FX」这个词意味着什么。"},
-      {"who": "narrator", "text": "父亲·郁夫一个人在外地工作（单身赴任）。家里的钱，由母亲·梢打理。"},
-      {"who": "narrator", "text": "——母亲瞒着所有人，把家里的钱投进了外汇保证金交易。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20081001, "start_date": "2008-10-01", "days": 8, "warmup_days": 6, "balance": 20000000,
-       "broker": {"name": "（当时的FX账户）", "leverage": 25.0, "stopout": 20.0, "margin_call": 60.0, "zero_cut": false},
-       "symbols": ["AUDJPY", "USDJPY", "N225"], "act": 3, "random_news": false, "sns": false, "calendar": false,
-       "market_params": {"vol_mult": 1.6, "intervention": false},
-       "overrides": {"start_prices": {"AUDJPY": 80.0, "USDJPY": 104.0, "N225": 11000}},
-       "mental": 60, "end_on_broken": false, "end_on_bust": false,
-       "goal_text": "【回放·示意走势】",
-       "script": [
-         {"day": 0, "hour": 9, "do": "text", "title": "全球股市连日暴跌，避险日元买盘汹涌", "kind": "market", "icon": "chart", "severity": 3},
-         {"day": 0, "hour": 9, "do": "effect", "target": "factor:risk", "channel": "drift", "mag": -1.2, "dur": 700},
-         {"day": 1, "hour": 23, "do": "guide", "symbol": "AUDJPY", "price": 74.0, "ticks": 60},
-         {"day": 3, "hour": 9, "do": "text", "title": "高息货币遭恐慌性抛售，套息交易全面崩溃", "kind": "market", "icon": "bolt", "severity": 3},
-         {"day": 3, "hour": 10, "do": "guide", "symbol": "AUDJPY", "price": 66.0, "ticks": 120},
-         {"day": 5, "hour": 12, "do": "guide", "symbol": "AUDJPY", "price": 62.0, "ticks": 140},
-         {"day": 7, "hour": 9, "do": "guide", "symbol": "AUDJPY", "price": 58.0, "ticks": 90}
-       ]
-     },
-     "positions": [{"symbol": "AUDJPY", "side": 1, "lots": 95, "entry": 80.0}],
-     "intro": [
-       {"who": "narrator", "text": "（这是母亲的交易画面。澳元/日元——高利息的货币，被认为「拿着就能赚利息」。）"},
-       {"who": "narrator", "text": "（以下走势为示意，用来表现2008年10月那场暴跌。）"}
-     ],
-     "steps": [
-       {"lock": ["buy", "sell", "close", "lots", "sl", "tp", "speed"], "speed": 3, "objective": "[color=#a89cc8]……只能眼睁睁地看着。[/color]", "until": {"type": "time", "day": 7, "hour": 20}, "finish": true}
-     ],
-     "win": {"always": true},
-     "close_at_end": false,
-     "on_win": [
-       {"who": "narrator", "text": "账户里的2000万円，几乎全部消失了。"}
-     ]
+ "id": "ch01",
+ "order": 1,
+ "title": "第1章 母亲的2000万円",
+ "manga": "第1話",
+ "period": "2008年秋",
+ "source": "manga-reference.md §1.2–1.5、§3.1 第1話（S10 ナタリー、S15、S20）。母亲交易的货币对「豪ドル円」仅单一博客来源（中置信）。",
+ "original": "2008年行情回放为示意走势（参考2008年10月澳元/日元暴跌），价位非真实历史数据；台词为转述。",
+ "tutorial": true,
+ "requires": [],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "2008年 秋",
+   "sub": "雷曼危机",
+   "hold": 1.8
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_living_dim",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "2008年秋。美国投资银行雷曼兄弟破产，金融危机席卷了全世界。"
     },
-    {"type": "dialogue", "bg": "bg_living_dim", "lines": [
-      {"who": "narrator", "text": "那天夜里，久留美看到了母亲从未有过的样子——崩溃、失控、歇斯底里。"},
-      {"who": "narrator", "text": "那之后的四个月，母亲拼命打工，想把窟窿补回来。"},
-      {"who": "narrator", "text": "可是2000万円，不是打工能补上的数字。"},
-      {"who": "narrator", "text": "四个月后，母亲留下一封信，离开了这个世界。"},
-      {"who": "narrator", "text": "父亲直到那时，才知道家里的积蓄已经全部消失。"}
-    ]},
-    {"type": "dialogue", "bg": "bg_room_night", "lines": [
-      {"who": "kurumi", "face": "young", "text": "……FX。"},
-      {"who": "kurumi", "face": "young", "text": "妈妈是被FX夺走的。2000万円，也是被FX夺走的。"},
-      {"who": "kurumi", "face": "young", "text": "那我就用同样的FX，把2000万円取回来。"},
-      {"who": "kurumi", "face": "young", "text": "2000万円这种程度——我一定能轻松取回来给你们看！"},
-      {"who": "narrator", "text": "这一天，一个少女决定了自己的路。"}
-    ]},
-    {"type": "title_card", "text": "FX战士久留美", "sub": "—— 2000万之路 ——", "hold": 2.2, "sfx": "title"}
-  ]
+    {
+     "who": "narrator",
+     "text": "那时，福賀久留美还是一名初三学生。她还不知道「FX」这个词意味着什么。"
+    },
+    {
+     "who": "narrator",
+     "text": "父亲·郁夫一个人在外地工作（单身赴任）。家里的钱，由母亲·梢打理。"
+    },
+    {
+     "who": "narrator",
+     "text": "——母亲瞒着所有人，把家里的钱投进了外汇保证金交易。"
+    }
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20081001,
+    "start_date": "2008-10-01",
+    "days": 8,
+    "warmup_days": 6,
+    "balance": 20000000,
+    "broker": {
+     "name": "（当时的FX账户）",
+     "leverage": 25.0,
+     "stopout": 20.0,
+     "margin_call": 60.0,
+     "zero_cut": false
+    },
+    "symbols": [
+     "AUDJPY",
+     "USDJPY",
+     "N225"
+    ],
+    "act": 3,
+    "random_news": false,
+    "sns": false,
+    "calendar": false,
+    "market_params": {
+     "vol_mult": 1.6,
+     "intervention": false
+    },
+    "overrides": {
+     "start_prices": {
+      "AUDJPY": 80.0,
+      "USDJPY": 104.0,
+      "N225": 11000
+     }
+    },
+    "mental": 60,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal_text": "【回放·示意走势】",
+    "script": [
+     {
+      "day": 0,
+      "hour": 9,
+      "do": "text",
+      "title": "全球股市连日暴跌，避险日元买盘汹涌",
+      "kind": "market",
+      "icon": "chart",
+      "severity": 3
+     },
+     {
+      "day": 0,
+      "hour": 9,
+      "do": "effect",
+      "target": "factor:risk",
+      "channel": "drift",
+      "mag": -1.2,
+      "dur": 700
+     },
+     {
+      "day": 1,
+      "hour": 23,
+      "do": "guide",
+      "symbol": "AUDJPY",
+      "price": 74.0,
+      "ticks": 60
+     },
+     {
+      "day": 3,
+      "hour": 9,
+      "do": "text",
+      "title": "高息货币遭恐慌性抛售，套息交易全面崩溃",
+      "kind": "market",
+      "icon": "bolt",
+      "severity": 3
+     },
+     {
+      "day": 3,
+      "hour": 10,
+      "do": "guide",
+      "symbol": "AUDJPY",
+      "price": 66.0,
+      "ticks": 120
+     },
+     {
+      "day": 5,
+      "hour": 12,
+      "do": "guide",
+      "symbol": "AUDJPY",
+      "price": 62.0,
+      "ticks": 140
+     },
+     {
+      "day": 7,
+      "hour": 9,
+      "do": "guide",
+      "symbol": "AUDJPY",
+      "price": 58.0,
+      "ticks": 90
+     }
+    ]
+   },
+   "positions": [
+    {
+     "symbol": "AUDJPY",
+     "side": 1,
+     "lots": 95,
+     "entry": 80.0
+    }
+   ],
+   "intro": [
+    {
+     "who": "narrator",
+     "text": "（这是母亲的交易画面。澳元/日元——高利息的货币，被认为「拿着就能赚利息」。）"
+    },
+    {
+     "who": "narrator",
+     "text": "（以下走势为示意，用来表现2008年10月那场暴跌。）"
+    }
+   ],
+   "steps": [
+    {
+     "lock": [
+      "buy",
+      "sell",
+      "close",
+      "lots",
+      "sl",
+      "tp",
+      "speed"
+     ],
+     "speed": 3,
+     "objective": "[color=#a89cc8]……只能眼睁睁地看着。[/color]（自动播放中，无需操作，约1分钟）",
+     "until": {
+      "type": "time",
+      "day": 7,
+      "hour": 20
+     },
+     "finish": true
+    }
+   ],
+   "win": {
+    "always": true
+   },
+   "close_at_end": false,
+   "on_win": [
+    {
+     "who": "narrator",
+     "text": "账户里的2000万円，几乎全部消失了。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_living_dim",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "那天夜里，久留美看到了母亲从未有过的样子——崩溃、失控、歇斯底里。"
+    },
+    {
+     "who": "narrator",
+     "text": "那之后的四个月，母亲拼命打工，想把窟窿补回来。"
+    },
+    {
+     "who": "narrator",
+     "text": "可是2000万円，不是打工能补上的数字。"
+    },
+    {
+     "who": "narrator",
+     "text": "四个月后，母亲留下一封信，离开了这个世界。"
+    },
+    {
+     "who": "narrator",
+     "text": "父亲直到那时，才知道家里的积蓄已经全部消失。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_room_night",
+   "lines": [
+    {
+     "who": "kurumi",
+     "face": "young",
+     "text": "……FX。"
+    },
+    {
+     "who": "kurumi",
+     "face": "young",
+     "text": "妈妈是被FX夺走的。2000万円，也是被FX夺走的。"
+    },
+    {
+     "who": "kurumi",
+     "face": "young",
+     "text": "那我就用同样的FX，把2000万円取回来。"
+    },
+    {
+     "who": "kurumi",
+     "face": "young",
+     "text": "2000万円这种程度——我一定能轻松取回来给你们看！"
+    },
+    {
+     "who": "narrator",
+     "text": "这一天，一个少女决定了自己的路。"
+    }
+   ]
+  },
+  {
+   "type": "title_card",
+   "text": "FX战士久留美",
+   "sub": "—— 2000万之路 ——",
+   "hold": 2.2,
+   "sfx": "title"
+  }
+ ]
 }

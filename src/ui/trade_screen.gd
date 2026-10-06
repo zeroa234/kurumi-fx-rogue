@@ -406,12 +406,12 @@ func _on_alert(kind: String, text: String) -> void:
 			chart.flash(UI.ORANGE)
 			Sfx.play("alarm")
 			if Save.setting("auto_pause_margin", true):
-				_set_speed(0, true)
+				_auto_pause()
 		"stopout":
 			chart.flash(UI.UP)
 			chart.shake(5.0)
 			Sfx.play("crash")
-			_set_speed(0, true)
+			_auto_pause()
 		"sl":
 			chart.flash(UI.ORANGE)
 		"tp":
@@ -436,7 +436,7 @@ func _on_news(item: Dictionary) -> void:
 		chart.shake(3.0)
 		Sfx.play("news")
 		if Save.setting("auto_pause_news", true):
-			_set_speed(0, true)
+			_auto_pause()
 
 func _on_said(text: String, face: String) -> void:
 	_bubble_lbl.text = text
@@ -446,15 +446,19 @@ func _on_said(text: String, face: String) -> void:
 	_set_face(face)
 
 func _on_script_pause(text: String) -> void:
-	_set_speed(0, true)
-	if text != "":
-		show_message(text)
+	if text == "":
+		_auto_pause()
+		return
+	show_message(text)
 
 func _on_script_dialog(lines: Array) -> void:
+	var prev := speed
 	_set_speed(0, true)
 	var dlg := DialogueBox.new()
 	dlg.lines = lines
-	dlg.finished.connect(func(): _modal_open = false)
+	dlg.finished.connect(func():
+		_modal_open = false
+		_modal_resume(prev))
 	_modal_open = true
 	_popup_layer.add_child(dlg)
 
@@ -544,7 +548,7 @@ func _pre_tick_checks() -> void:
 		for c in session.events.upcoming(1):
 			if int(c.stars) >= 2 and c.tick == session.market.tick and not c.get("_paused", false):
 				c["_paused"] = true
-				_set_speed(0, true)
+				_auto_pause()
 				_toast("指标即将发布：%s" % c.name, UI.CYAN)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -575,13 +579,16 @@ var exit_label := "返回标题"
 var exit_cb: Callable = func(): Game.goto("res://src/scenes/title.tscn")
 
 func _pause_menu() -> void:
+	var prev := speed
 	_set_speed(0, true)
 	_modal_open = true
 	var v := UI.modal(_popup_layer, UI.BORDER_HI, 220)
 	v.add_child(UI.label("暂停", UI.PINK))
 	v.add_child(UI.button("继续", func():
 		UI.close_modal(v)
-		_modal_open = false))
+		_modal_open = false
+		if prev > 0:
+			_set_speed(prev, true)))
 	v.add_child(UI.button("设置：新闻自动暂停 " + ("开" if Save.setting("auto_pause_news", true) else "关"), func():
 		Save.data.settings.auto_pause_news = not Save.setting("auto_pause_news", true)
 		Save.write()
@@ -602,6 +609,17 @@ var extra_tabs: Array = []
 func add_extra_tab(tab_name: String, build: Callable) -> void:
 	extra_tabs.append({"name": tab_name, "build": build})
 	_tabbar.add_tab(tab_name)
+
+## 系统自动暂停（新闻/指标/告警/强平）。速度被剧本锁定的「自动播放段」里不暂停，否则玩家无法恢复。
+func _auto_pause() -> void:
+	if locked.get("speed", false):
+		return
+	_set_speed(0, true)
+
+## 弹窗关闭后：自动播放段恢复弹窗前的速度
+func _modal_resume(prev: int) -> void:
+	if locked.get("speed", false) and prev > 0 and not finished:
+		_set_speed(prev, true)
 
 func _set_speed(i: int, force := false) -> void:
 	if locked.get("speed", false) and not force:
@@ -1002,6 +1020,7 @@ func _toast(text: String, col: Color) -> void:
 
 ## 剧情/教学用：显示一段说明并暂停，点击继续
 func show_message(text: String, on_close: Callable = Callable()) -> void:
+	var prev := speed
 	_set_speed(0, true)
 	_modal_open = true
 	var dim := ColorRect.new()
@@ -1018,6 +1037,7 @@ func show_message(text: String, on_close: Callable = Callable()) -> void:
 		dim.queue_free()
 		p.queue_free()
 		_modal_open = false
+		_modal_resume(prev)
 		if on_close.is_valid():
 			on_close.call()
 	)
@@ -1063,6 +1083,7 @@ func highlight(name_: String, on := true) -> void:
 func _on_impulse(kind: String) -> void:
 	if finished:
 		return
+	var prev := speed
 	_set_speed(0, true)
 	_modal_open = true
 	var acc := session.account
@@ -1094,6 +1115,7 @@ func _on_impulse(kind: String) -> void:
 		dim.queue_free()
 		p2.queue_free()
 		_modal_open = false
+		_modal_resume(prev)
 	h.add_child(UI.button(act_label, func():
 		close.call()
 		session.kurumi.change(10.0)
