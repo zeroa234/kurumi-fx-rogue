@@ -51,6 +51,7 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
 | [docs/GDD.md](docs/GDD.md) | 设计文档（与实现同步，含未实现清单） |
 | [docs/research/manga-reference.md](docs/research/manga-reference.md) | 原作调研（剧情事实唯一来源，带出处） |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | 版本历史 |
+| [docs/session-2026-10-07-android-touch.md](docs/session-2026-10-07-android-touch.md) | 会话记录：Android 打包与触屏适配（环境、命令、改动、真机待验、回滚） |
 
 ## 目录
 | 路径 | 内容 |
