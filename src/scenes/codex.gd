@@ -59,7 +59,7 @@ func _list(items: Array, key: String, icons: bool) -> void:
 			t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			t.modulate = Color.WHITE if known else Color(0, 0, 0, 0.8)
 			h.add_child(t)
-		var rar := {"common": "普通", "uncommon": "优秀", "rare": "稀有"}.get(it.get("rarity", ""), "")
+		var rar: String = {"common": "普通", "uncommon": "优秀", "rare": "稀有"}.get(it.get("rarity", ""), "")
 		var l := UI.label(("%s %s\n%s" % [it.name, ("〔%s〕" % rar) if rar != "" else "", it.desc]) if known else "？？？\n（在肉鸽中获得后解锁）", UI.TEXT if known else UI.MUTED)
 		l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		l.custom_minimum_size.x = 560
