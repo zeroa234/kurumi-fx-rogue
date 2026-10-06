@@ -390,8 +390,10 @@ func _connect() -> void:
 	chart.sl_tp_dragged.connect(_on_line_dragged)
 	chart.price_clicked.connect(_on_price_picked)
 
+var _ui_dirty := false
+
 func _on_ticked() -> void:
-	_refresh_all()
+	_ui_dirty = true
 
 func _on_pos_closed(pos: Account.Position, pnl: float, reason: String) -> void:
 	_tab_dirty = true
@@ -518,6 +520,9 @@ func _process(delta: float) -> void:
 		if _ticker_x < -_ticker.size.x:
 			_ticker_x = 640.0
 		_ticker.position.x = floorf(_ticker_x)
+	if _ui_dirty:
+		_ui_dirty = false
+		_refresh_all()
 	if finished or _modal_open or speed == 0:
 		return
 	_acc += delta * SPEEDS[speed]
