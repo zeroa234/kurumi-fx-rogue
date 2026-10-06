@@ -170,6 +170,7 @@ func _mebuki_prophecy() -> void:
 		truth = 1 if session.market.rng.randf() < 0.5 else -1
 	var call := -truth if session.market.rng.randf() < 0.75 else truth
 	session.events.post_sns("@芽吹", "今天的 %s 绝对%s！我的直觉这么说的！全力%s！" % [ins.name, "涨" if call > 0 else "跌", "买" if call > 0 else "卖"])
+	session.kurumi.say("mebuki_call")
 
 # ---------------------------------------------------------------- 结束
 

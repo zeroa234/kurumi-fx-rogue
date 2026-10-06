@@ -253,9 +253,9 @@
    "id": "mochiko_smile",
    "kind": "portrait_ref",
    "label": "萌智子·冷笑",
-   "seed": 5103,
+   "seed": 5113,
    "tags": "",
-   "nl": "The same girl standing and facing the viewer, eyes half-closed, with a cold amused smirk as if watching someone else's misfortune. Plain white background, clean anime cel shading, bold outlines.",
+   "nl": "The same girl in the same standing pose, facing the viewer with a confident, slightly mischievous smirk and narrowed eyes. Plain white background, clean anime cel shading, bold outlines.",
    "ref": "mochiko",
    "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
   },

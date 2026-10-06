@@ -63,6 +63,8 @@ func _init(config: Dictionary, shared_mods: Mods = null) -> void:
 	account.zero_cut_used.connect(func(_a): kurumi.say("zero_cut", true))
 	account.swap_settled.connect(_on_swap)
 	events.news_posted.connect(_on_news)
+	market.peg_broken.connect(func(_s): kurumi.say("peg_break", true); kurumi.change(-15.0))
+	market.intervention.connect(func(_u, _d): kurumi.say("intervention", true); events.post_text("【速報】日本政府·日银实施汇率干预", "cb", "bank", 3))
 	# 预热：让图表有历史
 	var warm: int = int(cfg.get("warmup_days", 5))
 	events.random_news = false
@@ -284,7 +286,15 @@ func _on_swap(total: float) -> void:
 		kurumi.say("swap")
 
 func _on_news(item: Dictionary) -> void:
-	if int(item.get("severity", 1)) >= 2:
+	var kind: String = item.get("kind", "news")
+	var id: String = item.get("id", "")
+	if id == "flash_crash":
+		kurumi.say("flash_crash", true)
+	elif kind == "indicator":
+		kurumi.say("indicator_big" if absf(float(item.get("z", 0.0))) > 1.2 else "indicator_flat", absf(float(item.get("z", 0.0))) > 1.2)
+	elif kind in ["disaster", "cb", "rumor", "denial", "politics", "market", "speech"]:
+		kurumi.say("news_" + kind, kind in ["disaster", "cb"])
+	elif int(item.get("severity", 1)) >= 2:
 		kurumi.say("news")
 
 # ---------------------------------------------------------------- 便捷操作（UI 调用）

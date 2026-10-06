@@ -319,11 +319,10 @@ def chest_up_crop(rgba, pad_frac=0.03):
         cols = []
         for y in range(y0, min(head_rows_y1, y1)):
             for x in range(x0, x1):
-                if apx[x, y][3]:
+                if apx[x, y]:
                     cols.append(x)
         cx = (min(cols) + max(cols)) // 2 if cols else (x0 + x1) // 2
-        side = int(min(cw * 1.05, ch * 0.46))
-        side = max(side, int(cw * 0.8))
+        side = int(max(ch * 0.30, min(cw * 1.05, ch * 0.38)))
         y0c = max(0, int(y0 - side * pad_frac))
         x0c = max(0, min(cx - side // 2, w - side))
         return rgba.crop((x0c, y0c, min(x0c + side, w), min(y0c + side, rgba.height)))
