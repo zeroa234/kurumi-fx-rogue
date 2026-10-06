@@ -1,0 +1,14 @@
+{
+  "_doc": "对话中出现的人物。name = 显示名；color = 名牌颜色；hair = 占位立绘的发色（素材缺失时用）。外貌与身份见 docs/research/manga-reference.md 第 2 节。",
+  "characters": {
+    "kurumi":  {"name": "久留美",   "color": "ff6fa5", "hair": "ff8fbf"},
+    "mochiko": {"name": "萌智子",   "color": "b48cff", "hair": "8a5cc8"},
+    "mebuki":  {"name": "芽吹",     "color": "ffd166", "hair": "f2d06b"},
+    "yasuko":  {"name": "やす子",   "color": "ff5d73", "hair": "3a3440"},
+    "ikuo":    {"name": "父亲·郁夫", "color": "a8c0d8", "hair": "4a4a55"},
+    "kozue":   {"name": "母亲·梢",   "color": "e8c0a0", "hair": "5a4038"},
+    "narrator":{"name": "",         "color": "a89cc8", "hair": "000000"},
+    "tv":      {"name": "电视",     "color": "5ad1e8", "hair": "000000"},
+    "note":    {"name": "久留美的FX笔记", "color": "ffd166", "hair": "000000"}
+  }
+}
