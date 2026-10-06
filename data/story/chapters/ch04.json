@@ -1,71 +1,258 @@
 {
-  "id": "ch04",
-  "order": 4,
-  "title": "第4章 壁橱里的300万円",
-  "manga": "第4〜5話",
-  "period": "2014年",
-  "source": "manga-reference.md §1.7、§3.1 第4話・第5話（S11 日文维基：久留美偷用父亲的タンス預金共300万円入金，勉强免于破灭；S5 评论区：之后大幅利益確定）。",
-  "original": "持仓规模与价位为游戏设定；止损/止盈教学为游戏原创；获利金额不对应原作具体数字。",
-  "tutorial": true,
-  "requires": ["ch03"],
-  "scenes": [
-    {"type": "title_card", "text": "第4章", "sub": "壁橱里的300万円", "hold": 1.4},
-    {"type": "dialogue", "bg": "bg_room_night", "lines": [
-      {"who": "narrator", "text": "最初的几周，久留美顺风顺水。账户里的数字，一点一点地变大。"},
-      {"who": "kurumi", "face": "smug", "text": "这次也是，加大手数，一口气拿下！"},
-      {"who": "narrator", "text": "——然后，行情反转了。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20140310, "start_date": "2014-03-10", "days": 4, "warmup_days": 6, "balance": 400000,
-       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
-       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false, "calendar": false,
-       "market_params": {"hunt_prob": 0.0, "vol_mult": 0.9},
-       "overrides": {"start_prices": {"USDJPY": 103.0, "EURJPY": 142.5, "AUDJPY": 93.0}},
-       "mental": 55, "end_on_broken": false, "end_on_bust": false,
-       "goal_text": "【教学】止损与止盈"
-     },
-     "positions": [{"symbol": "USDJPY", "side": 1, "lots": 120, "entry": 103.25}],
-     "steps": [
-       {"lock": ["buy", "sell", "close", "lots", "sl", "tp", "speed"],
-        "dialog": [
-          {"who": "kurumi", "face": "worried", "text": "美元/日元 120枚的多单……含み損已经30万円了。"},
-          {"who": "kurumi", "face": "worried", "text": "会回来的。一定会回来的。现在割肉的话，就真的亏了……"}
-        ],
-        "speed": 1,
-        "script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 102.93, "ticks": 40}],
-        "objective": "[color=#ff9fb5]含み損在扩大……[/color]", "until": {"type": "margin_below", "level": 62}},
-       {"speed": 0,
-        "dialog": [
-          {"who": "kurumi", "face": "shock", "text": "维持率……要掉到强平线了！"},
-          {"who": "kurumi", "face": "cry", "text": "被强平的话，30万円……我攒了那么久的钱……全都没了……"},
-          {"who": "narrator", "text": "久留美的视线，停在了壁橱上。"},
-          {"who": "narrator", "text": "那里有父亲在母亲去世后，每个月一点一点存下的现金。"},
-          {"who": "kurumi", "face": "cry", "text": "……对不起，爸爸。我一定会还回去的。只是借一下，只是借一下……"},
-          {"who": "narrator", "text": "她把300万円，全部存进了交易账户。"}
-        ],
-        "script": [{"t": 0, "do": "deposit", "amount": 3000000, "note": "入金 300万円"}]},
-       {"msg": "[color=#ffd166]【笔记⑥　止损（SL）与止盈（TP）】[/color]\n「会回来的」——这是最危险的想法。\n\n· [color=#ff9f43]止损[/color]：价格逆向走到某处就自动平仓，把亏损锁在可承受的范围。\n· [color=#5ad1e8]止盈[/color]：价格顺向走到目标就自动获利了结。\n\n设法：在右栏用「止损/止盈」的 [color=#ffd166]-/+[/color] 选好距离（pips），\n· 新下单时会自动带上；\n· 已有持仓：在「持仓」栏点 [color=#ffd166]「设」[/color] 应用到这笔仓位；\n· 也可以直接在图表上[color=#ffd166]拖动[/color]橙色(SL)/青色(TP)的线。",
-        "unlock": ["sl", "tp"], "highlight": "sl",
-        "objective": "给持仓设置 [color=#ff9f43]止损[/color]（建议 50 pips 左右）", "until": {"type": "sl_set"}},
-       {"objective": "再给持仓设置 [color=#5ad1e8]止盈[/color]（建议 150 pips 以上）", "highlight": "tp", "until": {"type": "tp_set"}},
-       {"msg": "设好了。现在不管看不看着，价格到了你定的位置，就会自动成交。\n\n让时间流动，等待结果吧。",
-        "unlock": ["speed", "close"], "speed": 1,
-        "script": [{"t": 4, "do": "guide", "symbol": "USDJPY", "price": 103.6, "ticks": 70}, {"t": 80, "do": "guide", "symbol": "USDJPY", "price": 104.75, "ticks": 140}],
-        "objective": "等待止盈成交（或手动获利平仓）", "until": {"type": "close", "profit": true}},
-       {"finish": true}
-     ],
-     "win": {"steps": true},
-     "on_win": [
-       {"who": "kurumi", "face": "shock", "text": "……一下子，赚了这么多？"},
-       {"who": "kurumi", "face": "smug", "text": "只是盯着屏幕，钱就自己涨上来了……"},
-       {"who": "narrator", "text": "那种在极短时间里拿到大钱的快感，深深刻进了久留美的脑子里。"},
-       {"who": "narrator", "text": "壁橱里的300万円，她打算之后悄悄放回去。"}
-     ],
-     "on_lose": [
-       {"who": "kurumi", "face": "cry", "text": "止损……被打掉了……"},
-       {"who": "note", "text": "提示：止损太近会被正常的上下波动扫掉。这次试着放远一点（比如 50 pips）。"}
-     ]
+ "id": "ch04",
+ "order": 4,
+ "title": "第4章 壁橱里的300万円",
+ "manga": "第4〜5話",
+ "period": "2014年",
+ "source": "manga-reference.md §1.7、§3.1 第4話・第5話（S11 日文维基：久留美偷用父亲的タンス預金共300万円入金，勉强免于破灭；S5 评论区：之后大幅利益確定）。",
+ "original": "持仓规模与价位为游戏设定；止损/止盈教学为游戏原创；获利金额不对应原作具体数字。",
+ "tutorial": true,
+ "requires": [
+  "ch03"
+ ],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "第4章",
+   "sub": "壁橱里的300万円",
+   "hold": 1.4
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_room_night",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "最初的几周，久留美顺风顺水。账户里的数字，一点一点地变大。"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "这次也是，加大手数，一口气拿下！"
+    },
+    {
+     "who": "narrator",
+     "text": "——然后，行情反转了。"
     }
-  ]
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20140310,
+    "start_date": "2014-03-10",
+    "days": 4,
+    "warmup_days": 6,
+    "balance": 600000,
+    "broker": {
+     "name": "海外FX",
+     "leverage": 888.0,
+     "stopout": 20.0,
+     "margin_call": 50.0,
+     "zero_cut": true,
+     "spread_mult": 1.8,
+     "slip_mult": 1.6
+    },
+    "symbols": [
+     "USDJPY",
+     "EURJPY",
+     "AUDJPY"
+    ],
+    "act": 1,
+    "random_news": false,
+    "calendar": false,
+    "market_params": {
+     "hunt_prob": 0.0,
+     "vol_mult": 0.9
+    },
+    "overrides": {
+     "start_prices": {
+      "USDJPY": 103.0,
+      "EURJPY": 142.5,
+      "AUDJPY": 93.0
+     }
+    },
+    "mental": 55,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal_text": "【教学】止损与止盈"
+   },
+   "positions": [
+    {
+     "symbol": "USDJPY",
+     "side": 1,
+     "lots": 120,
+     "entry": 103.25
+    }
+   ],
+   "steps": [
+    {
+     "lock": [
+      "buy",
+      "sell",
+      "close",
+      "lots",
+      "sl",
+      "tp",
+      "speed"
+     ],
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "worried",
+       "text": "美元/日元 120枚的多单……含み損已经30万円了。"
+      },
+      {
+       "who": "kurumi",
+       "face": "worried",
+       "text": "会回来的。一定会回来的。现在割肉的话，就真的亏了……"
+      }
+     ],
+     "speed": 1,
+     "script": [
+      {
+       "t": 0,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 102.86,
+       "ticks": 48
+      }
+     ],
+     "objective": "[color=#ff9fb5]含み損在扩大……[/color]",
+     "until": {
+      "type": "margin_below",
+      "level": 120
+     }
+    },
+    {
+     "speed": 0,
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "shock",
+       "text": "维持率……要掉到强平线了！"
+      },
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "被强平的话，30万円……我攒了那么久的钱……全都没了……"
+      },
+      {
+       "who": "narrator",
+       "text": "久留美的视线，停在了壁橱上。"
+      },
+      {
+       "who": "narrator",
+       "text": "那里有父亲在母亲去世后，每个月一点一点存下的现金。"
+      },
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "……对不起，爸爸。我一定会还回去的。只是借一下，只是借一下……"
+      },
+      {
+       "who": "narrator",
+       "text": "她把300万円，全部存进了交易账户。"
+      }
+     ],
+     "script": [
+      {
+       "t": 0,
+       "do": "deposit",
+       "amount": 3000000,
+       "note": "入金 300万円"
+      }
+     ]
+    },
+    {
+     "msg": "[color=#ffd166]【笔记⑥　止损（SL）与止盈（TP）】[/color]\n「会回来的」——这是最危险的想法。\n\n· [color=#ff9f43]止损[/color]：价格逆向走到某处就自动平仓，把亏损锁在可承受的范围。\n· [color=#5ad1e8]止盈[/color]：价格顺向走到目标就自动获利了结。\n\n设法：在右栏用「止损/止盈」的 [color=#ffd166]-/+[/color] 选好距离（pips），\n· 新下单时会自动带上；\n· 已有持仓：在「持仓」栏点 [color=#ffd166]「设」[/color] 应用到这笔仓位；\n· 也可以直接在图表上[color=#ffd166]拖动[/color]橙色(SL)/青色(TP)的线。",
+     "unlock": [
+      "sl",
+      "tp"
+     ],
+     "highlight": "sl",
+     "objective": "给持仓设置 [color=#ff9f43]止损[/color]（建议 50 pips 左右）",
+     "until": {
+      "type": "sl_set"
+     }
+    },
+    {
+     "objective": "再给持仓设置 [color=#5ad1e8]止盈[/color]（建议 150 pips 以上）",
+     "highlight": "tp",
+     "until": {
+      "type": "tp_set"
+     }
+    },
+    {
+     "msg": "设好了。现在不管看不看着，价格到了你定的位置，就会自动成交。\n\n让时间流动，等待结果吧。",
+     "unlock": [
+      "speed",
+      "close"
+     ],
+     "speed": 1,
+     "script": [
+      {
+       "t": 4,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 103.6,
+       "ticks": 70
+      },
+      {
+       "t": 80,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 104.75,
+       "ticks": 140
+      }
+     ],
+     "objective": "等待止盈成交（或手动获利平仓）",
+     "until": {
+      "type": "close",
+      "profit": true
+     }
+    },
+    {
+     "finish": true
+    }
+   ],
+   "win": {
+    "steps": true
+   },
+   "on_win": [
+    {
+     "who": "kurumi",
+     "face": "shock",
+     "text": "……一下子，赚了这么多？"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "只是盯着屏幕，钱就自己涨上来了……"
+    },
+    {
+     "who": "narrator",
+     "text": "那种在极短时间里拿到大钱的快感，深深刻进了久留美的脑子里。"
+    },
+    {
+     "who": "narrator",
+     "text": "壁橱里的300万円，她打算之后悄悄放回去。"
+    }
+   ],
+   "on_lose": [
+    {
+     "who": "kurumi",
+     "face": "cry",
+     "text": "止损……被打掉了……"
+    },
+    {
+     "who": "note",
+     "text": "提示：止损太近会被正常的上下波动扫掉。这次试着放远一点（比如 50 pips）。"
+    }
+   ],
+   "mods": {
+    "stopout_delta": 10
+   }
+  }
+ ]
 }

@@ -42,5 +42,49 @@
     "colors": 32,
     "generated_at": "2026-10-06T20:56:04",
     "rev": 1
+  },
+  "kurumi_happy": {
+    "file": "portraits/kurumi_happy.png",
+    "files": {
+      "portraits/kurumi_happy.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_happy.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620002,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, open mouth, :d, A chest-up portrait beaming happily, big open smile, bright cheerful eyes.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:01:28",
+    "rev": 1
+  },
+  "energy_drink": {
+    "file": "icons/energy_drink.png",
+    "files": {
+      "icons/energy_drink.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620047,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, energy drink can, aluminum can, pull tab, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:01:37",
+    "rev": 1
   }
 }

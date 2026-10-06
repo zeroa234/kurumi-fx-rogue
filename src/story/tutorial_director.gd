@@ -12,7 +12,8 @@ extends Node
 ##   until: 条件            满足后进入下一步（缺省 = 立即）
 ##   finish: true           这一步完成后结束交易
 ## 条件 type：open{side,symbol,min_lots} close{profit} sl_set tp_set any_sl equity{value}
-##   ticks{n} time{day,hour} tab{index} news played speed_any positions{n} margin_below{level} manual
+##   ticks{n} time{day,hour} tab{index} speed_any positions{n} margin_below{level} flat manual
+##   any{of:[条件...]} all{of:[条件...]}
 
 signal step_changed(i: int)
 
@@ -78,6 +79,8 @@ func _advance() -> void:
 	if st.has("speed"):
 		screen._set_speed(int(st.speed), true)
 	if st.get("finish", false) and _cond.is_empty():
+		i = steps.size()
+		screen.set_objective("")
 		screen.session.force_finish("goal")
 		return
 	_check()
@@ -167,4 +170,14 @@ func _met(c: Dictionary) -> bool:
 			return acc.margin_level() < float(c.level)
 		"manual":
 			return false
+		"any":
+			for sub in c.get("of", []):
+				if _met(sub):
+					return true
+			return false
+		"all":
+			for sub in c.get("of", []):
+				if not _met(sub):
+					return false
+			return true
 	return false

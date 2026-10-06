@@ -150,10 +150,20 @@
        "ticks": 40
       }
      ],
-     "objective": "让净值达到 [color=#ffd166]640万円（+30万）[/color]",
+     "objective": "让净值达到 [color=#ffd166]640万円（+30万）[/color]（时限：第2天 15:00）",
      "until": {
-      "type": "equity",
-      "value": 6400000
+      "type": "any",
+      "of": [
+       {
+        "type": "equity",
+        "value": 6400000
+       },
+       {
+        "type": "time",
+        "day": 1,
+        "hour": 15
+       }
+      ]
      }
     },
     {
