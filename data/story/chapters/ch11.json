@@ -1,116 +1,494 @@
 {
-  "id": "ch11",
-  "order": 11,
-  "title": "第11章 2015年1月15日 18:30",
-  "manga": "第31〜35話（7巻）",
-  "period": "2015年1月12日〜16日",
-  "source": "manga-reference.md §3.1 第31〜35話、§4-2（S16 7巻逐话列表：第31話焼肉屋女子会结算、第32話作中2015-01-07父亲出差独居、第33話2015-01-12平静→急转、作中标注「2015年1月15日18時30分　スイスフランショック」、第34話不足金通知——数日内须补足否则按年利14%追加计息（博客转述、中置信）、第35話「これじゃ私も　お母さんとおんなじ」与负债1億超（S16/S13/S19/S22）；S20 7巻评论）。真实行情（另行核实、investinglive.com 2015-01-15 报道与周年回顾）：SNB于2015-01-15当地时间10:30（东京18:30）无预警取消EUR/CHF 1.20下限并将利率目标降至−1.25%〜−0.25%；EUR/CHF从约1.201在约24分钟内跌至0.895（部分报价低至约0.85），随后回升，伦敦收盘约1.053。",
-  "original": "本章资金（1,900万円）与预置仓位（EUR/CHF 多320枚、两笔）为游戏设定，用于使冲击后的『不足金』落在原作记载的「1億円超」量级；崩溃路径用 peg_break(0.30/0.15/recover30)+guide 关键帧逼近真实走势（跌破至约0.85、此后数小时回到1.05附近）；强平滑点参数 slip_mult=0.6 为游戏调校（配合盘面点差，使不足金数值落在原作「1億円超」的1.0〜1.3億量级内）；「数日内补足、否则年利14%」为博客转述（中置信）；新闻/SNS 文本为游戏原创气氛文（原作未逐条记载）；画面显示的不足金数值由模拟产生（约1.0〜1.4億，随强平滑点浮动），对白只主张「1億円超」不引用精确数字；台词为转述。",
-  "tutorial": false,
-  "battle": true,
-  "requires": ["ch10"],
-  "scenes": [
-    {"type": "title_card", "text": "第11章", "sub": "2015年1月15日 18:30", "bg": "bg_room_day", "hold": 1.8},
-    {"type": "dialogue", "bg": "bg_yakiniku", "lines": [
-      {"who": "narrator", "text": "烧肉店。竞赛的结算——账户还站着的人，只剩一个。"},
-      {"who": "mochiko", "face": "normal", "text": "结算完毕。留下来的战士——福賀久留美，一个人。"},
-      {"who": "yasuko", "face": "angry", "text": "我们可是提前毕业的了。再待下去会没命的，那边。"},
-      {"who": "mebuki", "face": "normal", "text": "……久留美学姐。别太逞强哦。"},
-      {"who": "kurumi", "face": "smug", "text": "没事。我已经找到『不会输』的战场了。"},
-      {"who": "narrator", "text": "1月7日，父亲出差。家里只剩久留美，和一个安静运行的账户。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20150112, "start_date": "2015-01-12", "days": 4, "warmup_days": 8, "balance": 19000000,
-       "broker": {"name": "国内大手FX", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.0, "slip_mult": 0.6},
-       "symbols": ["EURCHF", "EURJPY", "USDJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
-       "market_params": {"hunt_prob": 0.0, "vol_mult": 0.7},
-       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
-       "overrides": {"start_prices": {"EURCHF": 1.2015, "EURJPY": 137.0, "USDJPY": 118.5}, "pegs": {"EURCHF": 1.2}},
-       "mental": 90, "end_on_broken": false, "end_on_bust": false,
-       "goal_text": "2015年1月15日 18:30",
-       "script": [
-         {"day": 0, "hour": 10, "do": "text", "title": "东京午后。EUR/CHF 稳稳钉在 1.20 下限。散户之间『ユロスイ＝安全货币』的说法流行", "kind": "market", "icon": "chart", "severity": 1},
-         {"day": 0, "hour": 10, "do": "sns", "who": "@毎日ユロスイ", "text": "三年没破的下限＝绝对安全。睡觉都香　#安全货币"},
-         {"day": 1, "hour": 14, "do": "text", "title": "平静的一天。EUR/CHF 依然钉在下限", "kind": "market", "icon": "paper", "severity": 1},
-         {"day": 2, "hour": 19, "do": "text", "title": "市场大半仍认为下限将长期维持——『瑞士央行没有理由放弃它』", "kind": "market", "icon": "chart", "severity": 1},
-         {"day": 3, "hour": 16, "do": "text", "title": "东京午后。EUR/CHF 在 1.2015 附近窄幅盘整，成交清淡", "kind": "market", "icon": "chart", "severity": 1},
-         {"day": 3, "hour": 18, "minute": 29, "do": "pause", "text": "……电视，插播了速报。"},
-         {"day": 3, "hour": 18, "minute": 30, "do": "text", "title": "【速报】瑞士央行无预警取消 EUR/CHF 1.20 下限！利率目标下调至 −0.25%〜−1.25%", "kind": "news", "icon": "bolt", "severity": 3},
-         {"day": 3, "hour": 18, "minute": 30, "do": "rate", "unit": "CHF", "value": -0.75},
-         {"day": 3, "hour": 18, "minute": 30, "do": "halt", "symbol": "EURCHF", "on": true},
-         {"day": 3, "hour": 18, "minute": 30, "do": "peg_break", "symbol": "EURCHF", "magnitude": 0.30, "overshoot": 0.15, "recover": 30},
-         {"day": 3, "hour": 18, "minute": 48, "do": "halt", "symbol": "EURCHF", "on": false},
-         {"day": 3, "hour": 18, "minute": 50, "do": "dialog", "lines": [
-           {"who": "kurumi", "face": "shock", "text": "呃……？"},
-           {"who": "narrator", "text": "屏幕上的价格，垂直下落。1.01——然后，0.85。"},
-           {"who": "kurumi", "face": "shock", "text": "不可能……这是数据错误吧？刷新一下就……"},
-           {"who": "narrator", "text": "瑞士央行在没有任何预告的情况下，舍弃了守了三年多的下限。（东京时间 2015年1月15日18:30）"}
-         ]},
-         {"day": 3, "hour": 18, "minute": 51, "do": "mental", "value": -45},
-         {"day": 3, "hour": 19, "minute": 10, "do": "dialog", "lines": [
-           {"who": "narrator", "text": "业者的通知音，响个不停。"},
-           {"who": "narrator", "text": "「维持率跌破强平线，已强制平仓。账户余额为负——不足金。请于数日内补足。届时无法补足时，将按年利14%追加计息。」"},
-           {"who": "kurumi", "face": "cry", "text": "不足金……"}
-         ]},
-         {"day": 3, "hour": 19, "minute": 35, "do": "guide", "symbol": "EURCHF", "price": 0.95, "ticks": 8},
-         {"day": 3, "hour": 21, "do": "guide", "symbol": "EURCHF", "price": 1.01, "ticks": 14},
-         {"day": 3, "hour": 23, "do": "guide", "symbol": "EURCHF", "price": 1.045, "ticks": 12},
-         {"day": 3, "hour": 0, "minute": 30, "do": "guide", "symbol": "EURCHF", "price": 1.052, "ticks": 6},
-         {"day": 3, "hour": 2, "do": "text", "title": "混乱逐步平息。EUR/CHF 回到 1.05 上方（伦敦收盘 1.053 附近）", "kind": "market", "icon": "chart", "severity": 2},
-         {"day": 3, "hour": 2, "minute": 10, "do": "mental", "value": -40}
-       ]
-     },
-     "positions": [
-       {"symbol": "EURCHF", "side": 1, "lots": 180, "entry": 1.202},
-       {"symbol": "EURCHF", "side": 1, "lots": 150, "entry": 1.2012}
-     ],
-     "intro": [
-       {"who": "narrator", "text": "（这一战没有教学。是重放——她的资金、她的仓位、她的信念。）"},
-       {"who": "narrator", "text": "（EUR/CHF 多单 合计320枚，保证金占用超过八成。操作已锁定——她自己也放不开手。）"}
-     ],
-     "steps": [
-       {"lock": ["buy", "sell", "close", "lots", "sl", "tp", "speed", "tabs", "watch"], "speed": 3,
-        "dialog": [
-          {"who": "kurumi", "face": "smug", "text": "维持率有点低……不过下限就在下面。没事的。"}, 
-          {"who": "narrator", "text": "平静的交易日。1月12日〜14日。"}
-        ],
-        "objective": "平静的日子（回放中）", "until": {"type": "time", "day": 1, "hour": 9}},
-       {"dialog": [
-          {"who": "kurumi", "face": "happy", "text": "下限三年多没破过。央行无限额地守着。……这等于没有风险。"},
-          {"who": "mochiko", "face": "normal", "text": "「没有风险」——说这句话的人，我已经见过很多。"},
-          {"who": "kurumi", "face": "smug", "text": "这次真的不一样。"}
-        ], "speed": 2,
-        "objective": "等待 1月14日收盘", "until": {"type": "time", "day": 2, "hour": 20}},
-       {"dialog": [
-          {"who": "narrator", "text": "1月15日。市场平静得像一潭死水。"},
-          {"who": "kurumi", "face": "focus", "text": "（今晚……也和昨天一样就好。）"}
-        ], "speed": 1,
-        "objective": "等待 [color=#ffd166]18:30[/color]（东京时间）", "until": {"type": "time", "day": 3, "hour": 18, "minute": 24}},
-       {"speed": 2,
-        "objective": "[color=#ff5d73]18:30——[/color]", "until": {"type": "time", "day": 3, "hour": 18, "minute": 55}},
-       {"dialog": [
-          {"who": "kurumi", "face": "cry", "text": "不足金……超过1億円……超过『妈妈输掉的钱』……"},
-          {"who": "kurumi", "face": "cry", "text": "我只是……守着一个『绝不会被打破』的下限……"},
-          {"who": "kurumi", "face": "cry", "text": "现在的我——和妈妈，一样了……"}
-        ],
-        "objective": "看着数字（1億円以上）", "until": {"type": "time", "day": 3, "hour": 23, "minute": 30}},
-       {"dialog": [
-          {"who": "narrator", "text": "深夜。价格在暴跌之后慢慢回头，伦敦的买盘把它推回1.05上方。"},
-          {"who": "narrator", "text": "可是账户里，已经没有任何可以挽回的东西。"},
-          {"who": "kurumi", "face": "worried", "text": "……为什么。明明是『绝对安全』的……"},
-          {"who": "mochiko", "face": "normal", "text": "（电话那头，沉默了很久。）……先活下来。别的，之后再一件一件想。"}
-        ],
-        "objective": "1月16日黎明", "until": {"type": "time", "day": 3, "hour": 5, "minute": 30}},
-       {"finish": true}
-     ],
-     "win": {"always": true},
-     "lose_continues": true,
-     "close_at_end": false,
-     "on_win": [
-       {"who": "note", "text": "【本战役·复盘】\n· 下限不是保险：被央行『压住』的力量，解除时会一口气释放（peg_break）。\n· 国内业者没有零cut：跳空打穿强平线时，亏掉保证金之外的部分，会变成「不足金」——真正的负债。\n· 『安全』的货币对，不等于没有风险。历史上真实存在过：2015-01-15，欧元/瑞郎在约24分钟里跌掉约25%。"},
-       {"who": "narrator", "text": "第12章 —— 她手里剩下的最后一张牌。"}
-     ]
+ "id": "ch11",
+ "order": 11,
+ "title": "第11章 2015年1月15日 18:30",
+ "manga": "第31〜35話（7巻）",
+ "period": "2015年1月12日〜16日",
+ "source": "manga-reference.md §3.1 第31〜35話、§4-2（S16 7巻逐话列表：第31話焼肉屋女子会结算、第32話作中2015-01-07父亲出差独居、第33話2015-01-12平静→急转、作中标注「2015年1月15日18時30分　スイスフランショック」、第34話不足金通知——数日内须补足否则按年利14%追加计息（博客转述、中置信）、第35話「これじゃ私も　お母さんとおんなじ」与负债1億超（S16/S13/S19/S22）；S20 7巻评论）。真实行情（另行核实、investinglive.com 2015-01-15 报道与周年回顾）：SNB于2015-01-15当地时间10:30（东京18:30）无预警取消EUR/CHF 1.20下限并将利率目标降至−1.25%〜−0.25%；EUR/CHF从约1.201在约24分钟内跌至0.895（部分报价低至约0.85），随后回升，伦敦收盘约1.053。",
+ "original": "本章资金（1,900万円）与预置仓位（EUR/CHF 多230枚、两笔）为游戏设定，用于使冲击后的『不足金』落在原作记载的「1億円超」量级；崩溃路径用 peg_break(0.30/0.15/recover30)+guide 关键帧逼近真实走势（跌破至约0.85、此后数小时回到1.05附近）；强平滑点参数 slip_mult=0.6 为游戏调校（配合盘面点差，使不足金数值落在原作「1億円超」的1.0〜1.3億量级内）；「数日内补足、否则年利14%」为博客转述（中置信）；新闻/SNS 文本为游戏原创气氛文（原作未逐条记载）；画面显示的不足金数值由模拟产生（实测约1.2億：报价停止期间无法强平，恢复报价后在0.85附近成交），对白只主张「1億円超」不引用精确数字；台词为转述。",
+ "tutorial": false,
+ "battle": true,
+ "requires": [
+  "ch10"
+ ],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "第11章",
+   "sub": "2015年1月15日 18:30",
+   "bg": "bg_room_day",
+   "hold": 1.8
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_yakiniku",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "烧肉店。竞赛的结算——账户还站着的人，只剩一个。"
+    },
+    {
+     "who": "mochiko",
+     "face": "normal",
+     "text": "结算完毕。留下来的战士——福賀久留美，一个人。"
+    },
+    {
+     "who": "yasuko",
+     "face": "angry",
+     "text": "我们可是提前毕业的了。再待下去会没命的，那边。"
+    },
+    {
+     "who": "mebuki",
+     "face": "normal",
+     "text": "……久留美学姐。别太逞强哦。"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "没事。我已经找到『不会输』的战场了。"
+    },
+    {
+     "who": "narrator",
+     "text": "1月7日，父亲出差。家里只剩久留美，和一个安静运行的账户。"
     }
-  ]
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20150112,
+    "start_date": "2015-01-12",
+    "days": 4,
+    "warmup_days": 8,
+    "balance": 19000000,
+    "broker": {
+     "name": "国内大手FX",
+     "leverage": 25.0,
+     "stopout": 100.0,
+     "margin_call": 150.0,
+     "zero_cut": false,
+     "spread_mult": 1.0,
+     "slip_mult": 0.6
+    },
+    "symbols": [
+     "EURCHF",
+     "EURJPY",
+     "USDJPY"
+    ],
+    "act": 1,
+    "random_news": false,
+    "sns": false,
+    "calendar": false,
+    "market_params": {
+     "hunt_prob": 0.0,
+     "vol_mult": 0.7
+    },
+    "event_params": {
+     "min_indicators_week": 0,
+     "indicator_mult": 0.0
+    },
+    "overrides": {
+     "start_prices": {
+      "EURCHF": 1.2015,
+      "EURJPY": 137.0,
+      "USDJPY": 118.5
+     },
+     "pegs": {
+      "EURCHF": 1.2
+     }
+    },
+    "mental": 90,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal_text": "2015年1月15日 18:30",
+    "script": [
+     {
+      "day": 0,
+      "hour": 10,
+      "do": "text",
+      "title": "东京午后。EUR/CHF 稳稳钉在 1.20 下限。散户之间『ユロスイ＝安全货币』的说法流行",
+      "kind": "market",
+      "icon": "chart",
+      "severity": 1
+     },
+     {
+      "day": 0,
+      "hour": 10,
+      "do": "sns",
+      "who": "@毎日ユロスイ",
+      "text": "三年没破的下限＝绝对安全。睡觉都香　#安全货币"
+     },
+     {
+      "day": 1,
+      "hour": 14,
+      "do": "text",
+      "title": "平静的一天。EUR/CHF 依然钉在下限",
+      "kind": "market",
+      "icon": "paper",
+      "severity": 1
+     },
+     {
+      "day": 2,
+      "hour": 19,
+      "do": "text",
+      "title": "市场大半仍认为下限将长期维持——『瑞士央行没有理由放弃它』",
+      "kind": "market",
+      "icon": "chart",
+      "severity": 1
+     },
+     {
+      "day": 3,
+      "hour": 16,
+      "do": "text",
+      "title": "东京午后。EUR/CHF 在 1.2015 附近窄幅盘整，成交清淡",
+      "kind": "market",
+      "icon": "chart",
+      "severity": 1
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 29,
+      "do": "pause",
+      "text": "……电视，插播了速报。"
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 30,
+      "do": "text",
+      "title": "【速报】瑞士央行无预警取消 EUR/CHF 1.20 下限！利率目标下调至 −0.25%〜−1.25%",
+      "kind": "news",
+      "icon": "bolt",
+      "severity": 3
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 30,
+      "do": "rate",
+      "unit": "CHF",
+      "value": -0.75
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 30,
+      "do": "halt",
+      "symbol": "EURCHF",
+      "on": true
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 30,
+      "do": "peg_break",
+      "symbol": "EURCHF",
+      "magnitude": 0.3,
+      "overshoot": 0.15,
+      "recover": 30
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 48,
+      "do": "halt",
+      "symbol": "EURCHF",
+      "on": false
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 50,
+      "do": "dialog",
+      "lines": [
+       {
+        "who": "kurumi",
+        "face": "shock",
+        "text": "呃……？"
+       },
+       {
+        "who": "narrator",
+        "text": "屏幕上的价格，垂直下落。1.01——然后，0.85。"
+       },
+       {
+        "who": "kurumi",
+        "face": "shock",
+        "text": "不可能……这是数据错误吧？刷新一下就……"
+       },
+       {
+        "who": "narrator",
+        "text": "瑞士央行在没有任何预告的情况下，舍弃了守了三年多的下限。（东京时间 2015年1月15日18:30）"
+       }
+      ]
+     },
+     {
+      "day": 3,
+      "hour": 18,
+      "minute": 51,
+      "do": "mental",
+      "value": -45
+     },
+     {
+      "day": 3,
+      "hour": 19,
+      "minute": 10,
+      "do": "dialog",
+      "lines": [
+       {
+        "who": "narrator",
+        "text": "业者的通知音，响个不停。"
+       },
+       {
+        "who": "narrator",
+        "text": "「维持率跌破强平线，已强制平仓。账户余额为负——不足金。请于数日内补足。届时无法补足时，将按年利14%追加计息。」"
+       },
+       {
+        "who": "kurumi",
+        "face": "cry",
+        "text": "不足金……"
+       }
+      ]
+     },
+     {
+      "day": 3,
+      "hour": 19,
+      "minute": 35,
+      "do": "guide",
+      "symbol": "EURCHF",
+      "price": 0.95,
+      "ticks": 8
+     },
+     {
+      "day": 3,
+      "hour": 21,
+      "do": "guide",
+      "symbol": "EURCHF",
+      "price": 1.01,
+      "ticks": 14
+     },
+     {
+      "day": 3,
+      "hour": 23,
+      "do": "guide",
+      "symbol": "EURCHF",
+      "price": 1.045,
+      "ticks": 12
+     },
+     {
+      "day": 3,
+      "hour": 0,
+      "minute": 30,
+      "do": "guide",
+      "symbol": "EURCHF",
+      "price": 1.052,
+      "ticks": 6
+     },
+     {
+      "day": 3,
+      "hour": 2,
+      "do": "text",
+      "title": "混乱逐步平息。EUR/CHF 回到 1.05 上方（伦敦收盘 1.053 附近）",
+      "kind": "market",
+      "icon": "chart",
+      "severity": 2
+     },
+     {
+      "day": 3,
+      "hour": 2,
+      "minute": 10,
+      "do": "mental",
+      "value": -40
+     }
+    ]
+   },
+   "positions": [
+    {
+     "symbol": "EURCHF",
+     "side": 1,
+     "lots": 125,
+     "entry": 1.202
+    },
+    {
+     "symbol": "EURCHF",
+     "side": 1,
+     "lots": 105,
+     "entry": 1.2012
+    }
+   ],
+   "intro": [
+    {
+     "who": "narrator",
+     "text": "（这一战没有教学。是重放——她的资金、她的仓位、她的信念。）"
+    },
+    {
+     "who": "narrator",
+     "text": "（EUR/CHF 多单 合计230枚，维持率只有一百五十多%。操作已锁定——她自己也放不开手。）"
+    }
+   ],
+   "steps": [
+    {
+     "lock": [
+      "buy",
+      "sell",
+      "close",
+      "lots",
+      "sl",
+      "tp",
+      "speed",
+      "tabs",
+      "watch"
+     ],
+     "speed": 3,
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "smug",
+       "text": "维持率有点低……不过下限就在下面。没事的。"
+      },
+      {
+       "who": "narrator",
+       "text": "平静的交易日。1月12日〜14日。"
+      }
+     ],
+     "objective": "平静的日子（回放中）",
+     "until": {
+      "type": "time",
+      "day": 1,
+      "hour": 9
+     }
+    },
+    {
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "happy",
+       "text": "下限三年多没破过。央行无限额地守着。……这等于没有风险。"
+      },
+      {
+       "who": "mochiko",
+       "face": "normal",
+       "text": "「没有风险」——说这句话的人，我已经见过很多。"
+      },
+      {
+       "who": "kurumi",
+       "face": "smug",
+       "text": "这次真的不一样。"
+      }
+     ],
+     "speed": 2,
+     "objective": "等待 1月14日收盘",
+     "until": {
+      "type": "time",
+      "day": 2,
+      "hour": 20
+     }
+    },
+    {
+     "dialog": [
+      {
+       "who": "narrator",
+       "text": "1月15日。市场平静得像一潭死水。"
+      },
+      {
+       "who": "kurumi",
+       "face": "focus",
+       "text": "（今晚……也和昨天一样就好。）"
+      }
+     ],
+     "speed": 1,
+     "objective": "等待 [color=#ffd166]18:30[/color]（东京时间）",
+     "until": {
+      "type": "time",
+      "day": 3,
+      "hour": 18,
+      "minute": 24
+     }
+    },
+    {
+     "speed": 2,
+     "objective": "[color=#ff5d73]18:30——[/color]",
+     "until": {
+      "type": "time",
+      "day": 3,
+      "hour": 18,
+      "minute": 55
+     }
+    },
+    {
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "不足金……超过1億円……超过『妈妈输掉的钱』……"
+      },
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "我只是……守着一个『绝不会被打破』的下限……"
+      },
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "现在的我——和妈妈，一样了……"
+      }
+     ],
+     "objective": "看着数字（1億円以上）",
+     "until": {
+      "type": "time",
+      "day": 3,
+      "hour": 23,
+      "minute": 30
+     }
+    },
+    {
+     "dialog": [
+      {
+       "who": "narrator",
+       "text": "深夜。价格在暴跌之后慢慢回头，伦敦的买盘把它推回1.05上方。"
+      },
+      {
+       "who": "narrator",
+       "text": "可是账户里，已经没有任何可以挽回的东西。"
+      },
+      {
+       "who": "kurumi",
+       "face": "worried",
+       "text": "……为什么。明明是『绝对安全』的……"
+      },
+      {
+       "who": "mochiko",
+       "face": "normal",
+       "text": "（电话那头，沉默了很久。）……先活下来。别的，之后再一件一件想。"
+      }
+     ],
+     "objective": "1月16日黎明",
+     "until": {
+      "type": "time",
+      "day": 3,
+      "hour": 5,
+      "minute": 30
+     }
+    },
+    {
+     "finish": true
+    }
+   ],
+   "win": {
+    "always": true
+   },
+   "lose_continues": true,
+   "close_at_end": false,
+   "on_win": [
+    {
+     "who": "note",
+     "text": "【本战役·复盘】\n· 下限不是保险：被央行『压住』的力量，解除时会一口气释放（peg_break）。\n· 国内业者没有零cut：跳空打穿强平线时，亏掉保证金之外的部分，会变成「不足金」——真正的负债。\n· 『安全』的货币对，不等于没有风险。历史上真实存在过：2015-01-15，欧元/瑞郎在约24分钟里跌掉约25%。"
+    },
+    {
+     "who": "narrator",
+     "text": "第12章 —— 她手里剩下的最后一张牌。"
+    }
+   ]
+  }
+ ]
 }

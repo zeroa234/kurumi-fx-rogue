@@ -246,7 +246,10 @@ def graph_ic(m, a, kind, seed, comfy):
         g["13"]["inputs"]["steps"] = kind["steps"]
     if "cfg" in kind:
         g["13"]["inputs"]["cfg"] = kind["cfg"]
-    g["41"]["inputs"]["filename_prefix"] = f"kurumi-fx-rogue/hi_{a['id']}"
+    g["41"] = {  # SaveImageKJ 在本版本不触发执行链，换标准 SaveImage
+        "class_type": "SaveImage",
+        "inputs": {"images": ["40", 0], "filename_prefix": f"kurumi-fx-rogue/hi_{a['id']}"},
+    }
     return g, prompt, negative
 
 
@@ -292,7 +295,8 @@ def remove_bg_white(im, tol=42):
 
 def to_rgba_with_alpha(im, alpha):
     rgba = im.convert("RGBA")
-    rgba.putalpha(bytes(bytearray(alpha)))
+    mask = Image.frombytes("L", im.size, bytes(alpha))
+    rgba.putalpha(mask)
     return rgba
 
 

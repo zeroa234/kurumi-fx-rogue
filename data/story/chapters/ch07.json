@@ -1,72 +1,256 @@
 {
-  "id": "ch07",
-  "order": 7,
-  "title": "第7章 复归的战士",
-  "manga": "第11〜15話（3巻）",
-  "period": "2014年 后半",
-  "source": "manga-reference.md §3.0 3巻・§3.1 第11〜15話、§2.1（S1 3巻宣传语「\"FXで勝つ\"ためには、奨学金を突っ込む勇気も必要みたいです！」；S15 3巻评论： restarting後「取り返すって発想が出始めると脳汁もいっぱい出る」式的兴奋；S11/S2 やす子条目：芽吹的挚友、以「あふぃちゃん」名义经营联盟广告FX战果博客）。四人组（久留美/萌智子/芽吹/やす子）关系成形。",
-  "original": "本章行情、资金（510万円，取自S5评论区「330万を510万にしたんやで」的获利数字）与目标金额为游戏设定，原作未记载具体交易内容；台词为转述。",
-  "tutorial": false,
-  "requires": ["ch06"],
-  "scenes": [
-    {"type": "title_card", "text": "第7章", "sub": "复归的战士", "bg": "bg_campus", "hold": 1.4},
-    {"type": "dialogue", "bg": "bg_campus", "lines": [
-      {"who": "narrator", "text": "另一边，芽吹也开始了一个人的交易。"},
-      {"who": "mebuki", "face": "happy", "text": "我不想再一直问久留美学姐了！我的行情，我自己来猜！"},
-      {"who": "yasuko", "face": "normal", "text": "喂，你连杠杆是怎么算的都没搞懂吧。"},
-      {"who": "mebuki", "face": "happy", "text": "没关系！钱放着不会自己变多，动了才有机会嘛！"},
-      {"who": "yasuko", "face": "angry", "text": "……这家伙真的没问题吗。"},
-      {"who": "narrator", "text": "高根やす子。芽吹从高中起的朋友。她以「あふぃちゃん」的名义，经营着一个连载FX战果的联盟广告博客。"},
-      {"who": "yasuko", "face": "normal", "text": "博客那边我是『あふぃちゃん』。投资的话……吃过一次大亏，所以这次只看着。"},
-      {"who": "kurumi", "face": "focus", "text": "（……我现在，是不交易的。）"},
-      {"who": "narrator", "text": "可屏幕上的数字一跳，取回亏损的念头就醒了过来。心跳，骗不了人。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20140901, "start_date": "2014-09-01", "days": 3, "warmup_days": 6, "balance": 5100000,
-       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
-       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
-       "market_params": {"hunt_prob": 0.002, "vol_mult": 1.0},
-       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
-       "overrides": {"start_prices": {"USDJPY": 104.5, "EURJPY": 136.5, "AUDJPY": 91.5}},
-       "mental": 90, "end_on_broken": false, "end_on_bust": false,
-       "goal": {"equity_early": 5600000},
-       "goal_text": "复归的第一战"
-     },
-     "steps": [
-       {"lock": ["close", "speed", "sl", "tp"],
-        "dialog": [
-          {"who": "kurumi", "face": "smug", "text": "……手，又开始痒了。"},
-          {"who": "mochiko", "face": "smile", "text": "回来了呢。（笑）"},
-          {"who": "kurumi", "face": "smug", "text": "这次不是小打小闹。"
-          }
-        ],
-        "unlock": ["buy", "sell", "lots"], "highlight": "lots",
-        "objective": "把手数调大，开仓（[color=#ffd166]15枚[/color] 以上）", "until": {"type": "open", "min_lots": 15}},
-       {"msg": "复归后的久留美，手数比教程时代大了一个数量级。\n30万円时代她只能开几枚；现在她张口就是几十枚。\n\n目标：3天内让 [color=#ffd166]510万円 → 560万円（+50万）[/color]。\n觉得危险随时平仓。",
-        "unlock": ["close", "speed"], "speed": 1,
-        "script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 105.2, "ticks": 40}],
-        "objective": "3天内净值达到 [color=#ffd166]560万円[/color]（可自由交易）", "until": {"type": "equity", "value": 5600000}},
-       {"finish": true}
+ "id": "ch07",
+ "order": 7,
+ "title": "第7章 复归的战士",
+ "manga": "第11〜15話（3巻）",
+ "period": "2014年 后半",
+ "source": "manga-reference.md §3.0 3巻・§3.1 第11〜15話、§2.1（S1 3巻宣传语「\"FXで勝つ\"ためには、奨学金を突っ込む勇気も必要みたいです！」；S15 3巻评论： restarting後「取り返すって発想が出始めると脳汁もいっぱい出る」式的兴奋；S11/S2 やす子条目：芽吹的挚友、以「あふぃちゃん」名义经营联盟广告FX战果博客）。四人组（久留美/萌智子/芽吹/やす子）关系成形。",
+ "original": "本章行情、资金（510万円，取自S5评论区「330万を510万にしたんやで」的获利数字）与目标金额为游戏设定，原作未记载具体交易内容；台词为转述。",
+ "tutorial": false,
+ "requires": [
+  "ch06"
+ ],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "第7章",
+   "sub": "复归的战士",
+   "bg": "bg_campus",
+   "hold": 1.4
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_campus",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "另一边，芽吹也开始了一个人的交易。"
+    },
+    {
+     "who": "mebuki",
+     "face": "happy",
+     "text": "我不想再一直问久留美学姐了！我的行情，我自己来猜！"
+    },
+    {
+     "who": "yasuko",
+     "face": "normal",
+     "text": "喂，你连杠杆是怎么算的都没搞懂吧。"
+    },
+    {
+     "who": "mebuki",
+     "face": "happy",
+     "text": "没关系！钱放着不会自己变多，动了才有机会嘛！"
+    },
+    {
+     "who": "yasuko",
+     "face": "angry",
+     "text": "……这家伙真的没问题吗。"
+    },
+    {
+     "who": "narrator",
+     "text": "高根やす子，芽吹的好朋友。她以「あふぃちゃん」的名义，经营着一个连载FX战果的联盟广告博客。"
+    },
+    {
+     "who": "yasuko",
+     "face": "normal",
+     "text": "博客那边我是『あふぃちゃん』。投资的话……吃过一次大亏，所以这次只看着。"
+    },
+    {
+     "who": "kurumi",
+     "face": "focus",
+     "text": "（……我现在，是不交易的。）"
+    },
+    {
+     "who": "narrator",
+     "text": "可屏幕上的数字一跳，取回亏损的念头就醒了过来。心跳，骗不了人。"
+    }
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20140901,
+    "start_date": "2014-09-01",
+    "days": 3,
+    "warmup_days": 6,
+    "balance": 5100000,
+    "broker": {
+     "name": "海外FX",
+     "leverage": 888.0,
+     "stopout": 20.0,
+     "margin_call": 50.0,
+     "zero_cut": true,
+     "spread_mult": 1.8,
+     "slip_mult": 1.6
+    },
+    "symbols": [
+     "USDJPY",
+     "EURJPY",
+     "AUDJPY"
+    ],
+    "act": 1,
+    "random_news": false,
+    "sns": false,
+    "calendar": false,
+    "market_params": {
+     "hunt_prob": 0.002,
+     "vol_mult": 1.0
+    },
+    "event_params": {
+     "min_indicators_week": 0,
+     "indicator_mult": 0.0
+    },
+    "overrides": {
+     "start_prices": {
+      "USDJPY": 104.5,
+      "EURJPY": 136.5,
+      "AUDJPY": 91.5
+     }
+    },
+    "mental": 90,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal": {
+     "equity_early": 5600000
+    },
+    "goal_text": "复归的第一战"
+   },
+   "steps": [
+    {
+     "lock": [
+      "close",
+      "speed",
+      "sl",
+      "tp"
      ],
-     "win": {"equity": 5600000},
-     "close_at_end": true,
-     "lose_continues": true,
-     "on_win": [
-       {"who": "kurumi", "face": "happy", "text": "赚到钱的声音……我回来了。我完全回来了！"},
-       {"who": "mochiko", "face": "smile", "text": "呵呵。才50万的手感，眼睛已经看到5000万那边去了哦。"},
-       {"who": "narrator", "text": "复归后的久留美，手数一次比一次大。她觉得自己终于找回了『战士』的感觉。"}
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "smug",
+       "text": "……手，又开始痒了。"
+      },
+      {
+       "who": "mochiko",
+       "face": "smile",
+       "text": "回来了呢。（笑）"
+      },
+      {
+       "who": "kurumi",
+       "face": "smug",
+       "text": "这次不是小打小闹。"
+      }
      ],
-     "on_lose": [
-       {"who": "kurumi", "face": "angry", "text": "不够……还不够。再来一局，就能赚回来了。"},
-       {"who": "note", "text": "提示：顺着趋势、小仓位分批进出，盈利目标比想象中更容易达成。"}
-     ]},
-    {"type": "dialogue", "bg": "bg_room_day", "lines": [
-      {"who": "mebuki", "face": "cry", "text": "呜……打工攒的钱，亏掉一半了……"},
-      {"who": "yasuko", "face": "angry", "text": "所以让你小点来！……等等，你刚才说什么？『下次把奖学金放进去』？"},
-      {"who": "mebuki", "face": "normal", "text": "反正之后能还上嘛！要赢，就得有把大钱放进去的勇气！"},
-      {"who": "kurumi", "face": "worried", "text": "（……那种『勇气』……曾经的我，也有。）"},
-      {"who": "narrator", "text": "四个人的日常开始了。谁也没有注意到，每个人都在朝自己的方向走。"}
-    ]}
-  ]
+     "unlock": [
+      "buy",
+      "sell",
+      "lots"
+     ],
+     "highlight": "lots",
+     "objective": "把手数调大，开仓（[color=#ffd166]15枚[/color] 以上）",
+     "until": {
+      "type": "open",
+      "min_lots": 15
+     }
+    },
+    {
+     "msg": "复归后的久留美，手数比教程时代大了一个数量级。\n30万円时代她只能开几枚；现在她张口就是几十枚。\n\n目标：3天内让 [color=#ffd166]510万円 → 560万円（+50万）[/color]。\n觉得危险随时平仓。",
+     "unlock": [
+      "close",
+      "speed"
+     ],
+     "speed": 1,
+     "script": [
+      {
+       "t": 0,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 105.2,
+       "ticks": 40
+      }
+     ],
+     "objective": "3天内净值达到 [color=#ffd166]560万円[/color]（可自由交易）",
+     "until": {
+      "type": "equity",
+      "value": 5600000
+     }
+    },
+    {
+     "finish": true
+    }
+   ],
+   "win": {
+    "equity": 5600000
+   },
+   "close_at_end": true,
+   "lose_continues": true,
+   "on_win": [
+    {
+     "who": "kurumi",
+     "face": "happy",
+     "text": "赚到钱的声音……我回来了。我完全回来了！"
+    },
+    {
+     "who": "mochiko",
+     "face": "smile",
+     "text": "呵呵。才50万的手感，眼睛已经看到5000万那边去了哦。"
+    },
+    {
+     "who": "narrator",
+     "text": "复归后的久留美，手数一次比一次大。她觉得自己终于找回了『战士』的感觉。"
+    }
+   ],
+   "on_lose": [
+    {
+     "who": "kurumi",
+     "face": "angry",
+     "text": "不够……还不够。再来一局，就能赚回来了。"
+    },
+    {
+     "who": "note",
+     "text": "提示：顺着趋势、小仓位分批进出，盈利目标比想象中更容易达成。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_room_day",
+   "lines": [
+    {
+     "who": "mebuki",
+     "face": "cry",
+     "text": "呜……打工攒的钱，亏掉一半了……"
+    },
+    {
+     "who": "yasuko",
+     "face": "angry",
+     "text": "所以让你小点来！……等等，你刚才说什么？『下次把奖学金放进去』？"
+    },
+    {
+     "who": "mebuki",
+     "face": "normal",
+     "text": "反正之后能还上嘛！要赢，就得有把大钱放进去的勇气！"
+    },
+    {
+     "who": "kurumi",
+     "face": "worried",
+     "text": "（……那种『勇气』……曾经的我，也有。）"
+    },
+    {
+     "who": "narrator",
+     "text": "四个人的日常开始了。谁也没有注意到，每个人都在朝自己的方向走。"
+    }
+   ]
+  },
+  {
+   "type": "unlock",
+   "title": "新的仲间！",
+   "unlocks": [
+    "friend_yasuko"
+   ],
+   "text": "[color=#ff5d73]高根やす子（あふぃちゃん）[/color] 可以在肉鸽模式中同行了。\n\n被动：联盟博客每天带来 FP；主动「博客煽动」：在博客上喊单，推动散户跟风。\n手法「兔子吊坠」也加入了卡池。"
+  }
+ ],
+ "unlock_on_clear": [
+  "friend_yasuko"
+ ]
 }

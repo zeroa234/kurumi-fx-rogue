@@ -189,6 +189,8 @@ func close_position(pos: Position, reason := "手动", price := NAN) -> float:
 	if not positions.has(pos):
 		return 0.0
 	var ins := market.get_ins(pos.symbol)
+	if ins.halted and reason == "手动":
+		return 0.0 # 报价停止中，无法手动平仓
 	if is_nan(price):
 		price = exit_price(pos)
 		if reason == "手动":
@@ -259,8 +261,8 @@ func process_tick() -> void:
 func _check_orders(pos: Position) -> void:
 	var ins := market.get_ins(pos.symbol)
 	var n := ins.c.size()
-	if n == 0:
-		return
+	if n == 0 or ins.halted:
+		return # 报价停止：止损/止盈都无法成交
 	var half := spread_of(ins) * 0.5
 	var o := ins.o[n - 1]
 	var hi := ins.h[n - 1]
@@ -312,9 +314,13 @@ func _check_margin() -> void:
 		warned = false
 
 func _stop_out() -> void:
+	# 报价停止的品种无法强平（等报价恢复时以恢复后的价格成交）
+	var closable := positions.filter(func(p: Position) -> bool: return not market.get_ins(p.symbol).halted)
+	if closable.is_empty():
+		return
 	stats.stopouts += 1
 	# 从亏得最多的开始平，直到维持率恢复
-	var sorted := positions.duplicate()
+	var sorted := closable
 	sorted.sort_custom(func(a: Position, b: Position) -> bool: return floating(a) < floating(b))
 	for p in sorted:
 		var ins := market.get_ins(p.symbol)

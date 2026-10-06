@@ -1,0 +1,82 @@
+{
+  "id": "ch15",
+  "order": 15,
+  "title": "第15章 新人的交易（连载中）",
+  "manga": "第51〜53話（未收录卷・连载中）",
+  "period": "2017年4月",
+  "source": "manga-reference.md §3.1 第51〜53話、§4-3（S21 51話/53話解说：第51話月森きずな的押し式劝诱投资、いなご心防被磨；第52話いなご决定用『与工作无关的5万円』试水；第53話きずな围绕2017年法国总统大选『ユーロ売り』的实盘动作与いなご的初トレード——连载中、S4 カドコミ最新公开第53話）。真实行情（任务核实、公开行情记录）：2017-04-23法国大选首轮（马克龙与勒庞进入决选），2017-04-24周一EUR/USD自上周五收盘跳空高开约150 pips、日内最高约1.0928。",
+  "original": "きずな持仓的方向与损益在原作（截至第53話）未明示，剧情保持悬念；いなご的初トレード为原作设定、5万円账户与手数为游戏设定，除跳空与日内高点两个已核实关键帧外其余走势为算法生成；对白为转述。",
+  "tutorial": false,
+  "wip": true,
+  "requires": ["ch14"],
+  "scenes": [
+    {"type": "title_card", "text": "第15章", "sub": "新人的交易（连载中）", "bg": "bg_office", "hold": 1.6},
+    {"type": "dialogue", "bg": "bg_office", "lines": [
+      {"who": "narrator", "name": "きずな", "text": "いなご酱，手机里有多余的1万円吧？那就足够开户了。"},
+      {"who": "narrator", "name": "いなご", "text": "又来了……きずなさん这周已经劝了我四次了……"},
+      {"who": "mochiko", "face": "normal", "text": "随她去劝。但有一条我替她加上：金额，只能是你丢得起的数额。"},
+      {"who": "narrator", "name": "いなご", "text": "……那么，5万円。和工作无关的5万円，试试看。"},
+      {"who": "yasuko", "face": "happy", "text": "ばなな也要入市了！"},
+      {"who": "narrator", "name": "なな", "text": "别叫我ばなな……！"},
+      {"who": "mochiko", "face": "normal", "text": "顺带一提——下周，法国大选。月森さん，据说要在『欧元』上动手。"}
+    ]},
+    {"type": "trade",
+     "config": {
+       "seed": 20170421, "start_date": "2017-04-21", "days": 2, "warmup_days": 4, "balance": 50000,
+       "broker": {"name": "国内大手FX", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.0, "slip_mult": 1.0},
+       "symbols": ["EURUSD", "EURJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
+       "market_params": {"hunt_prob": 0.0, "vol_mult": 0.7},
+       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
+       "overrides": {"start_prices": {"EURUSD": 1.0725, "EURJPY": 116.6}},
+       "mental": 80, "end_on_broken": false, "end_on_bust": false,
+       "goal_text": "いなご的初トレード — 2017 法国大选",
+       "script": [
+         {"day": 0, "hour": 10, "do": "text", "title": "法国总统大选·首轮前夜：舆论调查中马克龙与勒庞进入决选的呼声较高", "kind": "market", "icon": "chart", "severity": 2},
+         {"day": 0, "hour": 10, "do": "sns", "who": "@月森きずな", "text": "要起风了。周末我只持有欧元『卖』——周一见分晓。"},
+         {"day": 0, "hour": 15, "do": "text", "title": "周末前夕：交易员压缩仓位，欧元窄幅震荡", "kind": "market", "icon": "paper", "severity": 1},
+         {"day": 1, "hour": 7, "minute": 5, "do": "text", "title": "【速报】法国首轮投票结果：马克龙第一、勒庞第二，5月7日决选。风险后撤，欧元跳空高开", "kind": "news", "icon": "bolt", "severity": 3},
+         {"day": 1, "hour": 7, "minute": 5, "do": "guide", "symbol": "EURUSD", "price": 1.0877, "ticks": 2},
+         {"day": 1, "hour": 8, "minute": 30, "do": "guide", "symbol": "EURUSD", "price": 1.0928, "ticks": 10},
+         {"day": 1, "hour": 11, "do": "guide", "symbol": "EURUSD", "price": 1.0870, "ticks": 24},
+         {"day": 1, "hour": 13, "do": "sns", "who": "@月森きずな", "text": "……唔。"},
+         {"day": 1, "hour": 13, "minute": 30, "do": "dialog", "lines": [
+           {"who": "narrator", "text": "（月森きずな的持仓，方向是……这里先按下不表。）"}
+         ]}
+       ]
+     },
+     "intro": [
+       {"who": "narrator", "text": "（这不是久留美的账户——总务的座位旁，新人的5万円，刚刚开户。）"}
+     ],
+     "steps": [
+       {"lock": ["close", "speed", "sl", "tp", "tabs", "watch"], "lots": 0.1,
+        "dialog": [
+          {"who": "narrator", "name": "いなご", "text": "(……好像，开户成功了。账户里是5万円。)"},
+          {"who": "kurumi", "face": "normal", "text": "0.1枚。一次只会动几百円的生意。……嗯，很好的规模。真的。"},
+          {"who": "narrator", "name": "いなご", "text": "(学姐说得对。……先，试试看。)"}
+        ],
+        "unlock": ["buy", "sell"], "highlight": "buy",
+        "objective": "以 [color=#ffd166]0.1枚[/color] 打开 EUR/USD（买或卖都可以——这是いなご的初トレード）", "until": {"type": "open"}},
+       {"dialog": [
+          {"who": "narrator", "name": "いなご", "text": "(周末要来了。平仓吗。还是……带着过周末？)"}
+        ], "unlock": ["close", "speed"], "speed": 1,
+        "objective": "持有与否随意——周一开盘见分晓", "until": {"type": "time", "day": 1, "hour": 7, "minute": 30}},
+       {"dialog": [
+          {"who": "narrator", "name": "いなご", "text": "(跳……跳空了！?)"},
+          {"who": "narrator", "text": "周一开盘。欧元跳空高开约150 pips——日内一度触及1.0928。"},
+          {"who": "narrator", "name": "きずな", "text": "（唔。……）"}
+        ],
+        "objective": "观察周一行情（随时可以收手）", "until": {"type": "time", "day": 1, "hour": 14}},
+       {"finish": true}
+     ],
+     "win": {"always": true},
+     "lose_continues": true,
+     "close_at_end": false,
+     "on_win": [
+       {"who": "narrator", "name": "いなご", "text": "(第一次的损益…几杯咖啡的钱。可是心跳，停不下来。)"},
+       {"who": "kurumi", "face": "happy", "text": "0.1枚。很好的规模。比谁都好。"},
+       {"who": "mochiko", "face": "smile", "text": "那么，新人。你的故事——"},
+       {"who": "narrator", "text": "——连载中。（原作公开至第53話，未完。下一章等待更新。）"}
+     ]
+    }
+  ]
+}

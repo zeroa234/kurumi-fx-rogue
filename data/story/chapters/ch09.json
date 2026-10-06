@@ -1,84 +1,303 @@
 {
-  "id": "ch09",
-  "order": 9,
-  "title": "第9章 积小胜，一朝天崩",
-  "manga": "第21〜25話（5巻）",
-  "period": "2014年冬",
-  "source": "manga-reference.md §3.1 第21〜25話（S11 日文维基・萌智子条目：初中成绩几乎全科近满分却因言行招人恨被霸凌、家庭混乱（母亲被情人操弄）、在河川敷捡回的猫、住祖母家自学、高认合格后以特待生进入大学；S15 5巻评论：竞赛与『コツコツドカン』的教训；S5 评论区：やす子的同人志（1000部）创作线启动）、S15 芽吹亏损渐深。",
-  "original": "竞赛比分与行情为游戏设定（算法生成）；萌智子的自述为原作设定的转述；『コツコツドカン』行情事件为游戏原创演出； yasuko 的同人志细节为游戏设定。",
-  "tutorial": false,
-  "requires": ["ch08"],
-  "scenes": [
-    {"type": "title_card", "text": "第9章", "sub": "积小胜，一朝天崩", "bg": "bg_cafe", "hold": 1.4},
-    {"type": "dialogue", "bg": "bg_cafe", "lines": [
-      {"who": "kurumi", "face": "normal", "text": "……萌智子前辈，为什么开始做投资？"},
-      {"who": "narrator", "text": "初中时代，她的成绩几乎每一科都接近满分。可是因为不知变通的言行，被同学排挤。家里，母亲的情人把一切都搅乱了。"},
-      {"who": "mochiko", "face": "normal", "text": "那段时间陪着我的，是在河川敷捡回来的猫。它现在也还活着。"},
-      {"who": "mochiko", "face": "normal", "text": "我搬去祖母家，一个人自学，考出高认，然后以特待生进了大学。——钱能让人自由。就这样。"},
-      {"who": "kurumi", "face": "worried", "text": "……前辈。"},
-      {"who": "mochiko", "face": "smile", "text": "不要用那种眼神看人。竞赛，继续。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20141110, "start_date": "2014-11-10", "days": 3, "warmup_days": 6, "balance": 6100000,
-       "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
-       "symbols": ["USDJPY", "EURJPY", "AUDJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
-       "market_params": {"hunt_prob": 0.0, "vol_mult": 1.0},
-       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
-       "overrides": {"start_prices": {"USDJPY": 113.5, "EURJPY": 141.0, "AUDJPY": 102.0}},
-       "mental": 80, "end_on_broken": false, "end_on_bust": false,
-       "goal_text": "竞赛第二回合 — コツコツドカン"
-     },
-     "mods": {"show_sentiment": 1, "show_fair": 1},
-     "steps": [
-       {"lock": ["close", "speed", "sl", "tp"],
-        "dialog": [
-          {"who": "narrator", "text": "（竞赛第二回合。这一回合，久留美打算用笨办法——积小胜）"},
-          {"who": "kurumi", "face": "focus", "text": "不做大。10枚，赚两三万就收手，再来一次。积起来。"}
-        ],
-        "unlock": ["buy", "sell", "sl", "lots"], "highlight": "buy",
-        "objective": "开仓开始积小胜（[color=#ffd166]10枚[/color] 以上）", "until": {"type": "open", "min_lots": 10}},
-       {"unlock": ["close", "speed"], "speed": 1,
-        "script": [{"t": 0, "do": "guide", "symbol": "USDJPY", "price": 114.2, "ticks": 40}],
-        "objective": "让净值达到 [color=#ffd166]640万円（+30万）[/color]", "until": {"type": "equity", "value": 6400000}},
-       {"msg": "[color=#ffd166]【笔记⑩　コツコツドカン】[/color]\n积累的胜利，也改变着人。\n「一直在赚」会让手数悄悄变大、止损悄悄消失。\n\n而市场从不出预告。积小胜的人，最怕的是一次大输——[color=#ff5d73]一百次的小赢，可能被一根K线抹掉[/color]。\n\n现在，看着接下来发生什么。",
-        "dialog": [
-          {"who": "kurumi", "face": "smug", "text": "+30万。照这个节奏，月底就能再上一节……"},
-          {"who": "kurumi", "face": "tilt", "text": "再赚50万，把账户也……"}
-        ],
-        "unlock": ["speed"], "speed": 2,
-        "script": [
-          {"t": 0, "do": "text", "title": "美国长端利率急升，风险资产突遭抛售", "kind": "news", "icon": "bolt", "severity": 3},
-          {"t": 2, "do": "guide", "symbol": "USDJPY", "price": 111.4, "ticks": 12},
-          {"t": 2, "do": "guide", "symbol": "EURJPY", "price": 138.8, "ticks": 12},
-          {"t": 2, "do": "guide", "symbol": "AUDJPY", "price": 99.7, "ticks": 12}
-        ],
-        "objective": "[color=#ff5d73]行情，翻了脸[/color]", "until": {"type": "ticks", "n": 48}},
-       {"dialog": [
-          {"who": "kurumi", "face": "cry", "text": "……明明，一直在赚的……"},
-          {"who": "mochiko", "face": "normal", "text": "竞赛，还长着呢。"}
-        ],
-        "unlock": ["close"], "objective": "处理剩下的仓位（或已无仓可平）", "until": {"type": "flat"}},
-       {"finish": true}
+ "id": "ch09",
+ "order": 9,
+ "title": "第9章 积小胜，一朝天崩",
+ "manga": "第21〜25話（5巻）",
+ "period": "2014年冬",
+ "source": "manga-reference.md §3.1 第21〜25話（S11 日文维基・萌智子条目：初中成绩几乎全科近满分却因言行招人恨被霸凌、家庭混乱（母亲被情人操弄）、在河川敷捡回的猫、住祖母家自学、高认合格后以特待生进入大学；S15 5巻评论：竞赛与『コツコツドカン』的教训；S5 评论区：やす子的同人志（1000部）创作线启动）、S15 芽吹亏损渐深。",
+ "original": "竞赛比分与行情为游戏设定（算法生成）；萌智子的自述为原作设定的转述；『コツコツドカン』行情事件为游戏原创演出； yasuko 的同人志细节为游戏设定。萌智子被やす子原创角色萌到（原作有出处）；该角色的具体形象未核实，故不作描写。",
+ "tutorial": false,
+ "requires": [
+  "ch08"
+ ],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "第9章",
+   "sub": "积小胜，一朝天崩",
+   "bg": "bg_cafe",
+   "hold": 1.4
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_cafe",
+   "lines": [
+    {
+     "who": "kurumi",
+     "face": "normal",
+     "text": "……萌智子前辈，为什么开始做投资？"
+    },
+    {
+     "who": "narrator",
+     "text": "初中时代，她的成绩几乎每一科都接近满分。可是因为不知变通的言行，被同学排挤。家里，母亲的情人把一切都搅乱了。"
+    },
+    {
+     "who": "mochiko",
+     "face": "normal",
+     "text": "那段时间陪着我的，是在河川敷捡回来的猫。它现在也还活着。"
+    },
+    {
+     "who": "mochiko",
+     "face": "normal",
+     "text": "我搬去祖母家，一个人自学，考出高认，然后以特待生进了大学。——钱能让人自由。就这样。"
+    },
+    {
+     "who": "kurumi",
+     "face": "worried",
+     "text": "……前辈。"
+    },
+    {
+     "who": "mochiko",
+     "face": "smile",
+     "text": "不要用那种眼神看人。竞赛，继续。"
+    }
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20141110,
+    "start_date": "2014-11-10",
+    "days": 3,
+    "warmup_days": 6,
+    "balance": 6100000,
+    "broker": {
+     "name": "海外FX",
+     "leverage": 888.0,
+     "stopout": 20.0,
+     "margin_call": 50.0,
+     "zero_cut": true,
+     "spread_mult": 1.8,
+     "slip_mult": 1.6
+    },
+    "symbols": [
+     "USDJPY",
+     "EURJPY",
+     "AUDJPY"
+    ],
+    "act": 1,
+    "random_news": false,
+    "sns": false,
+    "calendar": false,
+    "market_params": {
+     "hunt_prob": 0.0,
+     "vol_mult": 1.0
+    },
+    "event_params": {
+     "min_indicators_week": 0,
+     "indicator_mult": 0.0
+    },
+    "overrides": {
+     "start_prices": {
+      "USDJPY": 113.5,
+      "EURJPY": 141.0,
+      "AUDJPY": 102.0
+     }
+    },
+    "mental": 80,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal_text": "竞赛第二回合 — コツコツドカン"
+   },
+   "mods": {
+    "show_sentiment": 1,
+    "show_fair": 1
+   },
+   "steps": [
+    {
+     "lock": [
+      "close",
+      "speed",
+      "sl",
+      "tp"
      ],
-     "win": {"steps": true},
-     "close_at_end": true,
-     "lose_continues": true,
-     "on_win": [
-       {"who": "kurumi", "face": "cry", "text": "积起来的东西，一下就……"},
-       {"who": "yasuko", "face": "normal", "text": "这就是『コツコツドカン』吧……一百次小赢，被一根K线抹掉了。"},
-       {"who": "narrator", "text": "而在别处，亏损渐渐加深的芽吹，正把自己一点点推向更深的坑。"}
+     "dialog": [
+      {
+       "who": "narrator",
+       "text": "（竞赛第二回合。这一回合，久留美打算用笨办法——积小胜）"
+      },
+      {
+       "who": "kurumi",
+       "face": "focus",
+       "text": "不做大。10枚，赚两三万就收手，再来一次。积起来。"
+      }
      ],
-     "on_lose": [
-       {"who": "kurumi", "face": "worried", "text": "……这一回合，全砸了。"},
-       {"who": "note", "text": "提示：积小胜的打法，最要紧的是遇到急跌时果断止损。"}
-     ]},
-    {"type": "dialogue", "bg": "bg_campus", "lines": [
-      {"who": "yasuko", "face": "happy", "text": "我决定了。FX那边就当交学费……我要画漫画。第一刷，先印1000部试试水。"},
-      {"who": "mebuki", "face": "happy", "text": "欸——就是那个兔子！超可爱！"},
-      {"who": "mochiko", "face": "blush", "text": "……那个兔子，可爱。"},
-      {"who": "yasuko", "face": "angry", "text": "诶？被夸了，好恶心，再来一次。"},
-      {"who": "narrator", "text": "竞赛还在继续。四个人，都在朝自己的深渊，或黎明，走去。"}
-    ]}
-  ]
+     "unlock": [
+      "buy",
+      "sell",
+      "sl",
+      "lots"
+     ],
+     "highlight": "buy",
+     "objective": "开仓开始积小胜（[color=#ffd166]10枚[/color] 以上）",
+     "until": {
+      "type": "open",
+      "min_lots": 10
+     }
+    },
+    {
+     "unlock": [
+      "close",
+      "speed"
+     ],
+     "speed": 1,
+     "script": [
+      {
+       "t": 0,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 114.2,
+       "ticks": 40
+      }
+     ],
+     "objective": "让净值达到 [color=#ffd166]640万円（+30万）[/color]",
+     "until": {
+      "type": "equity",
+      "value": 6400000
+     }
+    },
+    {
+     "msg": "[color=#ffd166]【笔记⑩　コツコツドカン】[/color]\n积累的胜利，也改变着人。\n「一直在赚」会让手数悄悄变大、止损悄悄消失。\n\n而市场从不出预告。积小胜的人，最怕的是一次大输——[color=#ff5d73]一百次的小赢，可能被一根K线抹掉[/color]。\n\n现在，看着接下来发生什么。",
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "smug",
+       "text": "+30万。照这个节奏，月底就能再上一节……"
+      },
+      {
+       "who": "kurumi",
+       "face": "tilt",
+       "text": "再赚50万，把账户也……"
+      }
+     ],
+     "unlock": [
+      "speed"
+     ],
+     "speed": 2,
+     "script": [
+      {
+       "t": 0,
+       "do": "text",
+       "title": "美国长端利率急升，风险资产突遭抛售",
+       "kind": "news",
+       "icon": "bolt",
+       "severity": 3
+      },
+      {
+       "t": 2,
+       "do": "guide",
+       "symbol": "USDJPY",
+       "price": 111.4,
+       "ticks": 12
+      },
+      {
+       "t": 2,
+       "do": "guide",
+       "symbol": "EURJPY",
+       "price": 138.8,
+       "ticks": 12
+      },
+      {
+       "t": 2,
+       "do": "guide",
+       "symbol": "AUDJPY",
+       "price": 99.7,
+       "ticks": 12
+      }
+     ],
+     "objective": "[color=#ff5d73]行情，翻了脸[/color]",
+     "until": {
+      "type": "ticks",
+      "n": 48
+     }
+    },
+    {
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "cry",
+       "text": "……明明，一直在赚的……"
+      },
+      {
+       "who": "mochiko",
+       "face": "normal",
+       "text": "竞赛，还长着呢。"
+      }
+     ],
+     "unlock": [
+      "close"
+     ],
+     "objective": "处理剩下的仓位（或已无仓可平）",
+     "until": {
+      "type": "flat"
+     }
+    },
+    {
+     "finish": true
+    }
+   ],
+   "win": {
+    "steps": true
+   },
+   "close_at_end": true,
+   "lose_continues": true,
+   "on_win": [
+    {
+     "who": "kurumi",
+     "face": "cry",
+     "text": "积起来的东西，一下就……"
+    },
+    {
+     "who": "yasuko",
+     "face": "normal",
+     "text": "这就是『コツコツドカン』吧……一百次小赢，被一根K线抹掉了。"
+    },
+    {
+     "who": "narrator",
+     "text": "而在别处，亏损渐渐加深的芽吹，正把自己一点点推向更深的坑。"
+    }
+   ],
+   "on_lose": [
+    {
+     "who": "kurumi",
+     "face": "worried",
+     "text": "……这一回合，全砸了。"
+    },
+    {
+     "who": "note",
+     "text": "提示：积小胜的打法，最要紧的是遇到急跌时果断止损。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_campus",
+   "lines": [
+    {
+     "who": "yasuko",
+     "face": "happy",
+     "text": "我决定了。FX那边就当交学费……我要画漫画。第一刷，先印1000部试试水。"
+    },
+    {
+     "who": "mebuki",
+     "face": "happy",
+     "text": "欸——这个角色！超可爱！"
+    },
+    {
+     "who": "mochiko",
+     "face": "blush",
+     "text": "……（这个角色，好可爱。不行，不能表现出来。）"
+    },
+    {
+     "who": "yasuko",
+     "face": "angry",
+     "text": "……萌智子，你刚才是不是笑了？"
+    },
+    {
+     "who": "narrator",
+     "text": "竞赛还在继续。四个人，都在朝自己的深渊，或黎明，走去。"
+    }
+   ]
+  }
+ ]
 }

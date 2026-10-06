@@ -21,14 +21,14 @@
     {"type": "dialogue", "bg": "bg_yakiniku", "lines": [
       {"who": "narrator", "name": "いなご", "text": "请、请多指教！酒田いなご。农家出身，从今天起在创作部……啊不对，全公司打杂起步！"},
       {"who": "kurumi", "face": "normal", "text": "欢迎。我是总务，福賀。……工资金额的事，别问我。我的工资，被我爸管着。"},
-      {"who": "narrator", "name": "いなago", "text": "えっ。"},
+      {"who": "narrator", "name": "いなご", "text": "えっ。"},
       {"who": "kurumi", "face": "happy", "text": "别在意！来说正题——欢迎会！"},
       {"who": "mochiko", "face": "smile", "text": "那么，新人歓迎会的固定话题——『資産運用』。"},
       {"who": "narrator", "text": "营业担当·月森きずな。入社三个月。自2012年开始投资，五年连续盈利，净资产已经超过1000万円。"},
       {"who": "narrator", "name": "きずな", "text": "目标这种事，当然要说一个数。1億円。資産運用做到『自由』——这就是目标。"},
       {"who": "mochiko", "face": "normal", "text": "……能做到1億的人，反过来，也可能在一晚上失去1億。这一面也想听吗？"},
       {"who": "narrator", "name": "きずな", "text": "呵呵。所以才需要我这样的营业嘛，社长。"},
-      {"who": "narrator", "name": "いなago", "text": "(这个公司……好可怕，又好热闹。)"}
+      {"who": "narrator", "name": "いなご", "text": "(这个公司……好可怕，又好热闹。)"}
     ]},
     {"type": "dialogue", "bg": "bg_office", "lines": [
       {"who": "narrator", "name": "きずな", "text": "最近的话题，游戏公司的股票。新出的那款，好像卖得不错哦。"},

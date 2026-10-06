@@ -18,5 +18,29 @@
     "colors": 48,
     "generated_at": "2026-10-06T20:54:06",
     "rev": 1
+  },
+  "kurumi_normal": {
+    "file": "portraits/kurumi_normal.png",
+    "files": {
+      "portraits/kurumi_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620001,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smile, looking at viewer, A chest-up portrait facing the viewer with a calm friendly closed-mouth smile.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T20:56:04",
+    "rev": 1
   }
 }

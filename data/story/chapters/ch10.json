@@ -1,80 +1,287 @@
 {
-  "id": "ch10",
-  "order": 10,
-  "title": "第10章 「安全」的选择",
-  "manga": "第26〜30話（6巻）",
-  "period": "2014年末〜2015年1月",
-  "source": "manga-reference.md §3.1 第26〜30話、§3.0 6巻（S18：芽吹在第六卷第27話前后迎来FX的决着；S17：「学費をつぎ込んだうえに、萌智子から年利109.5%で200万円も借金！」；S11：芽吹为还债一度进风俗行业（本作弱化为一笔带过）后退出FX；S1/S6 6巻宣传语：やす子漫画事业起飞退出竞赛、久留美胜出成为唯一还在FX的『战士』；S11/S15：卷末久留美选中ユロスイ（EUR/CHF）——SNB自2011年9月维持1ユーロ=1.20スイスフラン下限、无限额购买外币、三年多未被打破）、§2.1。",
-  "original": "「安全交易」的行情与收益为算法生成（原作未记载具体交易）；芽吹还债的工作仅模糊处理；久留美的资金曲线（竞赛期间增长至约1,900万円）为游戏设定。",
-  "tutorial": false,
-  "requires": ["ch09"],
-  "scenes": [
-    {"type": "title_card", "text": "第10章", "sub": "「安全」的选择", "bg": "bg_cafe", "hold": 1.4},
-    {"type": "dialogue", "bg": "bg_cafe", "lines": [
-      {"who": "narrator", "text": "竞赛还在继续。但芽吹的账户，先走到了尽头。"},
-      {"who": "mebuki", "face": "cry", "text": "……积蓄没了。然后是学费……信用卡，也开始催了……"},
-      {"who": "mochiko", "face": "normal", "text": "所以。借你200万円。利息按法定上限——年109.5%。我说过的规则，没有变过。"},
-      {"who": "mebuki", "face": "cry", "text": "萌智子借我的200万……也、全部没有了……"},
-      {"who": "narrator", "text": "为了还债，芽吹做过一段她不愿回忆的工作。然后，她退出了FX。"},
-      {"who": "yasuko", "face": "angry", "text": "这个笨蛋……我早就说了要收手的。呜。"},
-      {"who": "kurumi", "face": "worried", "text": "（……如果哪天输了的是我。会有人，这样骂我吗。）"}
-    ]},
-    {"type": "dialogue", "bg": "bg_room_day", "lines": [
-      {"who": "yasuko", "face": "happy", "text": "あふぃちゃん的博客，我停更了。FX战果这种东西，写不下去了。"},
-      {"who": "yasuko", "face": "happy", "text": "不过——画的四格，突然火了！同人即卖会的摊子也排起队了！"},
-      {"who": "mochiko", "face": "smile", "text": "杂志那边，我去牵线。"},
-      {"who": "yasuko", "face": "normal", "text": "欸？是真的假的。"},
-      {"who": "narrator", "text": " yasuko 退出了竞赛，把一切押在画上。场上，久留美成了唯一还站在账户前的『战士』。"}
-    ]},
-    {"type": "dialogue", "bg": "bg_finance", "lines": [
-      {"who": "kurumi", "face": "focus", "text": "要冲上2000万円……我需要一个『绝不会败』的武器。"},
-      {"who": "kurumi", "face": "focus", "text": "欧元/瑞郎。瑞士央行从2011年9月开始，把1欧元死死钉在1.20瑞郎的下限上——无限额地买。"},
-      {"who": "kurumi", "face": "smug", "text": "三年多，一次都没有破过。这就是安全的货币对——ユロスイ。"},
-      {"who": "kurumi", "face": "smug", "text": "而且这次用国内业者，25倍就够。因为下限不会破——不需要赌博式的倍数。"},
-      {"who": "narrator", "text": "她相信，脚下是一块绝对坚硬的地板。"}
-    ]},
-    {"type": "trade",
-     "config": {
-       "seed": 20141209, "start_date": "2014-12-09", "days": 4, "warmup_days": 8, "balance": 19000000,
-       "broker": {"name": "国内大手FX", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.0, "slip_mult": 1.0},
-       "symbols": ["EURCHF", "EURJPY", "USDJPY"], "act": 1, "random_news": false, "sns": false, "calendar": false,
-       "market_params": {"hunt_prob": 0.0, "vol_mult": 0.6},
-       "event_params": {"min_indicators_week": 0, "indicator_mult": 0.0},
-       "overrides": {"start_prices": {"EURCHF": 1.2050, "EURJPY": 140.0, "USDJPY": 121.5}, "pegs": {"EURCHF": 1.2}},
-       "mental": 88, "end_on_broken": false, "end_on_bust": false,
-       "goal": {"equity_early": 19100000},
-       "goal_text": "「安全」货币 ユロスイ"
+ "id": "ch10",
+ "order": 10,
+ "title": "第10章 「安全」的选择",
+ "manga": "第26〜30話（6巻）",
+ "period": "2014年末〜2015年1月",
+ "source": "manga-reference.md §3.1 第26〜30話、§3.0 6巻（S18：芽吹在第六卷第27話前后迎来FX的决着；S17：「学費をつぎ込んだうえに、萌智子から年利109.5%で200万円も借金！」；S11：芽吹为还债一度进风俗行业（本作弱化为一笔带过）后退出FX；S1/S6 6巻宣传语：やす子漫画事业起飞退出竞赛、久留美胜出成为唯一还在FX的『战士』；S11/S15：卷末久留美选中ユロスイ（EUR/CHF）——SNB自2011年9月维持1ユーロ=1.20スイスフラン下限、无限额购买外币、三年多未被打破）、§2.1。",
+ "original": "「安全交易」的行情与收益为算法生成（原作未记载具体交易）；芽吹还债的工作仅模糊处理；久留美的资金曲线（竞赛期间增长至约1,900万円）为游戏设定。久留美在EUR/CHF交易时使用国内业者，是本游戏根据「冲击后产生不足金（负债）」所作的推断（海外业者多为零cut）。",
+ "tutorial": false,
+ "requires": [
+  "ch09"
+ ],
+ "scenes": [
+  {
+   "type": "title_card",
+   "text": "第10章",
+   "sub": "「安全」的选择",
+   "bg": "bg_cafe",
+   "hold": 1.4
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_cafe",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "竞赛还在继续。但芽吹的账户，先走到了尽头。"
+    },
+    {
+     "who": "mebuki",
+     "face": "cry",
+     "text": "……积蓄没了。然后是学费……信用卡，也开始催了……"
+    },
+    {
+     "who": "mochiko",
+     "face": "normal",
+     "text": "所以。借你200万円。利息按法定上限——年109.5%。我说过的规则，没有变过。"
+    },
+    {
+     "who": "mebuki",
+     "face": "cry",
+     "text": "萌智子借我的200万……也、全部没有了……"
+    },
+    {
+     "who": "narrator",
+     "text": "为了还债，芽吹做过一段她不愿回忆的工作。然后，她退出了FX。"
+    },
+    {
+     "who": "yasuko",
+     "face": "angry",
+     "text": "这个笨蛋……我早就说了要收手的。呜。"
+    },
+    {
+     "who": "kurumi",
+     "face": "worried",
+     "text": "（……如果哪天输了的是我。会有人，这样骂我吗。）"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_room_day",
+   "lines": [
+    {
+     "who": "yasuko",
+     "face": "happy",
+     "text": "あふぃちゃん的博客，我停更了。FX战果这种东西，写不下去了。"
+    },
+    {
+     "who": "yasuko",
+     "face": "happy",
+     "text": "不过——我画的漫画在SNS上突然火了！同人即卖会的摊子也排起队了！"
+    },
+    {
+     "who": "mochiko",
+     "face": "smile",
+     "text": "杂志那边，我去牵线。"
+    },
+    {
+     "who": "yasuko",
+     "face": "normal",
+     "text": "欸？是真的假的。"
+    },
+    {
+     "who": "narrator",
+     "text": "やす子退出了竞赛，把一切押在画上。场上，久留美成了唯一还站在账户前的『战士』。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_finance",
+   "lines": [
+    {
+     "who": "kurumi",
+     "face": "focus",
+     "text": "要冲上2000万円……我需要一个『绝不会败』的武器。"
+    },
+    {
+     "who": "kurumi",
+     "face": "focus",
+     "text": "欧元/瑞郎。瑞士央行从2011年9月开始，把1欧元死死钉在1.20瑞郎的下限上——无限额地买。"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "三年多，一次都没有破过。这就是安全的货币对——ユロスイ。"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "而且这次用国内业者，25倍就够。因为下限不会破——不需要赌博式的倍数。"
+    },
+    {
+     "who": "narrator",
+     "text": "她相信，脚下是一块绝对坚硬的地板。"
+    }
+   ]
+  },
+  {
+   "type": "trade",
+   "config": {
+    "seed": 20141209,
+    "start_date": "2014-12-09",
+    "days": 4,
+    "warmup_days": 8,
+    "balance": 19000000,
+    "broker": {
+     "name": "国内大手FX",
+     "leverage": 25.0,
+     "stopout": 100.0,
+     "margin_call": 150.0,
+     "zero_cut": false,
+     "spread_mult": 1.0,
+     "slip_mult": 1.0
+    },
+    "symbols": [
+     "EURCHF",
+     "EURJPY",
+     "USDJPY"
+    ],
+    "act": 1,
+    "random_news": false,
+    "sns": false,
+    "calendar": false,
+    "market_params": {
+     "hunt_prob": 0.0,
+     "vol_mult": 0.6
+    },
+    "event_params": {
+     "min_indicators_week": 0,
+     "indicator_mult": 0.0
+    },
+    "overrides": {
+     "start_prices": {
+      "EURCHF": 1.205,
+      "EURJPY": 140.0,
+      "USDJPY": 121.5
      },
-     "steps": [
-       {"lock": ["speed", "sl", "tp", "close"],
-        "dialog": [
-          {"who": "kurumi", "face": "focus", "text": "1.205。买入。——这块地板，替我托着底部。"}
-        ],
-        "unlock": ["buy", "lots"], "highlight": "buy",
-        "objective": "在 1.204〜1.206 附近[color=#ff5d73]买入[/color] EUR/CHF（[color=#ffd166]50枚[/color] 以上）——不设止损", "until": {"type": "open", "side": 1, "symbol": "EURCHF", "min_lots": 50}},
-       {"msg": "[color=#ffd166]【笔记⑪　钉住汇率（Peg / 下限）】[/color]\n央行为守住某个汇率，会在市场上无限额地反向操作——价格被按下时，央行出手把它托回来。\n\n· 只要央行「无限额、有意志」，下限可以守很多年；\n· 但央行不是神。一旦「意志」或「无限额」破产，被压了多年的力量会[color=#ff5d73]一口气释放[/color]。\n\n现在，先体会「稳」。", "unlock": ["close", "speed"], "speed": 1,
-        "script": [
-          {"t": 0, "do": "guide", "symbol": "EURCHF", "price": 1.2060, "ticks": 20},
-          {"t": 48, "do": "guide", "symbol": "EURCHF", "price": 1.2062, "ticks": 20},
-          {"t": 96, "do": "guide", "symbol": "EURCHF", "price": 1.2070, "ticks": 24}
-        ],
-        "objective": "波段操作或持有，让净值达到 [color=#ffd166]1,910万円（+10万）[/color]", "until": {"type": "equity", "value": 19100000}},
-       {"finish": true}
+     "pegs": {
+      "EURCHF": 1.2
+     }
+    },
+    "mental": 88,
+    "end_on_broken": false,
+    "end_on_bust": false,
+    "goal": {
+     "equity_early": 19100000
+    },
+    "goal_text": "「安全」货币 ユロスイ"
+   },
+   "steps": [
+    {
+     "lock": [
+      "speed",
+      "sl",
+      "tp",
+      "close"
      ],
-     "win": {"equity": 19100000},
-     "lose_continues": true,
-     "on_win": [
-       {"who": "kurumi", "face": "smug", "text": "小赚……不过没关系。下限不会破，我可以安心地一直加仓。"},
-       {"who": "kurumi", "face": "smug", "text": "2000万円，只是时间问题♪"},
-       {"who": "narrator", "text": "1月上旬，父亲出差。家里只剩她一个人，和一个认为绝对安全的下限。"}
+     "dialog": [
+      {
+       "who": "kurumi",
+       "face": "focus",
+       "text": "1.205。买入。——这块地板，替我托着底部。"
+      }
      ],
-     "on_lose": [
-       {"who": "kurumi", "face": "normal", "text": "……没赚到也没关系。反正它是『安全』的，慢慢来就好。"},
-       {"who": "note", "text": "提示：这是「安全」剧情段——下限保护的 EUR/CHF 波动很小，适合波段或持有。"}
-     ]},
-    {"type": "dialogue", "bg": "bg_room_day", "lines": [
-      {"who": "narrator", "text": "2015年1月。她把账户里的资金，一步步全数换成 EUR/CHF 的多单。"},
-      {"who": "narrator", "text": "地板，看起来无限坚固。"}
-    ]}
-  ]
+     "unlock": [
+      "buy",
+      "lots"
+     ],
+     "highlight": "buy",
+     "objective": "在 1.204〜1.206 附近[color=#ff5d73]买入[/color] EUR/CHF（[color=#ffd166]50枚[/color] 以上）——不设止损",
+     "until": {
+      "type": "open",
+      "side": 1,
+      "symbol": "EURCHF",
+      "min_lots": 50
+     }
+    },
+    {
+     "msg": "[color=#ffd166]【笔记⑪　钉住汇率（Peg / 下限）】[/color]\n央行为守住某个汇率，会在市场上无限额地反向操作——价格被按下时，央行出手把它托回来。\n\n· 只要央行「无限额、有意志」，下限可以守很多年；\n· 但央行不是神。一旦「意志」或「无限额」破产，被压了多年的力量会[color=#ff5d73]一口气释放[/color]。\n\n现在，先体会「稳」。",
+     "unlock": [
+      "close",
+      "speed"
+     ],
+     "speed": 1,
+     "script": [
+      {
+       "t": 0,
+       "do": "guide",
+       "symbol": "EURCHF",
+       "price": 1.206,
+       "ticks": 20
+      },
+      {
+       "t": 48,
+       "do": "guide",
+       "symbol": "EURCHF",
+       "price": 1.2062,
+       "ticks": 20
+      },
+      {
+       "t": 96,
+       "do": "guide",
+       "symbol": "EURCHF",
+       "price": 1.207,
+       "ticks": 24
+      }
+     ],
+     "objective": "波段操作或持有，让净值达到 [color=#ffd166]1,910万円（+10万）[/color]",
+     "until": {
+      "type": "equity",
+      "value": 19100000
+     }
+    },
+    {
+     "finish": true
+    }
+   ],
+   "win": {
+    "equity": 19100000
+   },
+   "lose_continues": true,
+   "on_win": [
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "小赚……不过没关系。下限不会破，我可以安心地一直加仓。"
+    },
+    {
+     "who": "kurumi",
+     "face": "smug",
+     "text": "2000万円，只是时间问题♪"
+    },
+    {
+     "who": "narrator",
+     "text": "1月上旬，父亲出差。家里只剩她一个人，和一个认为绝对安全的下限。"
+    }
+   ],
+   "on_lose": [
+    {
+     "who": "kurumi",
+     "face": "normal",
+     "text": "……没赚到也没关系。反正它是『安全』的，慢慢来就好。"
+    },
+    {
+     "who": "note",
+     "text": "提示：这是「安全」剧情段——下限保护的 EUR/CHF 波动很小，适合波段或持有。"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "bg": "bg_room_day",
+   "lines": [
+    {
+     "who": "narrator",
+     "text": "2015年1月。她把账户里的资金，一步步全数换成 EUR/CHF 的多单。"
+    },
+    {
+     "who": "narrator",
+     "text": "地板，看起来无限坚固。"
+    }
+   ]
+  }
+ ]
 }
