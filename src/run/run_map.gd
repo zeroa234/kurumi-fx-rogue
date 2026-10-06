@@ -7,6 +7,7 @@ var side: VBoxContainer
 var top_lbl: RichTextLabel
 var mental_bar: ProgressBar
 var hint: Label
+var fp_lbl: Label
 var node_btns := {}
 
 const MAP_RECT := Rect2(8, 40, 430, 280)
@@ -46,8 +47,13 @@ func _build() -> void:
 	var th := UI.hbox(6)
 	top.add_child(th)
 	top_lbl = UI.rich()
-	top_lbl.custom_minimum_size = Vector2(520, 28)
+	top_lbl.custom_minimum_size = Vector2(440, 28)
 	th.add_child(top_lbl)
+	th.add_child(AnimSprite.make("res://assets/sprites/anim/coin.png", 24, 10.0))
+	fp_lbl = UI.label("", UI.YELLOW)
+	fp_lbl.custom_minimum_size.x = 50
+	fp_lbl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	th.add_child(fp_lbl)
 	var mv := UI.vbox(1)
 	mv.add_child(UI.label("メンタル", UI.PINK))
 	mental_bar = ProgressBar.new()
@@ -76,10 +82,11 @@ func _build() -> void:
 
 func _refresh() -> void:
 	var a := run.act_def()
-	top_lbl.text = "[color=#%s]%s[/color]  目标 净资产 %s\n资金 %s  借金 [color=#%s]%s[/color]  净资产 %s  FP [color=#ffd166]%d[/color]  %s" % [
+	top_lbl.text = "[color=#%s]%s[/color]  目标 净资产 %s\n资金 %s  借金 [color=#%s]%s[/color]  净资产 %s  %s" % [
 		UI.hex(UI.PINK), a.name, GameDate.yen(run.target()),
-		GameDate.yen(run.money), UI.hex(UI.UP if run.debt > 0 else UI.DIM), GameDate.yen(run.debt), GameDate.yen(run.net()), run.fp,
+		GameDate.yen(run.money), UI.hex(UI.UP if run.debt > 0 else UI.DIM), GameDate.yen(run.debt), GameDate.yen(run.net()),
 		("挑战度%d" % run.ascension) if run.ascension > 0 else ""]
+	fp_lbl.text = "%d FP" % run.fp
 	mental_bar.max_value = run.mods.get_v("mental_max")
 	mental_bar.value = run.mental
 	_draw_map()
@@ -339,7 +346,8 @@ func _shop_ui() -> void:
 	var v := UI.modal(self, UI.CYAN, 440)
 	var head := UI.hbox(8)
 	head.add_child(UI.label("便利店 & 书店", UI.CYAN))
-	head.add_child(UI.label("FP %d" % run.fp, UI.YELLOW))
+	head.add_child(AnimSprite.make("res://assets/sprites/anim/coin.png", 24, 10.0))
+	head.add_child(UI.label("%d FP" % run.fp, UI.YELLOW))
 	v.add_child(head)
 	v.add_child(UI.label("手法", UI.DIM))
 	for s in shop.relics:
