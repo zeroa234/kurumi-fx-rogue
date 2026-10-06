@@ -86,5 +86,1729 @@
     "colors": 16,
     "generated_at": "2026-10-06T21:01:37",
     "rev": 1
+  },
+  "kurumi_smug": {
+    "file": "portraits/kurumi_smug.png",
+    "files": {
+      "portraits/kurumi_smug.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_smug.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620003,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, smirk, grin, looking at viewer, A chest-up portrait with a self-satisfied greedy smirk, half-lidded confident eyes.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:23:05",
+    "rev": 1
+  },
+  "kurumi_focus": {
+    "file": "portraits/kurumi_focus.png",
+    "files": {
+      "portraits/kurumi_focus.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_focus.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620004,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, serious, focused, A chest-up portrait staring intently ahead with a determined serious expression, studying a chart.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:24:08",
+    "rev": 1
+  },
+  "kurumi_worried": {
+    "file": "portraits/kurumi_worried.png",
+    "files": {
+      "portraits/kurumi_worried.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_worried.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620005,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, worried, frown, A chest-up portrait looking anxious and uneasy, brows drawn together, slight cold sweat.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:24:31",
+    "rev": 1
+  },
+  "kurumi_shock": {
+    "file": "portraits/kurumi_shock.png",
+    "files": {
+      "portraits/kurumi_shock.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_shock.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620006,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, shocked, open mouth, wide-eyed, A chest-up portrait in horrified shock, eyes wide open, gaping, as if watching a chart crash.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:24:54",
+    "rev": 1
+  },
+  "kurumi_cry": {
+    "file": "portraits/kurumi_cry.png",
+    "files": {
+      "portraits/kurumi_cry.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_cry.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620007,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, crying, crying with eyes open, tears, A chest-up portrait crying with eyes open, tears streaming down both cheeks, trembling sad mouth.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:25:17",
+    "rev": 1
+  },
+  "kurumi_angry": {
+    "file": "portraits/kurumi_angry.png",
+    "files": {
+      "portraits/kurumi_angry.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_angry.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620008,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, angry, A chest-up portrait shouting in anger, furrowed brows and open mouth, frustrated.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:25:41",
+    "rev": 1
+  },
+  "kurumi_tilt": {
+    "file": "portraits/kurumi_tilt.png",
+    "files": {
+      "portraits/kurumi_tilt.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_tilt.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620109,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, crazy eyes, constricted pupils, shaded face, crazy smile, sweat, dark aura, looking at viewer, Chest-up portrait. She stares at the viewer with an obsessed, unhinged grin, shadow over her eyes, tiny pupils, cold sweat, as if gripped by gambling fever.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:37",
+    "rev": 2
+  },
+  "kurumi_sleep": {
+    "file": "portraits/kurumi_sleep.png",
+    "files": {
+      "portraits/kurumi_sleep.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_sleep.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620010,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, sleepy, half-closed eyes, A chest-up portrait drowsy and nodding off, eyes drooping half closed, relaxed tired face.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:26:27",
+    "rev": 1
+  },
+  "kurumi_young": {
+    "file": "portraits/kurumi_young.png",
+    "files": {
+      "portraits/kurumi_young.png": [
+        128,
+        128
+      ],
+      "portraits_small/kurumi_young.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620011,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, serafuku, school uniform, sailor collar, large breasts, solo, upper body, portrait, centered, simple background, white background, A chest-up portrait of the same character as a younger middle school girl, more childish round face, wearing a sailor-style school uniform (serafuku with sailor collar).",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:26:50",
+    "rev": 1
+  },
+  "ikuo_angry": {
+    "file": "portraits/ikuo_angry.png",
+    "files": {
+      "portraits/ikuo_angry.png": [
+        128,
+        128
+      ],
+      "portraits_small/ikuo_angry.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620022,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, silhouette, solo, featureless dark silhouette, adult man, office worker, A fully dark featureless silhouette, chest up, of a middle-aged office-working man leaning forward toward the viewer as if reprimanding, plain white background, no facial features.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:27:36",
+    "rev": 1
+  },
+  "kozue_normal": {
+    "file": "portraits/kozue_normal.png",
+    "files": {
+      "portraits/kozue_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/kozue_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620023,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, silhouette, solo, featureless dark silhouette, adult woman, A fully dark featureless silhouette, chest up, of a gentle adult woman with shoulder-length hair, plain white background, no facial features.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, multiple girls",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:27:59",
+    "rev": 1
+  },
+  "kurumi_chibi": {
+    "file": "chibi/kurumi_chibi.png",
+    "files": {
+      "chibi/kurumi_chibi.png": [
+        48,
+        48
+      ]
+    },
+    "seed": 46620024,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, chibi, solo, full body, standing, waving hand, simple background, white background, cute, happy, A small cute chibi version of the character, big head small body, standing and waving, plain white background.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, multiple girls",
+    "pixel_size": [
+      48,
+      48
+    ],
+    "colors": 24,
+    "generated_at": "2026-10-06T21:28:22",
+    "rev": 1
+  },
+  "cg_title": {
+    "file": "cg/cg_title.png",
+    "files": {
+      "cg/cg_title.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620025,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, chair, multiple monitors, candlestick charts, dark room, night, pink neon lights, looking back, smile, Kurumi sits at her trading desk at night, three monitors showing candlestick charts, turning back toward the viewer with a bright welcoming smile, pink neon light and city lights glowing in the window behind her.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad hands, extra fingers, multiple girls",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:28:50",
+    "rev": 1
+  },
+  "cg_shock": {
+    "file": "cg/cg_shock.png",
+    "files": {
+      "cg/cg_shock.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620026,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, sitting, computer desk, multiple monitors, red glowing screens, shocked, open mouth, screen glow, night, dark room, Kurumi stares in horror at the monitors as the chart plunges, the whole desk bathed in harsh red glow of the crashing screens, her eyes wide, cold sweat on her face.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad hands, extra fingers, multiple girls",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:29:19",
+    "rev": 1
+  },
+  "cg_win": {
+    "file": "cg/cg_win.png",
+    "files": {
+      "cg/cg_win.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620027,
+    "template": "anima-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, solo, cowboy shot, from front, eye level, :d, open mouth, excited, arms up, flying banknotes, money, sparkle, pink light, night, city lights, Seen from the front at eye level, waist-up framing: Kurumi throws both arms up in joy while banknotes rain down around her, eyes sparkling, pink neon city behind.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad hands, extra fingers, multiple girls, from below, panties, upskirt, cleavage",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:39:07",
+    "rev": 2
+  },
+  "bg_room_day": {
+    "file": "bg/bg_room_day.png",
+    "files": {
+      "bg/bg_room_day.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620029,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, day, bedroom, sunlight, window, curtains, computer desk, computer, A modest Japanese girl's bedroom in daylight, a desk with a computer and scattered study notes, warm sunlight through the curtains, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:29:57",
+    "rev": 1
+  },
+  "bg_room_night": {
+    "file": "bg/bg_room_night.png",
+    "files": {
+      "bg/bg_room_night.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620030,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, night, bedroom, dark, monitor light, computer desk, city lights, The same modest bedroom at night, dark and quiet, lit only by the soft glow of a computer monitor, city lights outside the window, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:05",
+    "rev": 1
+  },
+  "bg_campus": {
+    "file": "bg/bg_campus.png",
+    "files": {
+      "bg/bg_campus.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620031,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, day, university, school grounds, trees, walkway, buildings, blue sky, A sunny university campus, modern school buildings, trees and a walkway, students' bicycles parked, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:14",
+    "rev": 1
+  },
+  "bg_lecture": {
+    "file": "bg/bg_lecture.png",
+    "files": {
+      "bg/bg_lecture.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620032,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, university, lecture hall, auditorium, tiered seats, projection screen, daylight, An empty university tiered lecture hall with a large projected slide at the front, rows of seats, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:22",
+    "rev": 1
+  },
+  "bg_yakiniku": {
+    "file": "bg/bg_yakiniku.png",
+    "files": {
+      "bg/bg_yakiniku.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620033,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, restaurant, tabletop grill, charcoal, meat, vegetables, plates, warm lighting, The interior of a cozy Japanese yakiniku barbecue restaurant, a small charcoal grill surrounded by plates of meat and vegetables on the table, warm lighting, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:30",
+    "rev": 1
+  },
+  "bg_living": {
+    "file": "bg/bg_living.png",
+    "files": {
+      "bg/bg_living.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620034,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, japanese living room, low table, sofa, television, daylight, home, A modest Japanese family living room with a low table, a sofa and a television, soft afternoon light, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:38",
+    "rev": 1
+  },
+  "bg_living_dim": {
+    "file": "bg/bg_living_dim.png",
+    "files": {
+      "bg/bg_living_dim.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620035,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, japanese living room, low table, sofa, television, dim, dusk, dark, cold blue light, desaturated, The same Japanese living room at dusk, dim and desaturated, fading memory-like tone, cold blue light through the window, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:46",
+    "rev": 1
+  },
+  "bg_cafe": {
+    "file": "bg/bg_cafe.png",
+    "files": {
+      "bg/bg_cafe.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620036,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, cafe, tables, chairs, coffee, cups, plants, warm light, day, The interior of a quiet cafe with wooden tables, cups of coffee and green plants, warm afternoon light through the window, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:30:55",
+    "rev": 1
+  },
+  "bg_office": {
+    "file": "bg/bg_office.png",
+    "files": {
+      "bg/bg_office.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620037,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, office, small startup office, work desks, computers, plants, whiteboard, daylight, A small startup company office with a few work desks, computers, whiteboard and potted plants, bright daylight, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:03",
+    "rev": 1
+  },
+  "bg_city_night": {
+    "file": "bg/bg_city_night.png",
+    "files": {
+      "bg/bg_city_night.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620038,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, night, city, cityscape, skyline, skyscrapers, illuminated windows, city lights, A Japanese city skyline at night seen from below, skyscrapers with glowing windows under a dark blue sky, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:11",
+    "rev": 1
+  },
+  "bg_konbini": {
+    "file": "bg/bg_konbini.png",
+    "files": {
+      "bg/bg_konbini.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620039,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, convenience store, shelves, products, bright fluorescent light, counter, The interior of a Japanese convenience store, bright shelves of snacks and drinks, a checkout counter, fluorescent light, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:19",
+    "rev": 1
+  },
+  "bg_park": {
+    "file": "bg/bg_park.png",
+    "files": {
+      "bg/bg_park.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620040,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, dusk, park, bench, trees, streetlights, sunset, orange sky, An empty park at dusk, a single bench under trees, streetlights turning on, orange and purple sunset sky, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:27",
+    "rev": 1
+  },
+  "bg_finance": {
+    "file": "bg/bg_finance.png",
+    "files": {
+      "bg/bg_finance.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620041,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, day, financial district, skyscrapers, glass buildings, low angle, blue sky, Financial district skyscrapers of glass and steel seen from below under a bright blue sky, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:36",
+    "rev": 1
+  },
+  "bg_storm": {
+    "file": "bg/bg_storm.png",
+    "files": {
+      "bg/bg_storm.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620042,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, storm, cityscape, dark clouds, heavy rain, wind, lightning, dramatic, A city skyline in a raging storm, black clouds, sheets of rain and a lightning flash over dark buildings, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:44",
+    "rev": 1
+  },
+  "bg_winter_city": {
+    "file": "bg/bg_winter_city.png",
+    "files": {
+      "bg/bg_winter_city.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620043,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, winter, snow, lake, european old town, cobblestone plaza, cold light, clear sky, A snowy European lakeside old town in winter, snow-covered roofs and a frozen lakeside plaza, cold clear light, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:31:52",
+    "rev": 1
+  },
+  "bg_tv_studio": {
+    "file": "bg/bg_tv_studio.png",
+    "files": {
+      "bg/bg_tv_studio.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620044,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, television studio, news desk, cameras, studio lights, large screens, blue lighting, A television news studio, a large polished desk, studio cameras and big screens, blue stage lighting, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:32:00",
+    "rev": 1
+  },
+  "bg_rain_street": {
+    "file": "bg/bg_rain_street.png",
+    "files": {
+      "bg/bg_rain_street.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620045,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, outdoors, night, rain, street, neon signs, wet asphalt, reflections, city lights, A rainy Japanese street at night, glowing neon signs reflected in wet asphalt, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:32:08",
+    "rev": 1
+  },
+  "bg_gov_office": {
+    "file": "bg/bg_gov_office.png",
+    "files": {
+      "bg/bg_gov_office.png": [
+        320,
+        180
+      ]
+    },
+    "seed": 46620046,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, indoors, government office, corridor, hallway, fluorescent lights, notice board, benches, institutional, A long clean corridor of a government office building, fluorescent lights, notice boards and rows of plastic benches, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, human, character, face",
+    "pixel_size": [
+      320,
+      180
+    ],
+    "colors": 48,
+    "generated_at": "2026-10-06T21:32:16",
+    "rev": 1
+  },
+  "bento": {
+    "file": "icons/bento.png",
+    "files": {
+      "icons/bento.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620048,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, bento box, japanese lunch box, chopsticks, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:32:23",
+    "rev": 1
+  },
+  "passbook": {
+    "file": "icons/passbook.png",
+    "files": {
+      "icons/passbook.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620049,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, bank passbook, savings book, japanese bank book, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:32:30",
+    "rev": 1
+  },
+  "omamori": {
+    "file": "icons/omamori.png",
+    "files": {
+      "icons/omamori.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620050,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, omamori, japanese amulet, brocade pouch with tassel, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:32:37",
+    "rev": 1
+  },
+  "fortune_slip": {
+    "file": "icons/fortune_slip.png",
+    "files": {
+      "icons/fortune_slip.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620051,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, omikuji, paper fortune slip, folded paper strip, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:32:44",
+    "rev": 1
+  },
+  "calendar_leave": {
+    "file": "icons/calendar_leave.png",
+    "files": {
+      "icons/calendar_leave.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620052,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, desk calendar, red binding, red circled date, thick, simple icon, A chunky desk calendar with a big red binding on top and one date circled in red, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:37",
+    "rev": 2
+  },
+  "coffee": {
+    "file": "icons/coffee.png",
+    "files": {
+      "icons/coffee.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620053,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, coffee cup, hot coffee, steam, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:32:58",
+    "rev": 1
+  },
+  "eye_mask": {
+    "file": "icons/eye_mask.png",
+    "files": {
+      "icons/eye_mask.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620054,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, sleep mask, eye mask, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:05",
+    "rev": 1
+  },
+  "black_card": {
+    "file": "icons/black_card.png",
+    "files": {
+      "icons/black_card.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620055,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, black credit card, gold chip, thick card, tilted, large object filling the frame, simple icon, A single thick black credit card with a shiny gold chip, tilted, filling most of the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:16",
+    "rev": 2
+  },
+  "tissue_box": {
+    "file": "icons/tissue_box.png",
+    "files": {
+      "icons/tissue_box.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620056,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, tissue box, colorful box, tissue sticking out, simple icon, A colorful box of tissues with a white tissue sticking out of the top, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:40:12",
+    "rev": 2
+  },
+  "econ_calendar": {
+    "file": "icons/econ_calendar.png",
+    "files": {
+      "icons/econ_calendar.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620057,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, calendar book, schedule planner, currency symbols on cover, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:27",
+    "rev": 1
+  },
+  "tv": {
+    "file": "icons/tv.png",
+    "files": {
+      "icons/tv.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620058,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, retro television, old crt tv, antennas, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:33",
+    "rev": 1
+  },
+  "newspaper": {
+    "file": "icons/newspaper.png",
+    "files": {
+      "icons/newspaper.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620059,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, newspaper, folded newspaper, headlines, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:40",
+    "rev": 1
+  },
+  "smartphone": {
+    "file": "icons/smartphone.png",
+    "files": {
+      "icons/smartphone.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620060,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, smartphone, mobile phone, glowing screen, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:47",
+    "rev": 1
+  },
+  "binoculars": {
+    "file": "icons/binoculars.png",
+    "files": {
+      "icons/binoculars.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620061,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, binoculars, spyglass binoculars, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:33:54",
+    "rev": 1
+  },
+  "ruler": {
+    "file": "icons/ruler.png",
+    "files": {
+      "icons/ruler.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620062,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, yellow set square, triangle ruler, thick plastic, simple icon, A thick yellow triangular set square ruler, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:51",
+    "rev": 2
+  },
+  "ma_chart": {
+    "file": "icons/ma_chart.png",
+    "files": {
+      "icons/ma_chart.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620063,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, candlestick chart, line graph, moving average line, framed chart card, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:08",
+    "rev": 1
+  },
+  "bollinger": {
+    "file": "icons/bollinger.png",
+    "files": {
+      "icons/bollinger.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620064,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, stock chart icon, candlestick chart, two curved band lines, small screen, bold colors, simple icon, A small chunky chart panel showing a few bold candlesticks between two curved band lines, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:23",
+    "rev": 2
+  },
+  "rsi_gauge": {
+    "file": "icons/rsi_gauge.png",
+    "files": {
+      "icons/rsi_gauge.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620065,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, gauge meter, round analog gauge with needle, indicator dial, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:21",
+    "rev": 1
+  },
+  "shield": {
+    "file": "icons/shield.png",
+    "files": {
+      "icons/shield.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620066,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, shield, heraldic shield, protection, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:28",
+    "rev": 1
+  },
+  "stopwatch": {
+    "file": "icons/stopwatch.png",
+    "files": {
+      "icons/stopwatch.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620067,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, stopwatch, chrome stopwatch, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:35",
+    "rev": 1
+  },
+  "magnifier": {
+    "file": "icons/magnifier.png",
+    "files": {
+      "icons/magnifier.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620068,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, magnifying glass, lens with handle, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:42",
+    "rev": 1
+  },
+  "piggy_bank": {
+    "file": "icons/piggy_bank.png",
+    "files": {
+      "icons/piggy_bank.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620069,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, piggy bank, ceramic pig coin bank, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:49",
+    "rev": 1
+  },
+  "gold_coin": {
+    "file": "icons/gold_coin.png",
+    "files": {
+      "icons/gold_coin.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620070,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, shiny gold coin, gold money coin, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:34:56",
+    "rev": 1
+  },
+  "dice": {
+    "file": "icons/dice.png",
+    "files": {
+      "icons/dice.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620071,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, dice, single die with dots, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:03",
+    "rev": 1
+  },
+  "rocket": {
+    "file": "icons/rocket.png",
+    "files": {
+      "icons/rocket.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620072,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, rocket, retro rocket ship, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:10",
+    "rev": 1
+  },
+  "anchor": {
+    "file": "icons/anchor.png",
+    "files": {
+      "icons/anchor.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620073,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, ship anchor, metal anchor, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:17",
+    "rev": 1
+  },
+  "umbrella": {
+    "file": "icons/umbrella.png",
+    "files": {
+      "icons/umbrella.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620074,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, umbrella, open red umbrella, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:24",
+    "rev": 1
+  },
+  "white_cat": {
+    "file": "icons/white_cat.png",
+    "files": {
+      "icons/white_cat.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620075,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, white cat, round fluffy cat, curled up, sleeping, chubby, cute, simple icon, simple background, green background, A round fluffy white cat curled up asleep, chubby and cute, filling the frame, on a flat solid green background., A single object, centered on a flat solid green background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:41:58",
+    "rev": 3
+  },
+  "bunny_pendant": {
+    "file": "icons/bunny_pendant.png",
+    "files": {
+      "icons/bunny_pendant.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620076,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, white rabbit head charm, bunny face pendant, cute, thick outline, simple icon, A large cute white bunny-head charm with long ears on a short chain, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:30",
+    "rev": 2
+  },
+  "pillow": {
+    "file": "icons/pillow.png",
+    "files": {
+      "icons/pillow.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620077,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, fluffy pillow, plump white pillow, light blue stripes, simple icon, simple background, green background, A plump fluffy white pillow with light blue stripes, filling the frame, on a flat solid green background., A single object, centered on a flat solid green background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:41:51",
+    "rev": 3
+  },
+  "notebook": {
+    "file": "icons/notebook.png",
+    "files": {
+      "icons/notebook.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620078,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, notebook, study notebook, pen, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:52",
+    "rev": 1
+  },
+  "laptop": {
+    "file": "icons/laptop.png",
+    "files": {
+      "icons/laptop.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620079,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, laptop, open notebook computer, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:35:59",
+    "rev": 1
+  },
+  "monitors": {
+    "file": "icons/monitors.png",
+    "files": {
+      "icons/monitors.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620080,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, multiple computer monitors, three monitor setup, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:06",
+    "rev": 1
+  },
+  "headset": {
+    "file": "icons/headset.png",
+    "files": {
+      "icons/headset.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620081,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, headphones, gaming headset, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:13",
+    "rev": 1
+  },
+  "candlestick_gold": {
+    "file": "icons/candlestick_gold.png",
+    "files": {
+      "icons/candlestick_gold.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620082,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, golden bar, shiny gold block, chart candlestick, glowing, simple icon, A big shiny golden vertical block shaped like a chart candlestick with short wicks, glowing, filling the frame., A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:39:44",
+    "rev": 2
+  },
+  "crystal_ball": {
+    "file": "icons/crystal_ball.png",
+    "files": {
+      "icons/crystal_ball.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620083,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, crystal ball, fortune telling crystal sphere, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:27",
+    "rev": 1
+  },
+  "megaphone": {
+    "file": "icons/megaphone.png",
+    "files": {
+      "icons/megaphone.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620084,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, megaphone, handheld loudhailer, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:33",
+    "rev": 1
+  },
+  "handcuffs_money": {
+    "file": "icons/handcuffs_money.png",
+    "files": {
+      "icons/handcuffs_money.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620085,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, padlock, money bag with chains and lock, secured money pouch, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:40",
+    "rev": 1
+  },
+  "hourglass": {
+    "file": "icons/hourglass.png",
+    "files": {
+      "icons/hourglass.png": [
+        32,
+        32
+      ]
+    },
+    "seed": 46620086,
+    "template": "anima-turbo-t2i",
+    "prompt": "masterpiece, very aesthetic, best quality, highres, hourglass, sand timer, A single object, centered on a plain white background, full item in frame, no people.",
+    "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, 1girl, 1boy, people, hands, text, watermark",
+    "pixel_size": [
+      32,
+      32
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:36:47",
+    "rev": 1
+  },
+  "ikuo_normal": {
+    "file": "portraits/ikuo_normal.png",
+    "files": {
+      "portraits/ikuo_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/ikuo_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 46620021,
+    "template": "anima-t2i",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 16,
+    "generated_at": "2026-10-06T21:37:06",
+    "rev": 1
+  },
+  "mochiko_normal": {
+    "file": "portraits/mochiko_normal.png",
+    "files": {
+      "portraits/mochiko_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/mochiko_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5102,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:06",
+    "rev": 1
+  },
+  "mochiko_smile": {
+    "file": "portraits/mochiko_smile.png",
+    "files": {
+      "portraits/mochiko_smile.png": [
+        128,
+        128
+      ],
+      "portraits_small/mochiko_smile.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5113,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:07",
+    "rev": 1
+  },
+  "mochiko_blush": {
+    "file": "portraits/mochiko_blush.png",
+    "files": {
+      "portraits/mochiko_blush.png": [
+        128,
+        128
+      ],
+      "portraits_small/mochiko_blush.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5104,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:08",
+    "rev": 1
+  },
+  "mebuki_normal": {
+    "file": "portraits/mebuki_normal.png",
+    "files": {
+      "portraits/mebuki_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/mebuki_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5201,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:09",
+    "rev": 1
+  },
+  "mebuki_happy": {
+    "file": "portraits/mebuki_happy.png",
+    "files": {
+      "portraits/mebuki_happy.png": [
+        128,
+        128
+      ],
+      "portraits_small/mebuki_happy.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5202,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:10",
+    "rev": 1
+  },
+  "mebuki_cry": {
+    "file": "portraits/mebuki_cry.png",
+    "files": {
+      "portraits/mebuki_cry.png": [
+        128,
+        128
+      ],
+      "portraits_small/mebuki_cry.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5203,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:11",
+    "rev": 1
+  },
+  "yasuko_normal": {
+    "file": "portraits/yasuko_normal.png",
+    "files": {
+      "portraits/yasuko_normal.png": [
+        128,
+        128
+      ],
+      "portraits_small/yasuko_normal.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5301,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:12",
+    "rev": 1
+  },
+  "yasuko_angry": {
+    "file": "portraits/yasuko_angry.png",
+    "files": {
+      "portraits/yasuko_angry.png": [
+        128,
+        128
+      ],
+      "portraits_small/yasuko_angry.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5302,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:13",
+    "rev": 1
+  },
+  "yasuko_happy": {
+    "file": "portraits/yasuko_happy.png",
+    "files": {
+      "portraits/yasuko_happy.png": [
+        128,
+        128
+      ],
+      "portraits_small/yasuko_happy.png": [
+        64,
+        64
+      ]
+    },
+    "seed": 5303,
+    "template": "anima-ic",
+    "prompt": "",
+    "negative": "",
+    "pixel_size": [
+      128,
+      128
+    ],
+    "colors": 32,
+    "generated_at": "2026-10-06T21:37:14",
+    "rev": 1
   }
 }

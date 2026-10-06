@@ -239,19 +239,25 @@ func _draw() -> void:
 	draw_string(font, Vector2(3, 11), head, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.TEXT)
 	var spread_pips := session.account.spread_of(ins) / ins.pip
 	var info := "点差 %.1f" % spread_pips
-	if mods.flag("show_trend"):
-		info += "  趋势:%s/%s" % [m.regime_name(ins.base), m.regime_name(ins.quote)]
-	if mods.flag("show_sentiment"):
-		info += "  散户多 %d%%" % int(ins.long_ratio * 100.0)
 	if ins.halted:
-		info += "  【报价停止】"
+		info += " 【报价停止】"
+	var head_w := font.get_string_size(head, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+	draw_string(font, Vector2(head_w + 12, 11), info, HORIZONTAL_ALIGNMENT_LEFT, 280 - head_w, 12, UI.DIM if spread_pips < ins.spread_pips * 3.0 else UI.ORANGE)
+	# 左下角：情报类信息
+	var info2 := ""
+	if mods.flag("show_trend"):
+		info2 += "趋势 %s/%s  " % [m.regime_name(ins.base), m.regime_name(ins.quote)]
+	if mods.flag("show_sentiment"):
+		info2 += "散户多 %d%%  " % int(ins.long_ratio * 100.0)
 	var nxt := session.events.upcoming(48)
 	if not nxt.is_empty():
 		var c0: Dictionary = nxt[0]
 		var left := int(c0.tick) - m.tick
-		info += "  下一指标 %02d:%02d %s%s（%d时%02d分后）" % [int(c0.hour), int(c0.minute), String(c0.name).split(" ")[0], "★".repeat(int(c0.stars)), left / 4, (left % 4) * 15]
-	var head_w := font.get_string_size(head, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-	draw_string(font, Vector2(head_w + 12, 11), info, HORIZONTAL_ALIGNMENT_LEFT, 280 - head_w, 12, UI.DIM if spread_pips < ins.spread_pips * 3.0 else UI.ORANGE)
+		info2 += "下一指标 %02d:%02d %s%s（%d时%02d分后）" % [int(c0.hour), int(c0.minute), String(c0.name).split(" ")[0], "★".repeat(int(c0.stars)), left / 4, (left % 4) * 15]
+	if info2 != "":
+		var w2 := font.get_string_size(info2, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		draw_rect(Rect2(_plot.position.x, _plot.end.y - 12, w2 + 6, 12), Color(0.05, 0.03, 0.1, 0.7))
+		draw_string(font, Vector2(_plot.position.x + 3, _plot.end.y - 2), info2, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.CYAN)
 	# 十字光标
 	if _mouse.x >= 0.0 and _plot.has_point(_mouse):
 		draw_line(Vector2(_plot.position.x, _mouse.y), Vector2(_plot.end.x, _mouse.y), Color(1, 1, 1, 0.18))

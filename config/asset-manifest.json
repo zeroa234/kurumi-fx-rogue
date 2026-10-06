@@ -219,9 +219,9 @@
    "id": "kurumi_tilt",
    "kind": "portrait",
    "label": "久留美·执念暴走",
-   "seed": 46620009,
-   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, empty eyes, constricted pupils, purple aura",
-   "nl": "A chest-up portrait staring straight ahead with blank glassy eyes, tiny constricted pupils, an unsettling obsessed whisper of a smile, dark purple aura behind her."
+   "seed": 46620109,
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, upper body, portrait, centered, simple background, white background, crazy eyes, constricted pupils, shaded face, crazy smile, sweat, dark aura, looking at viewer",
+   "nl": "Chest-up portrait. She stares at the viewer with an obsessed, unhinged grin, shadow over her eyes, tiny pupils, cold sweat, as if gripped by gambling fever."
   },
   {
    "id": "kurumi_sleep",
@@ -382,8 +382,9 @@
    "kind": "cg",
    "label": "CG·大赚钞票",
    "seed": 46620027,
-   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, mary jane shoes, large breasts, solo, :d, open mouth, excited, flying banknotes, money, sparkle, pink light, night, city lights",
-   "nl": "Kurumi celebrates triumphantly surrounded by a shower of flying banknotes, head thrown back, eyes sparkling with joy, pink neon glow."
+   "tags": "fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, solo, cowboy shot, from front, eye level, :d, open mouth, excited, arms up, flying banknotes, money, sparkle, pink light, night, city lights",
+   "nl": "Seen from the front at eye level, waist-up framing: Kurumi throws both arms up in joy while banknotes rain down around her, eyes sparkling, pink neon city behind.",
+   "negativeExtra": "from below, panties, upskirt, cleavage"
   },
   {
    "id": "bg_title",
@@ -582,8 +583,8 @@
    "kind": "icon",
    "label": "日历",
    "seed": 46620052,
-   "tags": "calendar, desk calendar, page days",
-   "nl": ""
+   "tags": "desk calendar, red binding, red circled date, thick, simple icon",
+   "nl": "A chunky desk calendar with a big red binding on top and one date circled in red, filling the frame."
   },
   {
    "id": "coffee",
@@ -606,16 +607,16 @@
    "kind": "icon",
    "label": "黑信用卡",
    "seed": 46620055,
-   "tags": "black credit card, sleek black card",
-   "nl": ""
+   "tags": "black credit card, gold chip, thick card, tilted, large object filling the frame, simple icon",
+   "nl": "A single thick black credit card with a shiny gold chip, tilted, filling most of the frame."
   },
   {
    "id": "tissue_box",
    "kind": "icon",
    "label": "纸巾盒",
    "seed": 46620056,
-   "tags": "tissue box, facial tissue box",
-   "nl": ""
+   "tags": "tissue box, colorful box, tissue sticking out, simple icon",
+   "nl": "A colorful box of tissues with a white tissue sticking out of the top, filling the frame."
   },
   {
    "id": "econ_calendar",
@@ -662,8 +663,8 @@
    "kind": "icon",
    "label": "尺子",
    "seed": 46620062,
-   "tags": "ruler, straight measuring ruler",
-   "nl": ""
+   "tags": "yellow set square, triangle ruler, thick plastic, simple icon",
+   "nl": "A thick yellow triangular set square ruler, filling the frame."
   },
   {
    "id": "ma_chart",
@@ -678,8 +679,8 @@
    "kind": "icon",
    "label": "布林带图表",
    "seed": 46620064,
-   "tags": "candlestick chart, channel band lines, financial chart card",
-   "nl": ""
+   "tags": "stock chart icon, candlestick chart, two curved band lines, small screen, bold colors, simple icon",
+   "nl": "A small chunky chart panel showing a few bold candlesticks between two curved band lines, filling the frame."
   },
   {
    "id": "rsi_gauge",
@@ -766,24 +767,34 @@
    "kind": "icon",
    "label": "白猫",
    "seed": 46620075,
-   "tags": "white cat, small white cat sitting",
-   "nl": ""
+   "tags": "white cat, round fluffy cat, curled up, sleeping, chubby, cute, simple icon, simple background, green background",
+   "nl": "A round fluffy white cat curled up asleep, chubby and cute, filling the frame, on a flat solid green background.",
+   "kind_override": {
+    "bg_key": "auto",
+    "tol": 40,
+    "nl_auto": "A single object, centered on a flat solid green background, full item in frame, no people."
+   }
   },
   {
    "id": "bunny_pendant",
    "kind": "icon",
    "label": "兔子吊坠",
    "seed": 46620076,
-   "tags": "rabbit necklace pendant, bunny charm",
-   "nl": ""
+   "tags": "white rabbit head charm, bunny face pendant, cute, thick outline, simple icon",
+   "nl": "A large cute white bunny-head charm with long ears on a short chain, filling the frame."
   },
   {
    "id": "pillow",
    "kind": "icon",
    "label": "枕头",
    "seed": 46620077,
-   "tags": "pillow, soft white bed pillow",
-   "nl": ""
+   "tags": "fluffy pillow, plump white pillow, light blue stripes, simple icon, simple background, green background",
+   "nl": "A plump fluffy white pillow with light blue stripes, filling the frame, on a flat solid green background.",
+   "kind_override": {
+    "bg_key": "auto",
+    "tol": 40,
+    "nl_auto": "A single object, centered on a flat solid green background, full item in frame, no people."
+   }
   },
   {
    "id": "notebook",
@@ -822,8 +833,8 @@
    "kind": "icon",
    "label": "金色K线",
    "seed": 46620082,
-   "tags": "single golden candlestick candle, gold chart candle with wick",
-   "nl": ""
+   "tags": "golden bar, shiny gold block, chart candlestick, glowing, simple icon",
+   "nl": "A big shiny golden vertical block shaped like a chart candlestick with short wicks, glowing, filling the frame."
   },
   {
    "id": "crystal_ball",

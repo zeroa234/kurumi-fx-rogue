@@ -43,6 +43,8 @@ python scripts/gen_assets.py --contact           # 重做总览拼图 output/con
 参考图 `flat_*.png` 是官网透明底立绘铺白底后的版本。
 
 ## 其他
+- 白色物体（枕头、白猫）用绿底生成，清单里的 `kind_override: {"bg_key": "auto"}` 让抠图改为取四角颜色。
+- 金币动画由 Blender 渲染：`scripts/blender_coin.py` → `scripts/pixelize_frames.py` → `assets/sprites/anim/coin.png`（8 帧 24×24）。
 - 小号 UI 图标（新闻类型、地图节点、心形等）是 `src/ui/pixel_icons.gd` 里手写的 ASCII 像素画。
 - 音效由 `scripts/gen_sfx.py` 合成（8-bit 方波/三角波/噪声）。
 - 缺图时游戏会用占位：立绘 → 程序绘制的剪影（发色取自 `data/story/characters.json`），图标 → 像素星形。

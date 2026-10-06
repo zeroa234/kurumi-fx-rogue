@@ -170,11 +170,13 @@ def _tpl(name):
 
 def prompt_negative(m, a, kind):
     s = m["style"]
+    if a.get("kind_override"):
+        kind = {**kind, **a["kind_override"]}
     parts = [s.get("quality", ""), a.get("tags", ""), kind.get("kind_tags", ""), a.get("nl", ""), kind.get("nl_auto", "")]
     if kind.get("pixel_tag_on") and s.get("pixel_tag"):
         parts.insert(1, s["pixel_tag"])
     prompt = ", ".join(p.strip().strip(",") for p in parts if p and p.strip())
-    neg_parts = [s.get("negative", ""), kind.get("negativeExtra", "")]
+    neg_parts = [s.get("negative", ""), kind.get("negativeExtra", ""), a.get("negativeExtra", "")]
     negative = ", ".join(p.strip().strip(",") for p in neg_parts if p and p.strip())
     return prompt, negative
 
@@ -254,8 +256,9 @@ def graph_ic(m, a, kind, seed, comfy):
 
 
 # ---------- Pillow 像素化 ----------
-def remove_bg_white(im, tol=42):
-    """从图像边缘泛洪去掉近白背景，返回 (rgb Image, alpha bytearray)。"""
+def remove_bg_white(im, tol=42, key=None):
+    """从图像边缘泛洪去掉背景，返回 (rgb Image, alpha bytearray)。
+    key=None：近白背景；key="auto"：取四角平均色为背景色（白色物体改用纯色背景生成时用）。"""
     im = im.convert("RGB")
     w, h = im.size
     data = im.tobytes()
@@ -263,9 +266,15 @@ def remove_bg_white(im, tol=42):
     alpha = bytearray(b"\xff") * (w * h)
     visited = bytearray(w * h)
     stack = deque()
+    kc = None
+    if key == "auto":
+        cs = [im.getpixel((2, 2)), im.getpixel((w - 3, 2)), im.getpixel((2, h - 3)), im.getpixel((w - 3, h - 3))]
+        kc = tuple(sum(c[i] for c in cs) // 4 for i in range(3))
 
     def is_bg(i):
         p = i * 3
+        if kc is not None:
+            return abs(data[p] - kc[0]) + abs(data[p + 1] - kc[1]) + abs(data[p + 2] - kc[2]) <= tol * 3
         return data[p] >= hi and data[p + 1] >= hi and data[p + 2] >= hi
 
     for x in range(w):
@@ -374,7 +383,8 @@ def add_outline(rgba, color=(24, 20, 28, 255)):
 
 def pixelize_portraitlike(hires_path, kind):
     im = Image.open(hires_path)
-    im, alpha = remove_bg_white(im, tol=kind.get("tol", 42))
+    key = kind.get("bg_key")
+    im, alpha = remove_bg_white(im, tol=kind.get("tol", 42), key=key)
     rgba = to_rgba_with_alpha(im, alpha)
     crop = kind.get("crop")
     if crop == "chest_up":
@@ -441,6 +451,8 @@ def generate_one(m, comfy, a, seed):
 
 def render_one(a, kind, hires_path):
     out = []
+    if a.get("kind_override"):
+        kind = {**kind, **a["kind_override"]}
     for img in pixelize(kind, hires_path):
         if len(img) == 1:
             im = img[0]
