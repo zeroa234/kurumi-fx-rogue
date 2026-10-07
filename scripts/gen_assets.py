@@ -14,6 +14,7 @@ kurumi-fx-rogue 美术素材生成管线（只依赖标准库 + Pillow）
   python gen_assets.py kurumi_happy --reroll   # 换新随机种子并写回清单
   python gen_assets.py kurumi_happy --force    # 用清单里的原 seed 重画
   python gen_assets.py --pix-only kurumi_normal # 跳过生成，用已有 hires 重做像素化
+  python gen_assets.py --pix-only --rematte kurumi_normal # 同上，并重新跑 AI 抠图
   python gen_assets.py --contact       # 只重做总览拼图
   python gen_assets.py --status        # 列出缺失/已有
 """
@@ -38,6 +39,7 @@ REPO = PROJECT.parent.parent                # D:/agent
 TEMPLATES = REPO / "data/comfyui/templates"
 MANIFEST = PROJECT / "config/asset-manifest.json"
 HIRES = PROJECT / "output/hires"
+MASKS = PROJECT / "output/masks"            # AI 抠图蒙版缓存（不入库）
 SPRITES = PROJECT / "assets/sprites"
 INDEX = SPRITES / "index.json"
 SHEET = PROJECT / "output/contact_sheet.png"
@@ -302,6 +304,80 @@ def remove_bg_white(im, tol=42, key=None):
     return im, alpha
 
 
+def graph_matte(m, img_name, prefix):
+    """ComfyUI-RMBG 抠图：只取 MASK（软 alpha），颜色仍用本地原图。"""
+    mt = m["matte"]
+    return {
+        "1": {"class_type": "LoadImage", "inputs": {"image": img_name}},
+        "2": {"class_type": mt["node"], "inputs": {
+            "image": ["1", 0], "model": mt["model"], "sensitivity": mt.get("sensitivity", 1.0),
+            "mask_blur": 0, "mask_offset": 0, "invert_output": False,
+            "refine_foreground": False, "background": "Alpha"}},
+        "3": {"class_type": "MaskToImage", "inputs": {"mask": ["2", 1]}},
+        "4": {"class_type": "SaveImage", "inputs": {"images": ["3", 0], "filename_prefix": prefix}},
+    }
+
+
+def get_matte(m, comfy, a, hires_path, force=False):
+    """AI 蒙版缓存在 output/masks/<id>.png；原图比蒙版新或 force 时重新抠。"""
+    p = MASKS / f"{a['id']}.png"
+    if not force and p.exists() and p.stat().st_mtime >= hires_path.stat().st_mtime:
+        return Image.open(p).convert("L")
+    if comfy is None or not comfy.ping():
+        raise RuntimeError(f"缺 AI 蒙版 {p.name}，且 ComfyUI 不可达（先启动 ComfyUI）")
+    name = comfy.upload_image(hires_path, f"matte_{a['id']}.png")
+    imgs = comfy.poll(comfy.submit(graph_matte(m, name, f"kurumi_matte/{a['id']}")), timeout_s=1800)
+    MASKS.mkdir(parents=True, exist_ok=True)
+    p.write_bytes(comfy.download(imgs[0]))
+    return Image.open(p).convert("L")
+
+
+def decontaminate(im, mask, bg):
+    """半透明边缘去背景色：F = (I - (1-α)·B) / α，避免缩小后留下一圈白边。"""
+    im = im.convert("RGB")
+    data = bytearray(im.tobytes())
+    a = mask.tobytes()
+    for i, av in enumerate(a):
+        if 0 < av < 250:
+            al = max(av, 16) / 255.0
+            p = i * 3
+            for c in range(3):
+                v = (data[p + c] - (1 - al) * bg[c]) / al
+                data[p + c] = 0 if v < 0 else 255 if v > 255 else int(v)
+    return Image.frombytes("RGB", im.size, bytes(data))
+
+
+def drop_islands(mask, min_frac):
+    """去掉面积小于 min_frac×画布 的不透明孤岛（特效抖动线、碎点），返回新 mask。"""
+    w, h = mask.size
+    a = bytearray(mask.tobytes())
+    min_px = max(1, int(w * h * min_frac))
+    seen = bytearray(w * h)
+    for s in range(w * h):
+        if seen[s] or a[s] < 128:
+            continue
+        comp, q = [s], deque([s])
+        seen[s] = 1
+        while q:
+            i = q.popleft()
+            x, y = i % w, i // w
+            for nx, ny in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
+                if 0 <= nx < w and 0 <= ny < h:
+                    j = ny * w + nx
+                    if not seen[j] and a[j] >= 128:
+                        seen[j] = 1
+                        q.append(j)
+                        comp.append(j)
+        if len(comp) < min_px:
+            # 连同周围的半透明像素一起清掉
+            for i in comp:
+                x, y = i % w, i // w
+                for yy in range(max(0, y - 2), min(h, y + 3)):
+                    for xx in range(max(0, x - 2), min(w, x + 3)):
+                        a[yy * w + xx] = 0
+    return Image.frombytes("L", (w, h), bytes(a))
+
+
 def to_rgba_with_alpha(im, alpha):
     rgba = im.convert("RGBA")
     mask = Image.frombytes("L", im.size, bytes(alpha))
@@ -362,6 +438,31 @@ def quantize_colors(rgba, colors):
     return out
 
 
+def smooth_edges(rgba):
+    """二值 alpha 去毛刺：删掉只有 ≤1 个不透明邻居的凸点，补上 ≥3 面被包围的凹缺（颜色取邻居众数）。"""
+    w, h = rgba.size
+    px = rgba.load()
+    nb = ((-1, 0), (1, 0), (0, -1), (0, 1))
+
+    def opaque_nbrs(x, y):
+        return [px[x + dx, y + dy] for dx, dy in nb
+                if 0 <= x + dx < w and 0 <= y + dy < h and px[x + dx, y + dy][3]]
+
+    drop = [(x, y) for y in range(h) for x in range(w) if px[x, y][3] and len(opaque_nbrs(x, y)) <= 1]
+    for x, y in drop:
+        px[x, y] = (0, 0, 0, 0)
+    fill = []
+    for y in range(h):
+        for x in range(w):
+            if not px[x, y][3]:
+                ns = opaque_nbrs(x, y)
+                if len(ns) >= 3:
+                    fill.append((x, y, max(set(ns), key=ns.count)))
+    for x, y, c in fill:
+        px[x, y] = c
+    return rgba
+
+
 def add_outline(rgba, color=(24, 20, 28, 255)):
     w, h = rgba.size
     px = rgba.load()
@@ -381,11 +482,25 @@ def add_outline(rgba, color=(24, 20, 28, 255)):
     return rgba, bool(edge)
 
 
-def pixelize_portraitlike(hires_path, kind):
+def pixelize_portraitlike(hires_path, kind, matte=None):
     im = Image.open(hires_path)
     key = kind.get("bg_key")
-    im, alpha = remove_bg_white(im, tol=kind.get("tol", 42), key=key)
-    rgba = to_rgba_with_alpha(im, alpha)
+    if matte is not None:
+        # AI 蒙版：软 alpha → 去背景色 → 去孤岛
+        im = im.convert("RGB")
+        if key == "auto":
+            cs = [im.getpixel(p) for p in ((2, 2), (im.width - 3, 2), (2, im.height - 3), (im.width - 3, im.height - 3))]
+            bg = tuple(sum(c[i] for c in cs) // 4 for i in range(3))
+        else:
+            bg = (255, 255, 255)
+        mask = matte.resize(im.size, Image.LANCZOS) if matte.size != im.size else matte
+        mask = mask.point(lambda v: 0 if v < 8 else v)
+        mask = drop_islands(mask, kind.get("island_frac", 0.0004))
+        rgba = decontaminate(im, mask, bg).convert("RGBA")
+        rgba.putalpha(mask)
+    else:
+        im, alpha = remove_bg_white(im, tol=kind.get("tol", 42), key=key)
+        rgba = to_rgba_with_alpha(im, alpha)
     crop = kind.get("crop")
     if crop == "chest_up":
         rgba = chest_up_crop(rgba)
@@ -395,14 +510,16 @@ def pixelize_portraitlike(hires_path, kind):
     return rgba
 
 
-def pixelize(kind, hires_path):
+def pixelize(kind, hires_path, matte=None):
     """返回 [(out_rel_path, Image)]。"""
     results = []
     pixel = kind["pixel"]
     if "bg_remove" in kind:
-        rgba = pixelize_portraitlike(hires_path, kind)
+        rgba = pixelize_portraitlike(hires_path, kind, matte)
         img = fit_canvas(rgba, pixel[0], kind.get("inner_frac", 0.9))
         img = quantize_colors(img, kind["colors"])
+        if kind.get("smooth"):
+            img = smooth_edges(img)
         if kind.get("outline"):
             img, _ = add_outline(img)
         results.append((img,))
@@ -410,6 +527,8 @@ def pixelize(kind, hires_path):
         if small:
             s = fit_canvas(rgba, small["pixel"][0], kind.get("inner_frac", 0.9))
             s = quantize_colors(s, small["colors"])
+            if kind.get("smooth"):
+                s = smooth_edges(s)
             if kind.get("outline"):
                 s, _ = add_outline(s)
             results.append((s, "small"))
@@ -449,11 +568,14 @@ def generate_one(m, comfy, a, seed):
     return hires_path, prompt, negative, tpl
 
 
-def render_one(a, kind, hires_path):
+def render_one(a, kind, hires_path, m=None, comfy=None, rematte=False):
     out = []
     if a.get("kind_override"):
         kind = {**kind, **a["kind_override"]}
-    for img in pixelize(kind, hires_path):
+    matte = None
+    if kind.get("bg_remove") == "ai":
+        matte = get_matte(m, comfy, a, hires_path, force=rematte)
+    for img in pixelize(kind, hires_path, matte):
         if len(img) == 1:
             im = img[0]
             rel = sprite_rel(a, kind)
@@ -484,6 +606,7 @@ def main():
     ap.add_argument("--reroll", action="store_true", help="换新随机种子（写回清单）")
     ap.add_argument("--force", action="store_true", help="忽略已有结果，用清单 seed 重画")
     ap.add_argument("--pix-only", action="store_true", help="跳过生成，用已有 hires 重做像素化")
+    ap.add_argument("--rematte", action="store_true", help="忽略已缓存的 AI 蒙版，重新抠图")
     ap.add_argument("--contact", action="store_true", help="只重做总览拼图")
     ap.add_argument("--status", action="store_true", help="只列出状态")
     args = ap.parse_args()
@@ -536,7 +659,7 @@ def main():
                 tpl = kind["template"]
             else:
                 hires_path, prompt, negative, tpl = generate_one(m, comfy, a, seed)
-            outs = render_one(a, kind, hires_path)
+            outs = render_one(a, kind, hires_path, m, comfy, rematte=args.rematte or not args.pix_only)
             entry = idx.get(a["id"], {})
             idx[a["id"]] = {
                 "file": outs[0][0],
