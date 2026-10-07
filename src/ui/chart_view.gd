@@ -169,12 +169,13 @@ func _notification(what: int) -> void:
 func _line_at(y: float) -> Dictionary:
 	if session == null:
 		return {}
+	var tol := 6.0 if Game.touch else 3.0 # 手指比鼠标粗：触屏放宽命中范围
 	for p in session.account.positions:
 		if p.symbol != symbol:
 			continue
-		if p.sl > 0.0 and absf(_price_to_y(p.sl) - y) <= 3.0:
+		if p.sl > 0.0 and absf(_price_to_y(p.sl) - y) <= tol:
 			return {"pos_id": p.id, "which": "sl"}
-		if p.tp > 0.0 and absf(_price_to_y(p.tp) - y) <= 3.0:
+		if p.tp > 0.0 and absf(_price_to_y(p.tp) - y) <= tol:
 			return {"pos_id": p.id, "which": "tp"}
 	return {}
 

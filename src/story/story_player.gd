@@ -10,7 +10,8 @@ var bg_fill: ColorRect
 var layer: Control
 var trade_screen: TradeScreen
 var director: TutorialDirector
-var skip_btn: Button
+var menu_btn: Button # 剧情段（非交易）右上角菜单；交易段用 TradeScreen 自己的
+var _menu_v: VBoxContainer
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -26,6 +27,15 @@ func _ready() -> void:
 	layer = Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(layer)
+	# 手机没有 Esc：剧情段也要能暂停/退出（在 layer 之上，对话框挡不住）
+	menu_btn = UI.button("菜单", _open_menu)
+	menu_btn.position = Vector2(604, 2)
+	menu_btn.custom_minimum_size = Vector2(32, 13)
+	menu_btn.add_theme_stylebox_override("normal", UI.box(Color(0.08, 0.05, 0.14, 0.85), UI.BORDER, 1, 0))
+	menu_btn.add_theme_stylebox_override("hover", UI.box(Color("3d3060"), UI.BORDER_HI, 1, 0))
+	menu_btn.add_theme_stylebox_override("pressed", UI.box(Color("4a3a75"), UI.PINK, 1, 0))
+	menu_btn.tooltip_text = "暂停菜单（Esc）"
+	add_child(menu_btn)
 	var id: String = Game.params.get("chapter", "ch01")
 	chapter = StoryDB.chapter(id)
 	if chapter.is_empty():
@@ -64,6 +74,7 @@ func _clear_layer() -> void:
 		c.queue_free()
 	trade_screen = null
 	director = null
+	menu_btn.visible = true
 
 func set_bg(id: String) -> void:
 	if id == "" or id == "none":
@@ -103,7 +114,7 @@ func _play_title_card(s: Dictionary) -> void:
 	layer.add_child(v)
 	v.position = ((Vector2(640, 360) - v.get_combined_minimum_size()) / 2.0).floor()
 	v.modulate.a = 0.0
-	var tw := create_tween()
+	var tw := layer.create_tween() # 绑在 layer 上：打开菜单（layer 停止处理）时一起暂停
 	tw.tween_property(v, "modulate:a", 1.0, 0.6)
 	tw.tween_interval(float(s.get("hold", 1.6)))
 	tw.tween_property(v, "modulate:a", 0.0, 0.5)
@@ -161,6 +172,7 @@ func _play_trade(s: Dictionary) -> void:
 		if r is Account.Position and p.has("entry"):
 			(r as Account.Position).entry = float(p.entry)
 	trade_screen = TradeScreen.new(session)
+	menu_btn.visible = false
 	trade_screen.auto_close_on_finish = bool(s.get("close_at_end", true))
 	trade_screen.exit_label = "返回章节选择"
 	trade_screen.exit_cb = func(): Game.goto("res://src/scenes/chapter_select.tscn")
@@ -253,6 +265,49 @@ func _chapter_done() -> void:
 	p.reset_size()
 	p.position = ((Vector2(640, 360) - p.size) / 2.0).floor()
 
+# ---------------------------------------------------------------- 菜单（Esc / 返回键 / 右上按钮）
+
+## 对话框可跳过时，桌面 Esc 先被对话框处理（跳过本段）；其余情况（CG、解锁、结算面板）Esc 开关菜单
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and trade_screen == null:
-		pass
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE and trade_screen == null:
+		_toggle_menu()
+		get_viewport().set_input_as_handled()
+
+## Game.back()：交易段交给 TradeScreen；剧情段开关菜单（手机返回键不会直接跳过整段对话）
+func _on_back() -> bool:
+	if trade_screen != null:
+		return trade_screen.on_back()
+	_toggle_menu()
+	return true
+
+func _toggle_menu() -> void:
+	if is_instance_valid(_menu_v):
+		_close_menu()
+	else:
+		_open_menu()
+
+func _open_menu() -> void:
+	if is_instance_valid(_menu_v) or trade_screen != null:
+		return
+	layer.process_mode = Node.PROCESS_MODE_DISABLED # 对话打字、标题卡计时一起停
+	var v := UI.modal(self, UI.BORDER_HI, 220)
+	_menu_v = v
+	v.add_child(UI.label("暂停 · %s" % chapter.get("title", ""), UI.PINK))
+	v.add_child(UI.button("继续", _close_menu))
+	if battle_only:
+		v.add_child(UI.button("返回经典战役", func(): Game.goto("res://src/scenes/battles.tscn")))
+	else:
+		v.add_child(UI.button("返回章节选择", func(): Game.goto("res://src/scenes/chapter_select.tscn")))
+	v.add_child(UI.button("返回标题", func(): Game.goto("res://src/scenes/title.tscn")))
+	if Game.touch:
+		v.add_child(UI.label("对话：轻点继续 · 长按快进\n右上「快进」「跳过」· 返回键＝本菜单", UI.DIM))
+	else:
+		v.add_child(UI.label("对话：点击/空格 继续 · 按住 Ctrl 快进\nEsc 跳过本段对话", UI.DIM))
+	v.add_child(UI.label("退出后，下次从本章开头开始", UI.MUTED))
+
+func _close_menu() -> void:
+	if not is_instance_valid(_menu_v):
+		return
+	UI.close_modal(_menu_v)
+	_menu_v = null
+	layer.process_mode = Node.PROCESS_MODE_INHERIT

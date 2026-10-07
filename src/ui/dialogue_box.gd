@@ -1,7 +1,8 @@
 class_name DialogueBox
 extends Control
 ## 视觉小说式对话框。lines = [{who, face, text, side?, bg?, cg?, sfx?, shake?}]
-## 点击 / 空格 / 回车 前进；打字机效果；Ctrl 快进（手机：按住不放）；Esc 跳过全部（skippable 时）。
+## 点击 / 空格 / 回车 前进；打字机效果；Ctrl 或按住不放（≥HOLD_DELAY 秒）快进；Esc 跳过全部（skippable 时）。
+## 右上角有「快进」（开关，点对话框取消）与「跳过」按钮，以及按平台显示的操作提示——手机没有 Ctrl/Esc。
 
 signal finished
 signal line_shown(index: int, line: Dictionary)
@@ -21,10 +22,19 @@ var _box: PanelContainer
 var _arrow: Label
 var _name_panel: PanelContainer
 var _blink := 0.0
-var _hold := false # 触屏按住不放 = 快进
+## 按住超过这么久才算「长按快进」；轻点只前进一句（之前一按下就快进，手机上轻点会连跳好几句）
+const HOLD_DELAY := 0.45
+var _press_t := -1.0 # 在对话框上按住的秒数；-1 = 没按
+var _skip_mode := false # 「快进」开关
+var _done := false
+var _fast_lbl: Label
+var _skip_btn: Button
+## 上一个对话框结束时还在长按快进（记录结束时刻）：紧接着的下一段对话不用重新按
+static var _carry_fast_ms := -100000
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	# 代码创建的控件进树后才设锚点：必须连同偏移一起设，否则保持 0×0（点不到、弹窗遮罩也不显示）
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	if dim_background:
 		var dim := ColorRect.new()
@@ -68,11 +78,51 @@ func _ready() -> void:
 	_arrow = UI.label("▼", UI.PINK)
 	_arrow.position = Vector2(604, 360 - 20)
 	add_child(_arrow)
+	_build_controls()
+	if Time.get_ticks_msec() - _carry_fast_ms < 3000 and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		_press_t = HOLD_DELAY
+	_carry_fast_ms = -100000
 	_next()
 
+## 对话框右上方：操作提示 + 快进 / 跳过
+func _build_controls() -> void:
+	var h := UI.hbox(3)
+	h.alignment = BoxContainer.ALIGNMENT_END
+	h.position = Vector2(16, 360 - 106)
+	h.size = Vector2(608, 13)
+	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(h)
+	_fast_lbl = UI.label("▶▶", UI.YELLOW)
+	_fast_lbl.visible = false
+	h.add_child(_fast_lbl)
+	var tip := "轻点 继续 · 长按 快进" if Game.touch else "点击/空格 继续 · 按住 Ctrl 快进" + (" · Esc 跳过" if skippable else "")
+	var tl := UI.label(tip, UI.MUTED)
+	tl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.add_child(tl)
+	h.add_child(_bar_btn("快进", func(): _skip_mode = not _skip_mode))
+	if skippable:
+		_skip_btn = _bar_btn("跳过", _end)
+		h.add_child(_skip_btn)
+
+func _bar_btn(t: String, cb: Callable) -> Button:
+	var b := UI.button(t, cb)
+	b.custom_minimum_size = Vector2(30, 13)
+	b.add_theme_stylebox_override("normal", UI.box(Color(0.08, 0.05, 0.14, 0.9), UI.BORDER, 1, 0))
+	b.add_theme_stylebox_override("hover", UI.box(Color("3d3060"), UI.BORDER_HI, 1, 0))
+	b.add_theme_stylebox_override("pressed", UI.box(Color("4a3a75"), UI.PINK, 1, 0))
+	return b
+
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_advance()
+	# 手机上单指触摸会被模拟成左键，所以这里同时处理鼠标与触屏
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			if _skip_mode:
+				_skip_mode = false # 快进中点一下 = 停止快进
+			else:
+				_advance()
+			_press_t = 0.0
+		else:
+			_press_t = -1.0
 		accept_event()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -84,15 +134,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			_end()
 			get_viewport().set_input_as_handled()
 
-func _input(event: InputEvent) -> void:
-	# 手机没有 Ctrl：按住不放等价于长按 Ctrl 快进
-	if event is InputEventScreenTouch:
-		_hold = event.pressed
-	elif event is InputEventScreenDrag:
-		_hold = true
-
 func _process(delta: float) -> void:
-	var fast := _hold or Input.is_key_pressed(KEY_CTRL)
+	if _press_t >= 0.0:
+		# 松手的事件可能落在别处（比如手指滑出窗口），以实际按键状态为准
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			_press_t += delta
+		else:
+			_press_t = -1.0
+	var fast := _is_fast()
+	_fast_lbl.visible = fast
 	var speed := 2000.0 if fast else 50.0
 	if _shown < _full.length():
 		_shown = minf(_full.length(), _shown + delta * speed)
@@ -156,7 +206,15 @@ func _next() -> void:
 	_text_lbl.visible_characters = 0
 	line_shown.emit(_i, l)
 
+func _is_fast() -> bool:
+	return _skip_mode or _press_t >= HOLD_DELAY or Input.is_key_pressed(KEY_CTRL)
+
 func _end() -> void:
+	if _done:
+		return # 已经结束（例如「跳过」与最后一句同一帧触发）
+	_done = true
+	if _press_t >= HOLD_DELAY:
+		_carry_fast_ms = Time.get_ticks_msec()
 	set_process(false)
 	finished.emit()
 	queue_free()

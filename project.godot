@@ -15,6 +15,7 @@ config/description="FX戦士くるみちゃん 非官方同人像素 FX 肉鸽"
 run/main_scene="res://src/scenes/boot.tscn"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
+config/quit_on_go_back=false
 
 [autoload]
 

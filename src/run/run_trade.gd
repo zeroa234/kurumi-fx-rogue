@@ -29,6 +29,10 @@ func _ready() -> void:
 	_add_friend_buttons()
 	_intro()
 
+## Game.back()：返回键 / 弹窗中的 Esc → 交易画面的暂停菜单
+func _on_back() -> bool:
+	return screen != null and screen.on_back()
+
 func _intro() -> void:
 	var lines: Array = []
 	var a := run.act_def()

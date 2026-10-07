@@ -64,17 +64,25 @@ var _tab_dirty := true
 var _hint_lbl: Label
 var _menu_btn: Button
 var _modal_open := false
+var _pause_v: VBoxContainer # 打开着的暂停菜单（没有则 null）
+var _pause_prev := 0
+## 本次启动是否已提示过手机操作
+static var _touch_hint_shown := false
 
 func _init(s: TradeSession) -> void:
 	session = s
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	# 代码创建的控件进树后才设锚点：必须连同偏移一起设，否则保持 0×0（点不到、弹窗遮罩也不显示）
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	selected = session.symbols[0] if not session.symbols.is_empty() else "USDJPY"
 	speed = clampi(int(Save.setting("speed", 1)), 1, 4)
 	_build()
 	_connect()
 	_refresh_all()
+	if Game.touch and not _touch_hint_shown:
+		_touch_hint_shown = true
+		Game.toast("右上「菜单」＝暂停/退出 · 长按按钮看说明 · 双指缩放图表", 4.0)
 
 # ================================================================ 构建
 
@@ -146,6 +154,9 @@ func _build_top() -> void:
 	_top_goal = UI.label("", UI.YELLOW)
 	_top_goal.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_top_goal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	# 目标文字长时（如「【回放 · 示意走势】 剩 8 天」）不许把右边的「菜单」挤出屏幕
+	_top_goal.clip_text = true
+	_top_goal.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	h.add_child(_top_goal)
 	# 菜单（手机没有 Esc，靠这个按钮打开暂停菜单）
 	_menu_btn = UI.button("菜单", _pause_menu)
@@ -564,6 +575,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not (event is InputEventKey) or not event.pressed or event.echo:
 		return
 	if _modal_open:
+		if event.keycode == KEY_ESCAPE and is_instance_valid(_pause_v):
+			_close_pause()
+			get_viewport().set_input_as_handled()
 		return
 	match event.keycode:
 		KEY_SPACE:
@@ -588,29 +602,49 @@ var exit_label := "返回标题"
 var exit_cb: Callable = func(): Game.goto("res://src/scenes/title.tscn")
 
 func _pause_menu() -> void:
-	var prev := speed
+	if _modal_open:
+		return
+	_pause_prev = speed
 	_set_speed(0, true)
 	_modal_open = true
-	var v := UI.modal(_popup_layer, UI.BORDER_HI, 220)
+	var v := UI.modal(_popup_layer, UI.BORDER_HI, 240)
+	_pause_v = v
 	v.add_child(UI.label("暂停", UI.PINK))
-	v.add_child(UI.button("继续", func():
-		UI.close_modal(v)
-		_modal_open = false
-		if prev > 0:
-			_set_speed(prev, true)))
+	v.add_child(UI.button("继续", _close_pause))
 	v.add_child(UI.button("设置：新闻自动暂停 " + ("开" if Save.setting("auto_pause_news", true) else "关"), func():
 		Save.data.settings.auto_pause_news = not Save.setting("auto_pause_news", true)
 		Save.write()
-		UI.close_modal(v)
-		_modal_open = false
-		_pause_menu()))
-	v.add_child(UI.label("快捷键：空格 暂停 · 1~4 速度 · B 买 · S 卖\nC 全平 · Tab 换品种 · 滚轮/双指缩放 · 右键或拖空白处平移", UI.DIM))
+		var prev := _pause_prev
+		_close_pause(false)
+		_pause_menu()
+		_pause_prev = prev))
+	if Game.touch:
+		v.add_child(UI.label("顶栏：Ⅱ 暂停 · 1~4 速度\n右栏：点品种行切换 · 下单 / 平仓\n图表：拖空白处平移 · 双指缩放\n　　　拖持仓的止损/止盈线改单\n长按按钮看说明 · 返回键＝本菜单", UI.DIM))
+	else:
+		v.add_child(UI.label("快捷键：空格 暂停 · 1~4 速度 · B 买 · S 卖\nC 全平 · Tab 换品种 · Esc 本菜单\n图表：滚轮缩放 · 右键或拖空白处平移 · 拖止损/止盈线改单", UI.DIM))
 	var ex := UI.button(exit_label, func():
-		UI.close_modal(v)
-		_modal_open = false
+		_close_pause(false)
 		exit_cb.call())
 	ex.add_theme_color_override("font_color", UI.ORANGE)
 	v.add_child(ex)
+
+## 关闭暂停菜单；resume=true 时恢复打开前的速度
+func _close_pause(resume := true) -> void:
+	if not is_instance_valid(_pause_v):
+		return
+	UI.close_modal(_pause_v)
+	_pause_v = null
+	_modal_open = false
+	if resume and _pause_prev > 0:
+		_set_speed(_pause_prev, true)
+
+## 安卓返回键（以及弹窗打开时没被处理的 Esc）：开关暂停菜单；其他弹窗（说明/冲动选择）打开时不动作。
+func on_back() -> bool:
+	if is_instance_valid(_pause_v):
+		_close_pause()
+	elif not _modal_open and not finished:
+		_pause_menu()
+	return true
 
 ## 额外的信息页（上层场景注入）：{name, build: Callable(VBoxContainer)}
 var extra_tabs: Array = []
