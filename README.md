@@ -37,8 +37,14 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
 空格 暂停/继续 · 1~4 速度 · B 买 · S 卖 · C 全部平仓 · Tab 切换品种 · Esc 菜单 · F11 全屏
 图表：滚轮缩放 · 右键拖动 · 左键拖动持仓的 SL/TP 线改单。
 
-**手机（Android）**：每个功能都有屏幕按钮（买卖 / 平此品种 / 全部平仓 / Ⅱ~4 速度 / 品种行切换 / 手数 ± ½ MAX / 止损止盈 ± / 顶栏右上「菜单」= Esc 暂停菜单）。
-图表单指拖动空白处平移、双指捏合缩放、拖 SL/TP 线改单；对话框按住不放快进。手机端显示用小数缩放铺满宽度，非 16:9 屏幕上下留黑边。
+对话：点击 / 空格 继续 · 按住 Ctrl（或按住鼠标）快进 · Esc 跳过本段；剧情中 Esc / 右上「菜单」可返回章节选择。
+
+**手机（Android）**
+- 对话：**轻点**继续（一次只前进一句）· **长按**快进 · 对话框右上「快进」（开关）「跳过」。
+- 剧情 / 交易中右上「菜单」或**返回键**＝暂停菜单（继续 / 返回章节选择 / 返回标题；肉鸽为保存并退出）；菜单界面按返回键回标题，标题画面连按两次返回键退出。
+- 交易：每个功能都有屏幕按钮（买卖 / 平此品种 / 全部平仓 / Ⅱ 1~4 速度 / 品种行切换 / 手数 ± ½ MAX / 止损止盈 ±）；**长按按钮**显示说明（松手不会触发）。
+- 图表：单指拖动空白处平移 · 双指捏合缩放 · 拖持仓的 SL/TP 线改单。
+- 显示用小数缩放铺满宽度，非 16:9 屏幕上下留黑边。
 
 ## 文档
 | 文档 | 内容 |
@@ -51,7 +57,7 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
 | [docs/GDD.md](docs/GDD.md) | 设计文档（与实现同步，含未实现清单） |
 | [docs/research/manga-reference.md](docs/research/manga-reference.md) | 原作调研（剧情事实唯一来源，带出处） |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | 版本历史 |
-| [docs/session-2026-10-07-android-touch.md](docs/session-2026-10-07-android-touch.md) | 会话记录：Android 打包与触屏适配（环境、命令、改动、真机待验、回滚） |
+| [docs/session-2026-10-07-android-touch.md](docs/session-2026-10-07-android-touch.md) | 会话记录：Android 打包与触屏适配（环境、命令、改动、§9 返工、真机待验、回滚） |
 
 ## 目录
 | 路径 | 内容 |
@@ -77,9 +83,10 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
 $G --headless --path . res://tests/test_market.tscn      # 行情/账户/强平/钉住撤销自检 → "== 失败 0 =="
 $G --headless --path . res://tests/compile_check.tscn    # 全部脚本与数据 → "0 failures"
 $G --headless --path . res://tests/test_save.tscn        # 肉鸽存档往返 → "SAVE ROUNDTRIP OK"
-$G --path . res://tests/smoke_ui.tscn                    # 界面冒烟（需要窗口）→ "SMOKE DONE"
+$G --path . res://tests/smoke_ui.tscn                    # 界面冒烟（需要窗口，会覆盖本机存档）→ "SMOKE DONE"
 $G --path . res://tests/tutorial_driver.tscn             # 教程自动通关 → 每章 "步骤 n/n"
 $G --path . res://tests/autoplay_check.tscn              # 自动播放段不卡死 → "0 stalled"
+$G --path . res://tests/touch_check.tscn                 # 触屏：轻点/长按/返回键 → "TOUCH CHECK: 0 failures"
 $G --headless --path . res://tests/sim_balance.tscn -- --runs=16 --meta=3 --risk=0.1 --oracle   # 平衡模拟
 $G --headless --path . res://tests/check_battle.tscn -- --chapter=ch11                         # 战役关键数字
 ```

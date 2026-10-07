@@ -38,6 +38,7 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk   # �
 | `--chapter=ch04 --scene-index=2` | 配合 `res://src/story/story_player.tscn` 直接打开某章某场景 |
 | `--newrun` | 用固定种子 777 新开一局肉鸽（不写盘），配合 `res://src/run/run_map.tscn` |
 | `--node=<节点id>` | 配合 run_trade 场景 |
+| `--touch` | 按触屏设备显示操作提示（`Game.touch`；真正的触摸事件仍需手机或 `tests/touch_check`） |
 
 例：`$G --path . res://src/run/run_map.tscn -- --newrun --shot=D:/tmp/map.png --shot-delay=2`
 
@@ -131,7 +132,18 @@ TradeScreen(界面) ──持有── TradeSession
     所以图表平移不能只写右键（`ChartView` 里单指拖空白区域也平移）。双指手势在 `ChartView._gui_input` 处理
     `InputEventScreenTouch/Drag`，期间用 `_multitouch` 屏蔽触摸模拟出的鼠标事件，否则会边缩放边改 SL/TP 单。
     手机端显示在 `Game._setup_mobile_display()` 把 `content_scale_stretch` 切成小数缩放（桌面仍整数缩放，640×360 布局不变）。
-    改输入相关代码后至少跑 `smoke_ui` 与 `tutorial_driver`。
+    - **不要用“按下就算长按”**：对话框的快进要按住 ≥`DialogueBox.HOLD_DELAY`（0.45 秒）才生效，轻点只前进一句。
+    - **Esc / 返回键**：`project.godot` 设了 `quit_on_go_back=false`，安卓返回键与“没人处理的 Esc”都进 `Game.back()`：
+      当前场景有 `_on_back() -> bool` 就先交给它（剧情 `story_player` 开关菜单；交易 `TradeScreen.on_back()` 开关暂停菜单），
+      否则菜单类界面（`Game.BACK_TO_TITLE`）回标题、标题画面连按两次退出。新加的“游戏中”场景要实现 `_on_back()`，
+      新加的菜单界面要加进 `BACK_TO_TITLE`。
+    - **tooltip 在手机上靠长按**：`Game` 在单指按住 0.5 秒不动时显示手指下控件的 `tooltip_text`，并让松手不触发按钮。
+      所以说明文字放 `tooltip_text` 就行；但 **Label 默认 `MOUSE_FILTER_IGNORE`**，要显示说明得设成 `PASS`。
+    - **操作提示分平台**：`Game.touch`（手机或 `-- --touch`）为真时显示触屏说明（对话框提示行、暂停菜单、设置页），否则显示快捷键。
+    - **代码创建的全屏控件**在 `_ready`（已进树）里要用 `set_anchors_and_offsets_preset(PRESET_FULL_RECT)`；
+      只用 `set_anchors_preset` 会保持 0×0——收不到点击、子弹窗的遮罩也不显示（DialogueBox / TradeScreen 曾经如此）。
+      进树前（`add_child` 之前）调用 `set_anchors_preset` 没问题。
+    改输入相关代码后至少跑 `touch_check`、`smoke_ui` 与 `tutorial_driver`。
 
 ---
 
@@ -197,14 +209,17 @@ TradeScreen(界面) ──持有── TradeSession
 | `smoke_ui.tscn` | 是 | 肉鸽交易节点（含仲间主动、自动下单）→ 地图弹窗；所有剧情交易场景快进 |
 | `tutorial_driver.tscn [-- --chapter=chNN]` | 是 | 按每一步 until 模拟玩家操作，检查教学/剧情步骤能否走完（默认只跑教程章节） |
 | `autoplay_check.tscn` | 是 | 真实时间、不按速度键，确认自动播放段（ch01/ch04/ch11/ch12）不会被自动暂停卡住 |
+| `touch_check.tscn [-- --shots=<绝对目录>]` | 是 | 注入 `InputEventScreenTouch`：对话框轻点只前进一句、长按快进、「跳过」；长按看说明且不触发按钮；返回键开关剧情菜单/交易暂停菜单。`--shots` 顺便存三张截图 |
 
 全部跑一遍（约 5 分钟）：
 ```bash
 for t in test_market compile_check test_save; do $G --headless --path . res://tests/$t.tscn; done
-for t in smoke_ui tutorial_driver autoplay_check; do $G --path . res://tests/$t.tscn; done
+for t in smoke_ui tutorial_driver autoplay_check touch_check; do $G --path . res://tests/$t.tscn; done
 ```
 判定：test_market 末尾 `== 失败 0 ==`；compile_check `0 failures`；test_save `SAVE ROUNDTRIP OK`；
-smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤 n/n」；autoplay_check `0 stalled`。
+smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤 n/n」；autoplay_check `0 stalled`；touch_check `0 failures`。
+**注意**：`smoke_ui` 会把 `Save.data` 重置为默认值后跑完一个肉鸽交易节点（`run_trade._on_done` 里 `run.save()` 落盘），
+即**覆盖本机的 `user://save.json`**；在意本机进度先备份存档。`touch_check` 不写盘。
 退出时的 `ObjectDB instances leaked` / `resources still in use` 警告来自测试里未释放的会话，可忽略。
 
 ---
@@ -221,9 +236,11 @@ smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤
 | 原作资料缺口 | 第 1~30 话无逐话资料；母亲交易澳元/日元仅单一博客来源；漫画柜中文章节标题未抓取（见调研文档 §6） |
 | 平衡 | 只有机器人模拟，缺真人试玩数据 |
 | 导出 | 已配置 Android 预设（`export_presets.cfg`）：`$G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk`；Windows/桌面预设仍未加 |
-| 触屏细节 | 图表缩放以右端为锚点（不是捏合中心）；`tooltip_text`（“追”/速度按钮等）在手机上看不到，只能看图标/文字；SL/TP 线命中判定 3 像素，低分辨率大屏上手指偏难点中 |
+| 触屏细节 | 图表缩放以右端为锚点（不是捏合中心）；按钮高 12~13 视口像素（1080p 手机约 6mm），偏小但未改布局；部分说明挂在 `MOUSE_FILTER_IGNORE` 的 Label 上（如地图侧栏），桌面悬停与手机长按都看不到 |
+| 顶栏目标文字 | 太长时省略号截断（为保住右上「菜单」），如第 1 章「【回放 · 示意走势】 剩 8 天」看不到剩余天数 |
+| 真机未验 | 返回键路由、长按说明、双指缩放只在桌面用注入事件测过（`touch_check`），未上真机 |
 | 手机显示 | 用 `CONTENT_SCALE_ASPECT_KEEP`，非 16:9 屏幕上下留黑边；若要撑满可改用 `EXPAND`，但 640×360 的绝对坐标布局会露出空白区，需先改成自适应 |
-| 手机与桌面差异 | 手机无 Ctrl/Space 等键，快捷键提示文案仍挂在暂停菜单里（已在操作说明里列屏幕按钮）；存档只在退出/返回键时额外落盘一次，交易中的行情状态不落盘（切后台太久丢的是当前节点进度） |
+| 手机与桌面差异 | 存档在关窗口、切后台（`NOTIFICATION_APPLICATION_PAUSED`）、标题画面返回键退出时落盘；交易中的行情状态不落盘（切后台被回收丢的是当前节点进度）；剧情中途退出下次从本章开头开始 |
 | 每个 tick 的界面刷新 | 已节流为每帧一次；若在低端机卡顿，可降低 `ChartView` 重绘频率或缓存 K 线聚合 |
 
 ---

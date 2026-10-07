@@ -4,6 +4,18 @@
 
 ## 2026-10-07
 
+### 触屏适配返工（`cf99e89`）
+上一版只是“能点”，手机上实际问题：剧情轻点会连跳好几句、没有操作指示、剧情中没有 Esc 的替代（无法暂停/退出）、返回键直接退出 APP。
+- **根因修复**：`DialogueBox` / `TradeScreen` 是代码创建、进树后 `set_anchors_preset` 的，实际尺寸 0×0——点对话框收不到事件
+  （手机上靠“按住即快进”前进，轻点就连跳），交易画面里的弹窗遮罩也不显示、挡不住下层。改为 `set_anchors_and_offsets_preset`。
+- 对话框：轻点只前进一句；按住 ≥0.45 秒才快进（连续对话段之间保持）；右上「快进」开关、「跳过」按钮、按平台显示的操作提示。
+- 剧情段新增右上「菜单」（继续 / 返回章节选择或经典战役 / 返回标题），打开时对话暂停；Esc 同样开关。
+- 安卓返回键＝Esc（`quit_on_go_back=false` + `Game.back()`）：剧情/交易开关菜单，菜单界面回标题，标题连按两次退出；暂停菜单里 Esc 关闭菜单。
+- 长按按钮 0.5 秒显示 `tooltip_text`（手机原本看不到），松手不触发按钮。
+- 交易：暂停菜单按平台写操作说明，手机首次进入提示一次；顶栏目标文字过长时省略号截断（之前会把「菜单」挤出屏幕）；触屏 SL/TP 线命中 3→6 像素。
+- 设置：手机隐藏全屏按钮、显示触屏操作；「清除全部存档」加二次确认。切后台时落盘。
+- 新增 `tests/touch_check`（注入触摸事件）；回归全过：compile_check / test_market / test_save / smoke_ui / tutorial_driver / autoplay_check / touch_check。
+
 ### Android 打包与触屏适配
 - 新增 `export_presets.cfg`（Android：arm64-v8a + armeabi-v7a，横屏，debug 签名）；`project.godot` 开启 `textures/vram_compression/import_etc2_astc`（Android 导出的硬性要求）。
   产物 `output/kurumi-fx-rogue.apk`（59MB，不入库）；构建命令与依赖见 README「打包 Android」、`docs/maintenance.md` §7。

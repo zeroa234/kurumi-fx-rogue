@@ -85,3 +85,23 @@ D:/tools/android-sdk/platform-tools/adb.exe install -r output/kurumi-fx-rogue.ap
 - 不再打手机包：可删 `export_presets.cfg`、`D:/tools/android-sdk`（425 MB）、`D:/tools/jdk17`（305 MB）、`%APPDATA%/Godot/export_templates/4.7.2.stable`（426 MB）。
   注意 `project.godot` 的 `import_etc2_astc` 不要单独回退，否则 Android 导出会重新报错（它只影响导入格式，留着无害）。
 - `output/` 不入库，APK 只在本机。
+
+## 9. 返工（同日，`cf99e89`）
+
+用户试玩反馈：剧情轻点会被识别成连续触发、没有操作指示、游戏过程中没法触发 Esc 的功能。查下来：
+
+| 问题 | 原因 | 修正 |
+|---|---|---|
+| 轻点连跳好几句 | `DialogueBox` 实际 0×0（代码创建、进树后只设锚点），点击根本到不了 `_gui_input`；本版加的 `_input` 一按下就 `_hold=true`，按住的每一帧都 `_next()` | `set_anchors_and_offsets_preset`；轻点＝前进一句，按住 ≥0.45 秒才快进 |
+| 弹窗遮罩不显示 | `TradeScreen` 同样 0×0，其下 `_popup_layer` 与 `UI.modal` 的遮罩跟着 0×0 | 同上 |
+| 剧情中无 Esc 替代 | 只有交易画面有「菜单」；对话场景、CG、解锁面板没有任何退出入口；返回键直接退出 APP | 剧情段右上「菜单」；返回键路由到 `Game.back()` → 场景 `_on_back()` |
+| 没有操作指示 | 对话框无提示；tooltip 在手机上看不到；暂停菜单只写键盘快捷键 | 对话框提示行 + 「快进」「跳过」；长按看说明；暂停菜单/设置页按平台写说明 |
+| 交易「菜单」可能看不见 | 第 1 章顶栏目标文字太长，把「菜单」挤出 640 宽 | 目标文字省略号截断 |
+
+验证：`tests/touch_check`（`Input.parse_input_event` 注入 `InputEventScreenTouch`，走真实的触摸→模拟鼠标→GUI 链路）0 failures，
+其余回归全过；截图检查了对话框、剧情菜单、交易暂停菜单的排版（`-- --shots=<目录>`）。
+
+§7 的状态更新：第 2、3 条（菜单 / 返回键）已改为返回键＝暂停菜单，桌面注入事件验证通过；第 1 条双指缩放、第 5 条列表拖动仍只能真机验证。
+APK 已按 §3 重打（`output/kurumi-fx-rogue.apk`，`apksigner verify` 通过）。
+坑：重打时编辑器设置里的 `export/android/java_sdk_path` 变成空、`android_sdk_path` 变回默认的 `%LOCALAPPDATA%/Android/Sdk`（推测是之后打开过编辑器被改写），
+导出报「需要有效的 Java SDK 路径」；按 §2 改回 `D:/tools/jdk17/jdk-17.0.13+11`、`D:/tools/android-sdk` 后正常。
