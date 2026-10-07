@@ -4,7 +4,7 @@
 
 ## 2026-10-07
 
-### 背景音乐
+### 背景音乐（v0.2.0）
 - 新增自动加载 `Bgm`：各场景选曲、肉鸽事件/商店/休息覆盖曲、交易中暴走或维持率告警时切危机曲、下限撤销切「18:30」；15 章按剧情配曲（场景字段 `bgm` / `bgm_danger` / `bgm_peg_break`）。
 - 曲子先用 19 首 OpenGameArt CC0 曲（`config/bgm-oss.json` → `scripts/import_oss_bgm.py` → `assets/bgm/` + `tracks.json`），24 个曲目 id 复用映射；新增 `tests/bgm_check`。
 - YuE2 自制管线（`config/bgm-cues.json`、`scripts/gen_bgm.py`）暂停：加长曲子的三种办法（空乐段标签、`min_tokens`、长编曲后缀）实测都出现人声，见 `docs/bgm.md` §2。
