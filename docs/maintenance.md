@@ -61,7 +61,7 @@ src/core/    纯逻辑（可无界面测试）
   game_date.gd      交易日/日期/金额格式 GameDate
   db.gd save.gd game.gd   自动加载：数据缓存 / 存档 / 场景切换与调试参数
 src/ui/      交易界面 TradeScreen、K线 ChartView、对话框 DialogueBox、立绘 Portraits、
-             手绘像素图标 PixelIcons、序列帧 AnimSprite、主题 UI(ui_theme.gd)、音效 Sfx
+             手绘像素图标 PixelIcons、序列帧 AnimSprite、主题 UI(ui_theme.gd)、音效 Sfx、背景音乐 Bgm
 src/story/   StoryPlayer(story_player.gd)、TutorialDirector、StoryDB
 src/run/     run_hub(开局) run_map(地图/事件/商店/休息) run_trade(交易节点) run_result(结算) meta_screen(养成) map_lines
 src/scenes/  boot title chapter_select settings battles codex sandbox
@@ -69,7 +69,7 @@ data/        内容数据（JSON）       config/  素材清单（.gdignore）
 assets/      字体、像素素材、音效    scripts/ Python/Blender 工具（.gdignore）
 tests/       测试场景               docs/    文档（.gdignore）   output/ 生成物（.gdignore，不入库）
 ```
-自动加载顺序（project.godot）：`DB → Save → UI → Sfx → Game`。UI 依赖 Save（读配色设置），Game 依赖 RunState。
+自动加载顺序（project.godot）：`DB → Save → UI → Sfx → Bgm → Game`。UI 依赖 Save（读配色设置），Bgm 依赖 Save（读音量），Game 依赖 RunState。
 
 ### 2.2 场景流转
 ```
@@ -180,6 +180,11 @@ TradeScreen(界面) ──持有── TradeSession
 见 `docs/art-pipeline.md`：在 `config/asset-manifest.json` 加条目 → `python scripts/gen_assets.py <id>` → `$G --headless --path . --import`。
 官方人设参考的角色用 anima-ic（经 comfyui-contract MCP），父母等没有官方立绘的角色保持剪影，不臆造长相。
 抠图走 AI 蒙版（art-pipeline.md「抠图」节）：只改了像素化参数时用 `--pix-only`，不需要重画原图；抠图有问题先看 `output/masks/<id>.png`。
+
+### 4.6.1 加/换 BGM
+1. `config/bgm-cues.json` 加一条（或改 style / seed），`python scripts/gen_bgm.py submit <id>` → `fetch <id> --wait` → `qa <id>` → 试听 → `post <id>`（流程与判定见 `docs/bgm.md`）。
+2. 在用的地方调用：场景代码 `Bgm.play("<id>")`；剧情场景写 `"bgm": "<id>"`；临时盖在上面用 `Bgm.overlay()` / `Bgm.clear_overlay()`。缺 ogg 时静音不报错。
+3. `$G --headless --path . --import` 后跑 compile_check / smoke_ui。
 
 ### 4.7 加品种 / 货币 / 经济指标 / 新闻
 - 货币：`data/market/units.json`；品种：`instruments.json`（要解锁的写 `unlock` 并在 meta.json 加研究节点）。

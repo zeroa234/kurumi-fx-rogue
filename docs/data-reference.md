@@ -189,6 +189,19 @@ Boss/精英 `script[]` 条目同剧情时间线（见 story-format.md），额�
 
 ---
 
+## 5.5 BGM 清单 `config/bgm-cues.json`
+由 `scripts/gen_bgm.py` 读取，详见 `docs/bgm.md`。
+| 键 | 说明 |
+|---|---|
+| `defaults` | 每个 YuE2 `generate` 请求的公共字段（`instrumental:true`、`cot:"off"`、显存参数等） |
+| `style_prefix` / `style_suffix` | 拼在每首 `style` 前 / 后（后缀是引导长编曲的描述） |
+| `lyrics` | 歌词（instrumental 模式下服务端一律换成 `[instrumental]`） |
+| `separate` | true 时 `post` 改用 demucs 去人声伴奏（`output/bgm/inst/`）；当前 false |
+| `post` | 后期：目标响度 `lufs`、`true_peak`、淡入淡出秒数、`max_seconds`、OGG 质量、采样率 |
+| `cues[]` | `id`（= `assets/bgm/<id>.ogg`）、`label`、`uses`（说明）、`style`、`seed`；可选 `request`（覆盖请求字段）、`lyrics` |
+
+成品记录 `assets/bgm/index.json` → `tracks{id: {label, uses, style, job_id, seed, raw_seconds, seconds, input_lufs, qa, …}}`。
+
 ## 6. 素材清单 `config/asset-manifest.json`
 
 见 `docs/art-pipeline.md`。`kinds{}` 定义每类素材的生成模板、像素尺寸、颜色数、抠图方式；
@@ -204,7 +217,7 @@ Windows 路径：`%APPDATA%\Godot\app_userdata\FX战士久留美 同人 · 2000�
 | `meta` | `points`, `total_points`, `levels{id: 等级}`, `unlocks[]`（解锁标签）, `max_ascension` |
 | `stats` | `runs, clears, best_equity, total_trades, deaths{原因: 次数}` |
 | `codex` | `relics, items, events, bosses` 已发现 id |
-| `settings` | `speed, auto_pause_news, auto_pause_indicator, auto_pause_margin, screen_shake, green_up, sfx`；`fullscreen` 未使用（F11 直接切换） |
+| `settings` | `speed, auto_pause_news, auto_pause_indicator, auto_pause_margin, screen_shake, green_up, sfx, bgm`（音乐音量 0~1，默认 0.6，BGM 与开场 PV 共用）、`opening_every_launch`；`fullscreen` 未使用（F11 直接切换） |
 | `run` | 进行中的肉鸽局，`RunState.to_dict()`；为空表示没有进行中的局 |
 
 读档时 `_merge` 会把新版本默认值补进旧存档，所以**新增键要先加到 `_default()`**。

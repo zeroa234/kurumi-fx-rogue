@@ -95,7 +95,7 @@
 - 本作是**非官方同人作品**，与原作者、KADOKAWA 及动画制作方无关。
 - 剧情事实只采用调研文档中有出处的内容；台词为转述，不照搬原作对白，不使用原作图片。游戏原创部分在章节 `original` 字段中注明。
 - 复刻的真实行情只使用公开报道中的关键价位（来源写在章节 `source` 字段）；其余行情为算法生成，**不构成任何投资建议**。
-- 美术为 AI 生成后像素化：久留美立绘用 Anima + 角色 LoRA；萌智子 / 芽吹 / やす子以动画官网立绘为参考（IC 方法）；父母无官方立绘，用剪影。PV 配乐为 YuE2 本地生成。
+- 美术为 AI 生成后像素化：久留美立绘用 Anima + 角色 LoRA；萌智子 / 芽吹 / やす子以动画官网立绘为参考（IC 方法）；父母无官方立绘，用剪影。PV 配乐与游戏 BGM（24 首纯器乐）为 YuE2 本地生成。
 - 字体 [Fusion Pixel Font](https://github.com/TakWolf/fusion-pixel-font)（SIL OFL 1.1）。
 
 ---
@@ -131,7 +131,7 @@ $G --headless --path . --export-release "Web" output/web/index.html             
 | [docs/data-reference.md](docs/data-reference.md) | 所有 JSON 数据、Mods 修正值、存档的字段参考 |
 | [docs/story-format.md](docs/story-format.md) | 剧情章节格式、时间线动作、教学步骤条件、章节检查流程 |
 | [docs/art-pipeline.md](docs/art-pipeline.md) | 美术素材管线（ComfyUI / LoRA / IC / Blender / 像素化） |
-| [docs/bgm.md](docs/bgm.md) | 背景音乐：YuE2 生成管线、曲目与场景对应、进度（进行中） |
+| [docs/bgm.md](docs/bgm.md) | 背景音乐：YuE2 生成方法与实测对比、曲目与场景/各章对应、游戏内接入 |
 | [docs/pv.md](docs/pv.md) | 宣传 PV：结构与配乐对齐、实机录制驱动、合成器、素材来源、重新出片、游戏内开场 |
 | [docs/GDD.md](docs/GDD.md) | 设计文档（与实现同步，含未实现清单） |
 | [docs/research/manga-reference.md](docs/research/manga-reference.md) | 原作调研（剧情事实唯一来源，带出处） |
@@ -147,7 +147,7 @@ $G --headless --path . --export-release "Web" output/web/index.html             
 | `src/run/` | 肉鸽：开局、地图、交易节点、结算、局外养成 |
 | `src/scenes/` | 启动、开场 PV、标题、章节选择、设置、经典战役、图鉴、调试沙盒 |
 | `data/` | 行情/事件/剧情/肉鸽的 JSON 数据 |
-| `assets/` | 像素素材、字体（Fusion Pixel，OFL）、音效、开场视频 |
+| `assets/` | 像素素材、字体（Fusion Pixel，OFL）、音效、BGM、开场视频 |
 | `config/` | 素材生成清单 `asset-manifest.json`、PV 剪辑表 |
 | `scripts/` | 素材生成、取图、序列帧像素化、Blender 金币、音效合成、PV 合成 |
 | `tests/` | 引擎自检、编译检查、存档往返、平衡模拟、战役核对、界面冒烟、教程自动通关、自动播放检查、触屏、开场 |

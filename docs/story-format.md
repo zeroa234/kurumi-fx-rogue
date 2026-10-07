@@ -33,6 +33,10 @@
 
 ## 2. 场景类型
 
+所有场景都可以带 **`bgm`**（`assets/bgm/<id>.ogg` 的 id，曲目表见 `docs/bgm.md` §3；`""` = 静音）。
+播放第 i 个场景时向前找最近一个带 `bgm` 的场景播放，所以只需在换曲的场景上写；同一首不会重头播放。
+一章都没写 `bgm` 时沿用进入剧情前的曲子（章节选择 = menu）。
+
 ### title_card
 `{"type":"title_card","text":"2008年 秋","sub":"副标题","bg":"bg_living_dim","hold":1.6,"sfx":"page"}`
 
@@ -75,6 +79,8 @@ mebuki: normal happy cry；yasuko: normal angry happy；ikuo: normal angry；koz
 | `on_win` / `on_lose` | 结束后的对话行 |
 | `close_at_end` | 结束时自动平仓（默认 true；回放类可设 false） |
 | `battle` / `battle_title` | 列入「经典战役」/ 战役菜单里显示的标题 |
+| `bgm_danger` | 暴走或维持率低于告警线时临时覆盖的曲子，默认 `trade_danger`；`""` 关闭（回放、剧情注定的战役）。也可写在章节顶层作为默认 |
+| `bgm_peg_break` | 下限撤销（`peg_broken`）后切换的基础曲，如第 11 章 `snb_shock`；切换后不再触发危机覆盖 |
 
 结束流程：显示结算 → 播 on_win/on_lose → 胜利或 `lose_continues` 时进入下一场景，否则出现「再来一次 / 返回章节选择」。
 
