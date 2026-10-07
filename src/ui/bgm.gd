@@ -18,11 +18,16 @@ func play(id: String, fade := FADE) -> void:
 	if _base:
 		_fade_out(_base, fade, true)
 		_base = null
-	_base = _start(id, 0.0 if overlay_id != "" else fade)
+	_base = _start(id, fade)
 	if _base and overlay_id != "":
+		# 覆盖中：先以音量 0 暂停待命，clear_overlay() 时再从 0 淡入
+		_fade_to(_base, 0.0, 0.0)
+		_apply(_base, 0.0)
 		_base.stream_paused = true
 
+## 停掉一切（含覆盖曲）
 func stop(fade := FADE) -> void:
+	clear_overlay(fade)
 	play("", fade)
 
 func overlay(id: String, fade := FADE) -> void:
@@ -69,7 +74,7 @@ func _stream(id: String) -> AudioStream:
 		s = load("res://assets/bgm/%s.ogg" % id)
 		if s is AudioStreamOggVorbis:
 			(s as AudioStreamOggVorbis).loop = true
-	_cache[id] = s
+		_cache[id] = s # 缺文件不缓存：补进 ogg 后不用重启
 	return s
 
 func _start(id: String, fade: float) -> AudioStreamPlayer:
