@@ -184,6 +184,9 @@ func modal(parent: Node, border: Color = BORDER_HI, width := 380, dim_alpha := 0
 	p.add_child(v)
 	v.set_meta("root", root)
 	p.resized.connect(func(): p.position = ((Vector2(640, 360) - p.size) / 2.0).floor())
+	# 容器只会随最小尺寸变大、不会自己缩回：自动换行的富文本第一次排版时宽度为 0、逐字换行，
+	# 会先把弹窗撑到上千像素高；之后宽度正常了最小尺寸变小，这里把面板缩回去（resized 再居中）
+	p.minimum_size_changed.connect(func(): p.reset_size.call_deferred())
 	return v
 
 func close_modal(v: Control) -> void:

@@ -144,7 +144,10 @@ TradeScreen(界面) ──持有── TradeSession
       只用 `set_anchors_preset` 会保持 0×0——收不到点击、子弹窗的遮罩也不显示（DialogueBox / TradeScreen 曾经如此）。
       进树前（`add_child` 之前）调用 `set_anchors_preset` 没问题。
     - **`UI.rich()` 放进 HBox 时必须给 `custom_minimum_size.x`**：它开了自动换行，最小宽度是 0，HBox 不给宽度就逐字换行，
-      弹窗被撑到上千像素高（肉鸽结算画面曾经如此，见 `tests/result_check`）。直接放进 `UI.modal` 的 VBox 没问题（VBox 给满宽）。
+      弹窗被撑到上千像素高（肉鸽结算画面曾经如此，见 `tests/result_check`）。
+    - **容器只会随最小尺寸变大、不会自己缩回**：即使富文本直接放在有宽度的 VBox 里，第一次排版时宽度仍可能是 0，
+      面板先被撑到上千像素高，之后最小尺寸变小但面板不缩（交易节点被强平后的「交易结束」弹窗曾经如此）。
+      `UI.modal` 已在 `minimum_size_changed` 时 `reset_size()` 并重新居中；自己拼的弹窗面板也要这样做，或者给富文本固定宽度。
     改输入相关代码后至少跑 `touch_check`、`smoke_ui` 与 `tutorial_driver`。
 
 ---

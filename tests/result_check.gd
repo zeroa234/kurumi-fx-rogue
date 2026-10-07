@@ -1,5 +1,6 @@
 extends Node
-## 肉鸽结算画面布局：每种结局（通关/未达目标/心折/资金耗尽/放弃）弹窗都要完整落在 640×360 内，按钮可见。
+## 肉鸽结算画面布局：每种结局（通关/未达目标/心折/资金耗尽/放弃）弹窗都要完整落在 640×360 内，按钮可见；
+## 交易节点里满仓被强平后的「交易结束」弹窗同样检查。
 ## 结算会写存档（相場勘点数），结束时还原本机存档文件。可选 `-- --shots=<绝对目录>` 每种结局存一张截图。
 
 const SCENE := "res://src/run/run_result.tscn"
@@ -29,6 +30,7 @@ func _ready() -> void:
 			get_viewport().get_texture().get_image().save_png(shots.path_join("result_%s.png" % reason))
 		s.queue_free()
 		await get_tree().process_frame
+	await _check_stopout(shots)
 	_check_points()
 	if _backup == null:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(Save.PATH))
@@ -54,6 +56,49 @@ func _check_layout(s: Control, reason: String) -> void:
 		if not screen.encloses((b as Control).get_global_rect()):
 			_fail(reason, "按钮「%s」在屏幕外 %s" % [b.text, b.get_global_rect()])
 	print("  %s: 弹窗 %s" % [reason, rect])
+
+## 交易节点：满仓 → 净值压到约 1 円 → 下一 tick 强平 → 资金耗尽结束 → run_trade 的结算弹窗
+func _check_stopout(shots: String) -> void:
+	Save.data = Save._default()
+	var r := RunState.create({"broker": "overseas", "friends": [], "seed": 777})
+	var id: String = r.available()[0]
+	r.enter(id)
+	Game.run = r
+	Game.params = {"node": id}
+	var rt: Control = load("res://src/run/run_trade.tscn").instantiate()
+	add_child(rt)
+	await get_tree().process_frame
+	var acc: Account = rt.session.account
+	var lots := 1.0
+	while acc.margin_for("USDJPY", lots + 1.0) < acc.free_margin():
+		lots += 1.0
+	var pos = acc.open_position("USDJPY", 1, lots)
+	if pos is String:
+		_fail("stopout", "开仓失败：" + pos)
+	acc.balance -= acc.equity() - 1.0
+	for i in 5:
+		if rt.session.done:
+			break
+		rt.session.advance()
+	if not rt.session.done:
+		_fail("stopout", "强平后交易没有结束")
+	for i in 4:
+		await get_tree().process_frame
+	var found := false
+	for p in rt.find_children("*", "PanelContainer", true, false):
+		var c: Control = p
+		if c.find_children("*", "Button", true, false).any(func(b): return b.text == "继续"):
+			found = true
+			if not Rect2(0, 0, 640, 360).encloses(c.get_global_rect()):
+				_fail("stopout", "交易结束弹窗超出屏幕 %s" % c.get_global_rect())
+			print("  stopout: 弹窗 %s" % c.get_global_rect())
+	if not found:
+		_fail("stopout", "没有交易结束弹窗")
+	if shots != "":
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png(shots.path_join("result_stopout.png"))
+	rt.queue_free()
+	await get_tree().process_frame
 
 ## 相場勘：没完成节点或没做交易得 0 点（防刷）；作废节点不计数
 func _check_points() -> void:
