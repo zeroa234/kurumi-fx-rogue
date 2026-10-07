@@ -4,6 +4,11 @@
   "base_url": "http://127.0.0.1:8188",
   "client_id": "kurumi-fx-rogue"
  },
+ "matte": {
+  "node": "BiRefNetRMBG",
+  "model": "BiRefNet_toonout",
+  "note": "ComfyUI-RMBG 抠图；2026-10-07 在 9 张问题素材上对比 toonout/RMBG-2.0/BEN2/BiRefNet-HR-matting/Lucida/INSPYRENET 后选定（见 docs/art-pipeline.md）"
+ },
  "style": {
   "quality": "masterpiece, very aesthetic, best quality, highres",
   "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views"
@@ -27,7 +32,7 @@
     ],
     "colors": 24
    },
-   "bg_remove": "white",
+   "bg_remove": "ai",
    "crop": "chest_up",
    "outline": true,
    "lora": {
@@ -35,7 +40,8 @@
     "name": "kurumi.safetensors",
     "strength": 1.0
    },
-   "negativeExtra": "bad anatomy, bad eyes, asymmetric eyes, multiple girls"
+   "negativeExtra": "bad anatomy, bad eyes, asymmetric eyes, multiple girls",
+   "smooth": true
   },
   "portrait_ref": {
    "template": "anima-ic",
@@ -55,9 +61,10 @@
     ],
     "colors": 24
    },
-   "bg_remove": "white",
+   "bg_remove": "ai",
    "crop": "chest_up",
-   "outline": true
+   "outline": true,
+   "smooth": true
   },
   "portrait_sil": {
    "template": "anima-t2i",
@@ -77,10 +84,11 @@
     ],
     "colors": 12
    },
-   "bg_remove": "white",
+   "bg_remove": "ai",
    "crop": "chest_up",
    "outline": false,
-   "negativeExtra": "bad anatomy, multiple girls"
+   "negativeExtra": "bad anatomy, multiple girls",
+   "smooth": true
   },
   "bg": {
    "template": "anima-turbo-t2i",
@@ -106,7 +114,7 @@
     32
    ],
    "colors": 16,
-   "bg_remove": "white",
+   "bg_remove": "ai",
    "outline": true,
    "nl_auto": "A single object, centered on a plain white background, full item in frame, no people.",
    "negativeExtra": "1girl, 1boy, people, hands, text, watermark"
@@ -122,14 +130,15 @@
     48
    ],
    "colors": 24,
-   "bg_remove": "white",
+   "bg_remove": "ai",
    "outline": false,
    "lora": {
     "pit": "48",
     "name": "kurumi.safetensors",
     "strength": 1.0
    },
-   "negativeExtra": "bad anatomy, multiple girls"
+   "negativeExtra": "bad anatomy, multiple girls",
+   "smooth": true
   },
   "cg": {
    "template": "anima-t2i",
@@ -267,7 +276,10 @@
    "tags": "",
    "nl": "The same girl standing and facing the viewer, blushing deeply with sparkling eyes and both hands near her cheeks, flustered as if she just saw something adorable. Plain white background, clean anime cel shading, bold outlines.",
    "ref": "mochiko",
-   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化"
+   "via": "comfyui-contract MCP anima-ic（参考图 temp/kurumi-ref/official/flat_<ref>.png），再 scripts/fetch_comfy_job.py 取回节点24输出，gen_assets.py --pix-only 像素化",
+   "kind_override": {
+    "matte_flood_tol": 12
+   }
   },
   {
    "id": "mebuki_normal",

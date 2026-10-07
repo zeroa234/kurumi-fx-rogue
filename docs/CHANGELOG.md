@@ -4,6 +4,13 @@
 
 ## 2026-10-07
 
+### 角色抠图返工（`c1e4387` 起）
+旧抠图从画布边缘泛洪删近白像素：白衣服贴边或线稿有断口时会钻进衣服（kurumi_cry 裙子、kurumi_focus 桌上的纸、萌智子右肩、芽吹/やす子手臂缺失），
+alpha 只有 0/255，边缘残留白边和漂浮碎片。
+- 改为 ComfyUI-RMBG `BiRefNet_toonout` 软蒙版（对比 6 个模型后选定，见 art-pipeline.md「抠图」），蒙版缓存 `output/masks/`。
+- 半透明边缘去背景色、去孤岛、像素级去碎块/去毛刺；新增 `--rematte`、kind 字段 `smooth` / `island_frac` / `matte_flood_tol`。
+- 64 张立绘/图标/Q 版全部用原图重新像素化（原图未重画）。已知取舍：kurumi_shock 的惊吓线、mebuki_cry 的飞溅泪滴作为孤岛被清掉。
+
 ### 触屏适配返工（`cf99e89`）
 上一版只是“能点”，手机上实际问题：剧情轻点会连跳好几句、没有操作指示、剧情中没有 Esc 的替代（无法暂停/退出）、返回键直接退出 APP。
 - **根因修复**：`DialogueBox` / `TradeScreen` 是代码创建、进树后 `set_anchors_preset` 的，实际尺寸 0×0——点对话框收不到事件

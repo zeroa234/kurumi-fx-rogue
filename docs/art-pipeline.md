@@ -5,7 +5,9 @@
 ## 流程
 ```
 高清原图（ComfyUI）→ output/hires/<id>.png（不入库）
-  → 去白底（立绘/图标/Q版）→ 胸像裁切（立绘）→ BOX 缩小 → 限色 → 透明二值化 → 1px 深色外描边
+  → AI 抠图蒙版（立绘/图标/Q版，ComfyUI-RMBG BiRefNet_toonout）→ output/masks/<id>.png（不入库）
+  → 去背景色（半透明边缘）→ 去孤岛（特效线/碎点）→ 胸像裁切（立绘）→ BOX 缩小
+  → 限色 → 透明二值化 → 去 ≤2px 碎块 → 去毛刺（立绘/Q版）→ 1px 深色描边
   → assets/sprites/<类别>/<id>.png（入库）
 ```
 | 类别 | 目录 | 像素尺寸 | 颜色数 | 用途 |
@@ -30,15 +32,26 @@
 `kinds`（素材类别）：
 | kind | 模板 | 生成尺寸 | 像素/颜色 | 抠图/裁切 | 角色 LoRA |
 |---|---|---|---|---|---|
-| portrait | anima-t2i | 1024² | 128/32 + 小图 64/24 | 去白底、胸像裁切、描边 | ✓ |
+| portrait | anima-t2i | 1024² | 128/32 + 小图 64/24 | AI 抠图、胸像裁切、去毛刺、描边 | ✓ |
 | portrait_ref | anima-ic（见下） | 1024² | 同上 | 同上 | — |
-| portrait_sil | anima-t2i | 1024² | 128/16 + 64/12 | 去白底、胸像 | — |
+| portrait_sil | anima-t2i | 1024² | 128/16 + 64/12 | AI 抠图、胸像、去毛刺 | — |
 | bg | anima-turbo-t2i | 1536×864 | 320×180/48 | 无 | — |
 | cg | anima-t2i | 1536×864 | 320×180/48 | 无 | ✓ |
-| icon | anima-turbo-t2i | 1024² | 32/16 | 去白底、描边 | — |
-| chibi | anima-t2i | 1024² | 48/24 | 去白底 | ✓ |
+| icon | anima-turbo-t2i | 1024² | 32/16 | AI 抠图、描边 | — |
+| chibi | anima-t2i | 1024² | 48/24 | AI 抠图、去毛刺 | ✓ |
 
-`kinds` 里还可以有：`nl_auto`（自动追加的自然语言）、`negativeExtra`、`tol`（抠图容差）、`inner_frac`（主体占画布比例）、`bg_key`（`"auto"` = 取四角颜色抠图）。
+`kinds` 里还可以有：
+| 字段 | 说明 |
+|---|---|
+| `bg_remove` | `"ai"` = AI 蒙版（默认，见下节）；`"white"` = 旧的白底泛洪算法（回退用） |
+| `smooth` | 像素级去毛刺：删只连一个点的凸点、补三面包围的凹缺。32px 图标不开（会削短细线） |
+| `island_frac` | 去孤岛阈值，面积小于 画布×该值 的不透明块删掉（默认 0.0004 ≈ 1024² 上 420px） |
+| `matte_flood_tol` | 再与「严格容差的白底泛洪」取交集，清掉模型误留的白底夹缝。**只能逐条用**（见下节） |
+| `bg_key` | `"auto"` = 背景色取四角平均（白色物体用绿底生成时）；AI 抠图时也用它算去背景色 |
+| `tol` | 旧白底泛洪的容差 |
+| `nl_auto` / `negativeExtra` / `inner_frac` | 自动追加的自然语言 / 额外负面词 / 主体占画布比例 |
+
+顶层 `matte{node, model}`：AI 抠图用的 ComfyUI 节点与模型（当前 `BiRefNetRMBG` + `BiRefNet_toonout`）。
 
 `assets[]` 每项：
 | 字段 | 说明 |
@@ -51,7 +64,7 @@
 | `nl` | 自然语言补充（构图、表情） |
 | `ref` | portrait_ref 的参考角色（`mochiko`/`mebuki`/`yasuko` → `flat_<ref>.png`） |
 | `negativeExtra` | 本条额外负面词（例：cg_win 加了 `from below, upskirt`） |
-| `kind_override` | 覆盖本条的 kind 参数（例：白色物体 `{"bg_key":"auto","nl_auto":"…green background…"}`） |
+| `kind_override` | 覆盖本条的 kind 参数（例：白色物体 `{"bg_key":"auto","nl_auto":"…green background…"}`；`mochiko_blush` 用 `{"matte_flood_tol":12}`） |
 | `via` | 备注生成方式 |
 
 ## 命令
@@ -61,7 +74,8 @@ python scripts/gen_assets.py --status            # 缺失清单
 python scripts/gen_assets.py                     # 生成全部缺失（t2i 类）
 python scripts/gen_assets.py kurumi_cry --reroll # 换种子重画
 python scripts/gen_assets.py kurumi_cry --force  # 用清单原种子重画（改了 tags 后用）
-python scripts/gen_assets.py --pix-only <id>     # 只用已有原图重新像素化
+python scripts/gen_assets.py --pix-only <id>     # 只用已有原图重新像素化（有缓存蒙版则不连 ComfyUI）
+python scripts/gen_assets.py --pix-only --rematte <id>  # 同上，并重新跑 AI 抠图
 python scripts/gen_assets.py --contact           # 重做总览拼图 output/contact_sheet.png
 ```
 生成完要在 Godot 里导入一次：`$G --headless --path . --import`。
@@ -85,6 +99,30 @@ python scripts/gen_assets.py --contact           # 重做总览拼图 output/con
 3. `python scripts/gen_assets.py --pix-only <asset_id>`
 
 参考图 `flat_*.png` 是官网透明底立绘铺白底后的版本。
+
+## 抠图（AI 蒙版）
+旧做法是从画布四边泛洪删近白像素（RGB 都 ≥213）。角色都穿白衣服：衣服贴着画布边缘（`kurumi_cry` 的裙子被底边截断）
+或线稿有 1px 断口时，泛洪会钻进衣服，立绘缺块；alpha 只有 0/255，边缘还残留一圈白边和碎片。
+
+现在：`get_matte()` 把原图传给 ComfyUI-RMBG 的 `BiRefNetRMBG` 节点，取回软 alpha 蒙版缓存到 `output/masks/<id>.png`
+（原图比蒙版新时自动重抠），颜色仍用本地原图。随后：
+1. `decontaminate`：半透明像素按 F=(I−(1−α)·B)/α 反解前景色（B = 白或 `bg_key` 色），缩小后不留白边；
+2. `drop_islands`：删掉面积 < `island_frac` 的孤立块（抖动特效线、碎点——128px 下只会变成噪点）；
+3. 缩小、限色、二值化后 `drop_specks`（≤2px 碎块）和 `smooth_edges`（`smooth`）。
+
+**模型选择**（2026-10-07，9 张问题素材：kurumi_cry/focus/normal、mochiko_normal、mebuki_normal、yasuko_angry、kurumi_chibi、pillow、white_cat）：
+| 模型 | 结果 |
+|---|---|
+| **BiRefNet_toonout**（BiRefNet 动漫微调） | ✅ 选用。白衣白底分得开，边缘贴线稿，桌上的纸、绿底白物都正确 |
+| RMBG-2.0 | 白裙边缘残留白团，头发外侧白晕 |
+| BEN2 / INSPYRENET / BiRefNet-HR-matting | 白裙变半透明（底色透出） |
+| Lucida | 白裙边缘有白团 |
+
+已知取舍：
+- `drop_islands` 也会删掉与主体分离的小特效（`kurumi_shock` 的惊吓线、`mebuki_cry` 飞溅的泪滴）。想保留就给该条 `kind_override: {"island_frac": 0}`。
+- 模型会把「特效线之间夹着的白底」当前景（`mochiko_blush` 星星周围）。用 `matte_flood_tol: 12` 与严格泛洪取交集解决；
+  **不要全局开**——白衣服贴画布边缘的图（kurumi_focus 的纸、kurumi_happy/cry 的裙摆）会被再次扣掉。
+- 依赖：ComfyUI 已装 ComfyUI-RMBG；模型首次使用自动从 HuggingFace `1038lab/BiRefNet` 下载到 `ComfyUI/models/RMBG/BiRefNet/`（约 885MB）。
 
 ## 其他
 - 白色物体（枕头、白猫）用绿底生成，清单里的 `kind_override: {"bg_key": "auto"}` 让抠图改为取四角颜色。

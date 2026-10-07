@@ -179,6 +179,7 @@ TradeScreen(界面) ──持有── TradeSession
 ### 4.6 加/重画素材
 见 `docs/art-pipeline.md`：在 `config/asset-manifest.json` 加条目 → `python scripts/gen_assets.py <id>` → `$G --headless --path . --import`。
 官方人设参考的角色用 anima-ic（经 comfyui-contract MCP），父母等没有官方立绘的角色保持剪影，不臆造长相。
+抠图走 AI 蒙版（art-pipeline.md「抠图」节）：只改了像素化参数时用 `--pix-only`，不需要重画原图；抠图有问题先看 `output/masks/<id>.png`。
 
 ### 4.7 加品种 / 货币 / 经济指标 / 新闻
 - 货币：`data/market/units.json`；品种：`instruments.json`（要解锁的写 `unlock` 并在 meta.json 加研究节点）。
@@ -251,6 +252,7 @@ smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤
 | Godot 4.7.2 | 引擎 | `D:/godot/Godot_v4.7.2-stable_win64_console.exe` |
 | ComfyUI（aki 整合包） | 生成素材 | `D:/ComfyUI-aki-v3.2/ComfyUI`，`http://127.0.0.1:8188`，可用 comfyui-contract MCP 启停 |
 | Anima + `kurumi.safetensors` LoRA | 久留美立绘 | ComfyUI 模型目录；LoRA 触发词见 asset-manifest |
+| ComfyUI-RMBG + `BiRefNet_toonout` | 立绘/图标/Q版 AI 抠图 | `ComfyUI/custom_nodes/ComfyUI-RMBG`；模型 `ComfyUI/models/RMBG/BiRefNet/`（首次自动下载）。蒙版缓存 `output/masks/` |
 | Blender 5.x | 金币序列帧 | `scripts/blender_coin.py`（或 Blender MCP） |
 | Python 3 + Pillow | 像素化、音效 | `scripts/*.py` |
 | 官方人设参考图 | IC 生成仲间立绘 | `D:/agent/temp/kurumi-ref/official/`（不入库、不进游戏） |

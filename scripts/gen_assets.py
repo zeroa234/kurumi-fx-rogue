@@ -30,7 +30,7 @@ import uuid
 from collections import deque
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 # ---------- 路径 ----------
 SELF = Path(__file__).resolve()
@@ -438,6 +438,32 @@ def quantize_colors(rgba, colors):
     return out
 
 
+def drop_specks(rgba, max_px=2):
+    """最终像素图上删掉 ≤max_px 像素的不透明孤块（8 连通），细线不受影响。"""
+    w, h = rgba.size
+    px = rgba.load()
+    seen = set()
+    for y in range(h):
+        for x in range(w):
+            if (x, y) in seen or not px[x, y][3]:
+                continue
+            comp, q = [(x, y)], [(x, y)]
+            seen.add((x, y))
+            while q:
+                cx, cy = q.pop()
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        nx, ny = cx + dx, cy + dy
+                        if 0 <= nx < w and 0 <= ny < h and (nx, ny) not in seen and px[nx, ny][3]:
+                            seen.add((nx, ny))
+                            q.append((nx, ny))
+                            comp.append((nx, ny))
+            if len(comp) <= max_px:
+                for c in comp:
+                    px[c] = (0, 0, 0, 0)
+    return rgba
+
+
 def smooth_edges(rgba):
     """二值 alpha 去毛刺：删掉只有 ≤1 个不透明邻居的凸点，补上 ≥3 面被包围的凹缺（颜色取邻居众数）。"""
     w, h = rgba.size
@@ -495,6 +521,11 @@ def pixelize_portraitlike(hires_path, kind, matte=None):
             bg = (255, 255, 255)
         mask = matte.resize(im.size, Image.LANCZOS) if matte.size != im.size else matte
         mask = mask.point(lambda v: 0 if v < 8 else v)
+        if kind.get("matte_flood_tol"):
+            # 模型把特效线之间夹着的白底也当成前景时：再与严格容差的边缘泛洪取交集
+            # 仅逐条开启——白衣服贴画布边缘的图开了会把衣服再扣掉
+            _, fl = remove_bg_white(im, tol=kind["matte_flood_tol"], key=key)
+            mask = ImageChops.darker(mask, Image.frombytes("L", im.size, bytes(fl)))
         mask = drop_islands(mask, kind.get("island_frac", 0.0004))
         rgba = decontaminate(im, mask, bg).convert("RGBA")
         rgba.putalpha(mask)
@@ -517,7 +548,7 @@ def pixelize(kind, hires_path, matte=None):
     if "bg_remove" in kind:
         rgba = pixelize_portraitlike(hires_path, kind, matte)
         img = fit_canvas(rgba, pixel[0], kind.get("inner_frac", 0.9))
-        img = quantize_colors(img, kind["colors"])
+        img = drop_specks(quantize_colors(img, kind["colors"]))
         if kind.get("smooth"):
             img = smooth_edges(img)
         if kind.get("outline"):
@@ -526,7 +557,7 @@ def pixelize(kind, hires_path, matte=None):
         small = kind.get("small")
         if small:
             s = fit_canvas(rgba, small["pixel"][0], kind.get("inner_frac", 0.9))
-            s = quantize_colors(s, small["colors"])
+            s = drop_specks(quantize_colors(s, small["colors"]))
             if kind.get("smooth"):
                 s = smooth_edges(s)
             if kind.get("outline"):
