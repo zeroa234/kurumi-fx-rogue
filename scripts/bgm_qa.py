@@ -8,6 +8,10 @@
   silent_frac        低于 -45 dBFS 的帧比例；longest_gap 最长连续静音秒数
   peak_db            峰值
 
+--inst-dir DIR：同时把 demucs 分出的 drums+bass+other（去掉 vocals 声部）写成 DIR/<名>.flac，
+并对这份伴奏再算一遍 vocal_ratio/vocal_active（键 inst_vocal_ratio / inst_vocal_active）。
+YuE2 的 instrumental 模式只是文本引导，实测仍会出人声，所以成品一律用这份伴奏。
+
 注意：这些只是旁证。合成主旋律（小提琴、合成器 lead）也常被 demucs 归到 vocals 声部，
 vocal_ratio 高 ≠ 一定有人声；要结论请人耳试听。用法：python -I bgm_qa.py --out qa.json [--device cpu] a.flac b.flac …
 """
@@ -56,7 +60,20 @@ def frame_db(x: np.ndarray, sr: int, hop_s=0.5) -> np.ndarray:
     return 10 * np.log10(np.mean(fr ** 2, axis=1) + 1e-12)
 
 
-def analyze(path: Path, sep) -> dict:
+def vocal_stats(sep, path: Path) -> tuple[dict, np.ndarray]:
+    origin, stems = sep.separate_audio_file(path)
+    voc = stems["vocals"].detach().float().cpu().numpy()
+    mix = origin.detach().float().cpu().numpy()
+    inst = sum(stems[k].detach().float().cpu().numpy() for k in stems if k != "vocals")
+    vm, mm = voc.mean(axis=0), mix.mean(axis=0)
+    sr2 = sep._samplerate
+    vdb, mdb = frame_db(vm, sr2), frame_db(mm, sr2)
+    loud = mdb > -45
+    return ({"vocal_ratio": round(float(np.sum(vm ** 2) / (np.sum(mm ** 2) + 1e-12)), 4),
+             "vocal_active": round(float(np.mean((vdb - mdb > -12) & loud)), 3)}, inst)
+
+
+def analyze(path: Path, sep, inst_dir: Path | None = None) -> dict:
     import librosa
 
     audio, sr = sf.read(path, always_2d=True)
@@ -78,14 +95,14 @@ def analyze(path: Path, sep) -> dict:
     res["tempo_alt"] = [round(t / 2, 1), round(t * 2, 1)]
 
     if sep is not None:
-        origin, stems = sep.separate_audio_file(path)
-        voc = stems["vocals"].detach().float().cpu().numpy().mean(axis=0)
-        mix = origin.detach().float().cpu().numpy().mean(axis=0)
-        res["vocal_ratio"] = round(float(np.sum(voc ** 2) / (np.sum(mix ** 2) + 1e-12)), 4)
-        sr2 = sep._samplerate
-        vdb, mdb = frame_db(voc, sr2), frame_db(mix, sr2)
-        loud = mdb > -45
-        res["vocal_active"] = round(float(np.mean((vdb - mdb > -12) & loud)), 3)
+        stats, inst = vocal_stats(sep, path)
+        res.update(stats)
+        if inst_dir is not None:
+            inst_dir.mkdir(parents=True, exist_ok=True)
+            dst = inst_dir / f"{path.stem}.flac"
+            sf.write(dst, inst.T, sep._samplerate, subtype="PCM_24")
+            again, _ = vocal_stats(sep, dst)
+            res["inst_vocal_ratio"], res["inst_vocal_active"] = again["vocal_ratio"], again["vocal_active"]
     return res
 
 
@@ -94,6 +111,7 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--no-sep", action="store_true")
+    ap.add_argument("--inst-dir")
     ap.add_argument("files", nargs="+")
     a = ap.parse_args()
     out = Path(a.out)
@@ -101,7 +119,7 @@ def main() -> None:
     sep = None if a.no_sep else load_separator(a.device)
     for f in a.files:
         p = Path(f)
-        r = analyze(p, sep)
+        r = analyze(p, sep, Path(a.inst_dir) if a.inst_dir else None)
         data[p.stem] = r
         print(p.stem, json.dumps(r, ensure_ascii=False), flush=True)
         out.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

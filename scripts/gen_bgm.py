@@ -4,8 +4,8 @@
   python scripts/gen_bgm.py status                 # 每首的作业 / 原始音频 / 成品状态
   python scripts/gen_bgm.py submit [id ...]        # 提交生成（不写 id = 所有还没有成品的）；--seed 换种子（只能配单个 id）
   python scripts/gen_bgm.py fetch [id ...]         # 取回已完成作业的 audio.flac；--wait 阻塞等待
-  python scripts/gen_bgm.py post [id ...]          # 后期：裁首尾静音 → 截到 max_seconds → 两遍 loudnorm → 淡入淡出 → OGG
-  python scripts/gen_bgm.py qa [id ...]            # 用 YuE2 运行时（demucs + librosa）检查人声残留/节拍/静音 → output/bgm/qa.json
+  python scripts/gen_bgm.py post [id ...]          # 后期（优先用 qa 产出的去人声伴奏 output/bgm/inst/）：裁首尾静音 → 截到 max_seconds → 两遍 loudnorm → 淡入淡出 → OGG
+  python scripts/gen_bgm.py qa [id ...]            # 用 YuE2 运行时（demucs + librosa）检查人声残留/节拍/静音 → output/bgm/qa.json，并输出去人声伴奏 output/bgm/inst/
 
 服务地址：环境变量 YUE2_API，否则 http://127.0.0.1:8189。需要 ffmpeg/ffprobe 在 PATH。
 作业记录 output/bgm/jobs.json（不入库）；成品记录 assets/bgm/index.json（入库，含作业 id、种子、style、时长、响度、QA）。
@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CUES = ROOT / "config" / "bgm-cues.json"
 OUT = ROOT / "output" / "bgm"
 RAW = OUT / "raw"
+INST = OUT / "inst"
 JOBS = OUT / "jobs.json"
 QA = OUT / "qa.json"
 ASSETS = ROOT / "assets" / "bgm"
@@ -55,7 +56,8 @@ def api(method: str, path: str, body: dict | None = None):
 
 def cue_table() -> tuple[dict, dict, dict]:
     cfg = load_json(CUES, {})
-    return cfg["defaults"], cfg["post"], {c["id"]: c for c in cfg["cues"]}
+    defaults = dict(cfg["defaults"], _style_prefix=cfg.get("style_prefix", ""), _lyrics=cfg.get("lyrics", "[instrumental]"))
+    return defaults, cfg["post"], {c["id"]: c for c in cfg["cues"]}
 
 
 def pick(ids: list[str], cues: dict, missing_only=False) -> list[str]:
@@ -80,13 +82,13 @@ def cmd_submit(args) -> None:
     for cid in ids:
         c = cues[cid]
         seed = args.seed if args.seed is not None else int(c["seed"])
-        req = dict(defaults)
-        req.update({"style": c["style"], "lyrics": "[instrumental]", "seed": seed})
+        req = {k: v for k, v in defaults.items() if not k.startswith("_")}
+        req.update({"style": defaults["_style_prefix"] + c["style"], "lyrics": c.get("lyrics", defaults["_lyrics"]), "seed": seed})
         req.update(c.get("request", {}))
         res = api("POST", "/api/jobs", {"kind": "generate", "request": req, "source": "api",
                                         "client_request_id": uuid.uuid4().hex, "result_panel": "create"})
         job = res.get("job", res)
-        jobs.setdefault(cid, []).append({"job_id": job["id"], "seed": seed, "style": c["style"],
+        jobs.setdefault(cid, []).append({"job_id": job["id"], "seed": seed, "style": req["style"], "lyrics": req["lyrics"],
                                          "submitted": time.strftime("%Y-%m-%d %H:%M:%S")})
         print(f"{cid}: {job['id']} seed={seed}")
     save_json(JOBS, jobs)
@@ -156,7 +158,10 @@ def cmd_post(args) -> None:
     tmp = OUT / "tmp"
     tmp.mkdir(parents=True, exist_ok=True)
     for cid in pick(args.ids, cues):
-        src = RAW / f"{cid}.flac"
+        # 优先用 qa 时 demucs 去掉 vocals 声部后的伴奏（output/bgm/inst/）
+        src = INST / f"{cid}.flac"
+        if not src.is_file():
+            src = RAW / f"{cid}.flac"
         if not src.is_file():
             print(f"{cid}: 没有原始音频，跳过")
             continue
@@ -183,7 +188,8 @@ def cmd_post(args) -> None:
         qa = load_json(QA, {}).get(cid, {})
         index["tracks"][cid] = {
             "label": cues[cid]["label"], "uses": cues[cid]["uses"], "style": rec.get("style", cues[cid]["style"]),
-            "job_id": rec.get("job_id"), "seed": rec.get("seed"), "raw_seconds": rec.get("audio_seconds"),
+            "job_id": rec.get("job_id"), "seed": rec.get("seed"), "lyrics": rec.get("lyrics"),
+            "source": "demucs_no_vocals" if src.parent == INST else "raw", "raw_seconds": rec.get("audio_seconds"),
             "seconds": round(duration(dst), 2), "input_lufs": float(m["input_i"]), "target_lufs": post["lufs"],
             "bytes": dst.stat().st_size, "qa": qa,
         }
@@ -209,7 +215,7 @@ def cmd_qa(args) -> None:
     if not ids:
         sys.exit("没有可检查的原始音频")
     py = yue2_python()
-    cmd = [str(py), "-I", str(ROOT / "scripts" / "bgm_qa.py"), "--out", str(QA)]
+    cmd = [str(py), "-I", str(ROOT / "scripts" / "bgm_qa.py"), "--out", str(QA), "--inst-dir", str(INST)]
     cmd += ["--device", args.device] + [str(RAW / f"{i}.flac") for i in ids]
     subprocess.run(cmd, check=True)
 
