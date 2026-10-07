@@ -1,7 +1,7 @@
 {
  "_doc": "PV 剪辑表，scripts/pv/make_pv.py 读取。镜头按顺序首尾相接（xfade>0 时与上一个重叠交叉淡化）。时间单位秒。配乐 assets/pv/pv_theme.ogg 从 offset 秒开始播：原曲 63.0 秒的爆发点＝PV 22.0 秒（Logo），之后每小节约 2.49 秒，第二幕镜头都切在拍点上；原曲 83.2 秒起是断奏段＝PV 42.2 秒（瑞郎冲击）；原曲 103 秒再推起＝PV 62 秒（计数器）；原曲 108 秒结束＝PV 67 秒。镜头字段：type=black|still|clip|grid；d 时长；src（still：hires:<id> / pv:<id> / 相对路径）；clip（output/pv/raw 下的片段名）+ from（起始帧）+ speed；zoom=[起,止]、center=[[x,y],[x,y]]（0~1）推拉；inset=画中画比例；grade=dark/dim/red/blue/mono/vignette 用 + 连接；text[]={s,scale,color,pos(bottom|center|top|upper|lower|[x,y]),in,out,typewriter,cps,box,fade,rise}；portraits[]={id,name,color}；icons[]；counter={from,to,fmt,in,out_at,scale,y}；fx={flash:[[t,dur,color]],shake:[[t0,t1,px]],glitch:[[t0,t1,强度]]}；fade_in/fade_out（黑场）。",
  "fps": 30,
- "music": {"src": "assets/pv/pv_theme.ogg", "offset": 41.0, "gain_db": 0, "fade_in": 0.8, "fade_out": 2.5, "fade_out_end": 67.0},
+ "music": {"src": "assets/pv/pv_theme.ogg", "offset": 41.0, "gain_db": 3.5, "fade_in": 0.8, "fade_out": 2.5, "fade_out_end": 67.0},
  "sfx": [
   {"t": 3.25, "src": "assets/sfx/news.wav", "gain_db": -10},
   {"t": 22.0, "src": "assets/sfx/title.wav", "gain_db": -8},
@@ -85,7 +85,7 @@
 
   {"id": "snb_tv", "type": "clip", "clip": "snb", "from": 300, "speed": 1.0, "d": 1.8, "zoom": [1.0, 1.25], "center": [[0.5, 0.5], [0.45, 0.6]], "ease": "in"},
 
-  {"id": "snb_crash", "type": "clip", "clip": "snb", "from": 374, "speed": 0.5, "d": 3.0, "zoom": [1.12, 1.0], "center": [[0.35, 0.35], [0.5, 0.5]], "ease": "out",
+  {"id": "snb_crash", "type": "clip", "clip": "snb", "from": 374, "speed": 0.12, "d": 3.0, "zoom": [1.12, 1.0], "center": [[0.35, 0.35], [0.5, 0.5]], "ease": "out",
    "fx": {"flash": [[0.0, 0.35, "#ff2040"]], "shake": [[0.0, 1.2, 34]], "glitch": [[0.0, 0.3, 1.0], [1.5, 1.6, 0.6]]}},
 
   {"id": "snb_stopout", "type": "clip", "clip": "snb", "from": 389, "speed": 0.4, "d": 2.4, "zoom": [1.0, 1.35], "center": [[0.5, 0.5], [0.42, 0.62]], "ease": "inout",

@@ -436,7 +436,7 @@ def mix_audio(cfg: dict, total: float, t_from: float, dst: Path):
         labels.append(f"[s{i}]")
         n += 1
     filt.append(f"{''.join(labels)}amix=inputs={len(labels)}:normalize=0:duration=first,"
-                f"atrim=0:{total - t_from},alimiter=limit=0.89[a]")
+                f"atrim=0:{total - t_from},alimiter=limit=0.75:level=false[a]")
     cmd = ["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt), "-map", "[a]",
            "-ac", "2", "-c:a", "pcm_s16le", str(dst)]
     subprocess.run(cmd, check=True)

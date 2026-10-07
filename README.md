@@ -54,6 +54,7 @@ $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk
 | [docs/story-format.md](docs/story-format.md) | 剧情章节格式、时间线动作、教学步骤条件、章节检查流程 |
 | [docs/art-pipeline.md](docs/art-pipeline.md) | 美术素材管线（ComfyUI / LoRA / IC / Blender / 像素化） |
 | [docs/bgm.md](docs/bgm.md) | 背景音乐：YuE2 生成管线、曲目与场景对应、进度（进行中） |
+| [docs/pv.md](docs/pv.md) | 宣传 PV：结构与配乐对齐、实机录制驱动、合成器、素材来源、重新出片 |
 | [docs/GDD.md](docs/GDD.md) | 设计文档（与实现同步，含未实现清单） |
 | [docs/research/manga-reference.md](docs/research/manga-reference.md) | 原作调研（剧情事实唯一来源，带出处） |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | 版本历史 |
