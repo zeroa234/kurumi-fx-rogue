@@ -54,6 +54,8 @@ func _build_menu() -> void:
 		["设置", func(): Game.goto("res://src/scenes/settings.tscn"), true, ""],
 		["退出", func(): get_tree().quit(), true, ""],
 	]
+	if OS.has_feature("web"):
+		items.pop_back() # 网页版关不掉浏览器标签，去掉「退出」
 	for it in items:
 		var b := UI.button(it[0], it[1], 150)
 		b.custom_minimum_size.y = 22

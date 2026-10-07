@@ -25,7 +25,7 @@ var _lp_fired := false
 var _quit_armed_ms := -100000
 
 func _ready() -> void:
-	touch = OS.has_feature("mobile") or "--touch" in OS.get_cmdline_user_args()
+	touch = is_mobile() or "--touch" in OS.get_cmdline_user_args()
 	_setup_mobile_display()
 	_build_overlay()
 	# 调试：-- --shot=res路径/或绝对路径 --shot-delay=秒 [--scene=res://...] 截图后退出
@@ -95,9 +95,13 @@ func back(from_back_key: bool) -> void:
 	elif from_back_key:
 		toast("请使用画面上的按钮")
 
+## 手机 App，或手机浏览器里的网页版（网页版 has_feature("mobile") 为假，要看 web_android / web_ios）
+func is_mobile() -> bool:
+	return OS.has_feature("mobile") or OS.has_feature("web_android") or OS.has_feature("web_ios")
+
 ## 手机：640x360 视口 + 整数缩放会让 1080p 屏幕只用中间一小块，改成小数缩放铺满宽度（保留黑边不裁切）。
 func _setup_mobile_display() -> void:
-	if not OS.has_feature("mobile"):
+	if not is_mobile():
 		return
 	var w := get_window()
 	w.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
