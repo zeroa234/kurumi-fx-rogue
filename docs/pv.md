@@ -81,3 +81,10 @@ python scripts/pv/make_pv.py                       # 成片（约 1 分钟）
 - **音效**：游戏自己的 `assets/sfx/*.wav`（v2 新增：角色登场 `open`、仲间面板 `click`）。**字体**：Fusion Pixel（OFL）。
 - 抖动与硬边像素让 H.264 码率变高（CRF16 约 10 Mbps，v1 约 4.5 Mbps）；要压体积可把 `make_pv.py` 里的 CRF 调到 18~20。
 - 合成只依赖 Pillow + ffmpeg（不需要 numpy）。
+
+## 7. 游戏内开场
+- `python scripts/pv/make_pv.py --game` → `assets/video/opening.ogv`：640×360 画布原样（不经 ×3 放大），Theora yuv444p q3 + Vorbis，约 15.5 MB。
+  4:2:0 会让红线等像素边缘串色；q2 文字开始糊，q5 体积翻倍、肉眼看不出差别。静止画面编码成空包，ffprobe 数出的帧数少于 2142 属正常。
+- 播放：`src/scenes/opening.gd`。boot 在「没看过」或设置「每次启动都播放」时进入；带调试参数启动不播。
+  按一次出「再按一次跳过」，提示期间再按才跳过；网页版先「点击开始」（浏览器要求用户操作后才能出声）。音量读设置 `bgm`。
+- 改了 PV 之后重新跑 `--game` 再导出游戏。测试 `tests/opening_check.tscn`。
