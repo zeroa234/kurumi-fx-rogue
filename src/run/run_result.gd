@@ -47,6 +47,7 @@ func _ready() -> void:
 	var por := TextureRect.new()
 	por.texture = Portraits.small("kurumi", face)
 	por.custom_minimum_size = Vector2(64, 64)
+	por.size_flags_vertical = Control.SIZE_SHRINK_BEGIN # HBox 默认竖直拉满行高，旁边文字一高立绘就被拉长
 	h.add_child(por)
 	var t := "到达 第%d幕 · 节点 %d · 交易日 %d\n" % [run.act, run.nodes_cleared, run.days_elapsed]
 	t += "最高净资产 %s\n" % GameDate.yen(run.max_net)
@@ -54,14 +55,14 @@ func _ready() -> void:
 	t += "手法 %d 个 · 击败 Boss %d 个\n" % [run.relics.size(), run.bosses_beaten.size()]
 	t += "\n获得 [color=#ffd166]相場勘 %d 点[/color]（现有 %d）" % [pts, int(Save.data.meta.points)]
 	if pts == 0 and not victory:
-		t += "\n[color=#a89cc8]（至少完成 1 个节点、做过 1 笔交易才有相場勘）[/color]"
+		t += "\n[color=#a89cc8]（需完成 1 个节点并做过 1 笔交易）[/color]"
 	# 富文本自动换行：放在 HBox 里必须给宽度，否则最小宽度为 0、逐字换行把弹窗撑出屏幕
 	var info := UI.rich(t)
 	info.custom_minimum_size.x = 328
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(info)
 	v.add_child(h)
-	if not victory:
+	if _tip(run) != "":
 		var tip := UI.label(_tip(run), UI.DIM)
 		tip.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		tip.custom_minimum_size.x = 400

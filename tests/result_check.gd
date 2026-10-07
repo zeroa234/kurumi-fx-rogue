@@ -55,6 +55,10 @@ func _check_layout(s: Control, reason: String) -> void:
 	for b in p.find_children("*", "Button", true, false):
 		if not screen.encloses((b as Control).get_global_rect()):
 			_fail(reason, "按钮「%s」在屏幕外 %s" % [b.text, b.get_global_rect()])
+	for t in p.find_children("*", "TextureRect", true, false):
+		var sz: Vector2 = (t as Control).size
+		if sz != Vector2(64, 64):
+			_fail(reason, "立绘被拉伸 %s（应为 64×64）" % sz)
 	print("  %s: 弹窗 %s" % [reason, rect])
 
 ## 交易节点：满仓 → 净值压到约 1 円 → 下一 tick 强平 → 资金耗尽结束 → run_trade 的结算弹窗

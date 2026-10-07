@@ -307,6 +307,7 @@ func _open_event(n: Dictionary) -> void:
 	var por := TextureRect.new()
 	por.texture = Portraits.small(ev.get("who", "kurumi"), ev.get("face", "normal")) if ev.get("who", "narrator") != "narrator" else null
 	por.custom_minimum_size = Vector2(64, 64)
+	por.size_flags_vertical = Control.SIZE_SHRINK_BEGIN # HBox 默认竖直拉满行高，旁边文字一高立绘就被拉长
 	h.add_child(por)
 	var tv := UI.vbox(3)
 	tv.add_child(UI.label(ev.title, UI.YELLOW))
