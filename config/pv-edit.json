@@ -1,117 +1,3570 @@
 {
- "_doc": "PV 剪辑表，scripts/pv/make_pv.py 读取。镜头按顺序首尾相接（xfade>0 时与上一个重叠交叉淡化）。时间单位秒。配乐 assets/pv/pv_theme.ogg 从 offset 秒开始播：原曲 63.0 秒的爆发点＝PV 22.0 秒（Logo），之后每小节约 2.49 秒，第二幕镜头都切在拍点上；原曲 83.2 秒起是断奏段＝PV 42.2 秒（瑞郎冲击）；原曲 103 秒再推起＝PV 62 秒（计数器）；原曲 108 秒结束＝PV 67 秒。镜头字段：type=black|still|clip|grid；d 时长；src（still：hires:<id> / pv:<id> / 相对路径）；clip（output/pv/raw 下的片段名）+ from（起始帧）+ speed；zoom=[起,止]、center=[[x,y],[x,y]]（0~1）推拉；inset=画中画比例；grade=dark/dim/red/blue/mono/vignette 用 + 连接；text[]={s,scale,color,pos(bottom|center|top|upper|lower|[x,y]),in,out,typewriter,cps,box,fade,rise}；portraits[]={id,name,color}；icons[]；counter={from,to,fmt,in,out_at,scale,y}；fx={flash:[[t,dur,color]],shake:[[t0,t1,px]],glitch:[[t0,t1,强度]]}；fade_in/fade_out（黑场）。",
+ "_doc": "PV 剪辑表 v2，由 scripts/pv/build_edit.py 生成（改剪辑请改那个脚本再运行），scripts/pv/make_pv.py 读取。画布 640×360（游戏原生分辨率），成片最近邻放大 3 倍。配乐 assets/pv/pv_theme.ogg 从 offset 秒开始播：原曲 63.0 秒的爆发点＝PV 22.06 秒（Logo）；拍长约 0.6225 秒、小节 2.49 秒，重拍 24.57/27.05/29.54/32.02/34.50/37.01/39.50/41.98/44.47/46.95/49.44/51.94/54.43/56.91/59.40/61.90/64.39；原曲 83.2 秒起断奏段＝PV 42.2；103 秒再推起＝PV 62；108 秒结束＝PV 67。镜头：at（绝对开始秒，上一镜头的 d 自动补齐）或 d；bg 底色；in 转场 {type: dither|slash|diamond|shutter|iris|pixelate|flash, d, color, center}；layers[] 依次叠放；fx {flash:[[t,dur,色]], shake:[[t0,t1,像素]], glitch:[[t0,t1,强度]], impact:[[t0,t1,neg|red|white]]}；fade_in/fade_out（抖动黑场）。图层通用字段：t=[开始,结束]（null＝到镜头末）、ox/oy 整体偏移、poly 多边形遮罩（随 ox/oy 移动）+ border/bw 描边、alpha、fi/fo（抖动淡入淡出）。数值字段都可写关键帧 [[t,v],[t,v,缓动]]，缓动 linear|in|out|inout|back|step。图层类型：img{src,scale(整数),x,y,anchor(c|b|t|l|r|tl),crop,flip,silhouette,grade,ghost[n,dt],frames}；clip{clip,from,speed,punch[[t,cx,cy,整数倍]],crop+x/y/anchor,grade}；fill{color|grad[c0,c1]+grad_y}；stripes{colors,w,speed}；grid{speed,tint}；speedlines{color,n,speed,len,band}；focus{color,cx,cy,r,n}；burst{colors,cx,cy,n,speed}；particles{kind:rain|dust|sparkle|coins_fall|coins_burst,…}；text{s,scale,color,outline(null＝无),x,y,align(c|l|r),typewriter,cps,slam[起始倍数,时长],box{bar,pad,alpha,color},vertical}；rect；icons{icons,cols,scale,cell,x,y,stagger}；counter{from,to,fmt,t_in,out_at,scale,y}；vignette{strength,color}；letterbox{h}；group{layers}。",
  "fps": 30,
- "music": {"src": "assets/pv/pv_theme.ogg", "offset": 41.0, "gain_db": 3.5, "fade_in": 0.8, "fade_out": 2.5, "fade_out_end": 67.0},
+ "music": {
+  "src": "assets/pv/pv_theme.ogg",
+  "offset": 41.0,
+  "gain_db": 3.5,
+  "fade_in": 0.8,
+  "fade_out": 2.5,
+  "fade_out_end": 67.0
+ },
  "sfx": [
-  {"t": 3.25, "src": "assets/sfx/news.wav", "gain_db": -10},
-  {"t": 22.0, "src": "assets/sfx/title.wav", "gain_db": -8},
-  {"t": 27.6, "src": "assets/sfx/win.wav", "gain_db": -12},
-  {"t": 30.2, "src": "assets/sfx/news.wav", "gain_db": -11},
-  {"t": 47.7, "src": "assets/sfx/news.wav", "gain_db": -8},
-  {"t": 49.4, "src": "assets/sfx/crash.wav", "gain_db": -2},
-  {"t": 49.55, "src": "assets/sfx/alarm.wav", "gain_db": -9},
-  {"t": 50.1, "src": "assets/sfx/alarm.wav", "gain_db": -11},
-  {"t": 52.45, "src": "assets/sfx/lose.wav", "gain_db": -6},
-  {"t": 62.2, "src": "assets/sfx/coin.wav", "gain_db": -12},
-  {"t": 63.0, "src": "assets/sfx/coin.wav", "gain_db": -12},
-  {"t": 63.7, "src": "assets/sfx/coin.wav", "gain_db": -11},
-  {"t": 64.3, "src": "assets/sfx/win.wav", "gain_db": -7},
-  {"t": 66.3, "src": "assets/sfx/title.wav", "gain_db": -9}
+  {
+   "t": 3.25,
+   "src": "assets/sfx/news.wav",
+   "gain_db": -10
+  },
+  {
+   "t": 22.06,
+   "src": "assets/sfx/title.wav",
+   "gain_db": -8
+  },
+  {
+   "t": 24.57,
+   "src": "assets/sfx/open.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 27.58,
+   "src": "assets/sfx/win.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 30.2,
+   "src": "assets/sfx/news.wav",
+   "gain_db": -11
+  },
+  {
+   "t": 34.5,
+   "src": "assets/sfx/click.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 35.12,
+   "src": "assets/sfx/click.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 35.75,
+   "src": "assets/sfx/click.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 47.7,
+   "src": "assets/sfx/news.wav",
+   "gain_db": -8
+  },
+  {
+   "t": 49.44,
+   "src": "assets/sfx/crash.wav",
+   "gain_db": -2
+  },
+  {
+   "t": 49.6,
+   "src": "assets/sfx/alarm.wav",
+   "gain_db": -9
+  },
+  {
+   "t": 50.1,
+   "src": "assets/sfx/alarm.wav",
+   "gain_db": -11
+  },
+  {
+   "t": 51.62,
+   "src": "assets/sfx/lose.wav",
+   "gain_db": -6
+  },
+  {
+   "t": 62.2,
+   "src": "assets/sfx/coin.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 63.0,
+   "src": "assets/sfx/coin.wav",
+   "gain_db": -12
+  },
+  {
+   "t": 63.7,
+   "src": "assets/sfx/coin.wav",
+   "gain_db": -11
+  },
+  {
+   "t": 64.39,
+   "src": "assets/sfx/win.wav",
+   "gain_db": -7
+  },
+  {
+   "t": 66.3,
+   "src": "assets/sfx/title.wav",
+   "gain_db": -9
+  }
  ],
  "shots": [
-  {"id": "open_2008", "type": "black", "d": 3.2, "fade_out": 0.3,
-   "text": [{"s": "2008年 秋", "scale": 7, "pos": "center", "typewriter": true, "cps": 6, "in": 0.3, "rise": false},
-            {"s": "雷曼兄弟破产，金融危机席卷全世界。", "scale": 3, "color": "#a89cc8", "pos": [0.5, 0.62], "in": 1.4}]},
-
-  {"id": "lehman", "type": "clip", "clip": "lehman", "from": 30, "speed": 4.0, "d": 5.2, "inset": 0.84, "tint": "#ff3050",
-   "fade_in": 0.2,
-   "text": [{"s": "母亲瞒着所有人，把家里的钱投进了 FX。", "scale": 4, "pos": [0.5, 0.94], "in": 0.2, "out": 2.6},
-            {"s": "2000万円，在暴跌中消失殆尽。", "scale": 4, "color": "#ff7a90", "pos": [0.5, 0.94], "in": 2.7}]},
-
-  {"id": "living", "type": "still", "src": "hires:bg_living_dim", "d": 4.0, "zoom": [1.0, 1.1], "center": [[0.5, 0.5], [0.45, 0.5]],
-   "grade": "dim+blue+vignette", "fade_in": 0.4,
-   "text": [{"s": "四个月后，母亲离开了这个世界。", "scale": 4, "pos": "bottom", "in": 0.5, "box": true}]},
-
-  {"id": "rain", "type": "still", "src": "pv:pv_rain", "d": 5.4, "zoom": [1.35, 1.05], "center": [[0.5, 0.33], [0.5, 0.45]],
-   "grade": "vignette", "xfade": 0.5,
-   "text": [{"s": "她的女儿——福賀久留美。", "scale": 4, "pos": "bottom", "in": 0.6, "out": 2.9, "box": true},
-            {"s": "她决定，用同样的 FX……", "scale": 4, "pos": "bottom", "in": 3.0, "box": true}]},
-
-  {"id": "resolve", "type": "still", "src": "pv:pv_resolve", "d": 5.2, "zoom": [1.05, 1.45], "center": [[0.5, 0.45], [0.6, 0.33]],
-   "ease": "in", "xfade": 0.5,
-   "text": [{"s": "「把 2000万円 取回来！」", "scale": 6, "color": "#ff5da0", "pos": "lower", "in": 1.6, "fade": 0.15}]},
-
-  {"id": "logo", "type": "still", "src": "pv:pv_key", "d": 3.8, "zoom": [1.18, 1.04], "center": [[0.5, 0.45], [0.5, 0.5]], "ease": "out",
-   "grade": "dark+vignette",
-   "fx": {"flash": [[0.0, 0.45]], "shake": [[0.0, 0.35, 26]]},
-   "text": [{"s": "FX战士久留美", "scale": 13, "color": "#ff5da0", "outline": "#1a0820", "pos": [0.5, 0.38], "in": 0.0, "rise": false, "fade": 0.05},
-            {"s": "同人 · 2000万之路", "scale": 6, "pos": [0.5, 0.56], "in": 0.25, "fade": 0.1},
-            {"s": "FX戦士くるみちゃん  Fan Game", "scale": 3, "color": "#6ee6ff", "pos": [0.5, 0.67], "in": 0.5}]},
-
-  {"id": "trade_a", "type": "clip", "clip": "trade", "from": 228, "speed": 1.5, "d": 2.508, "inset": 0.84,
-   "text": [{"s": "多因子算法实时生成的行情 · 最高 888 倍杠杆", "scale": 4, "pos": [0.5, 0.94], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "trade_b", "type": "clip", "clip": "trade", "from": 420, "speed": 1.2, "d": 2.484, "inset": 0.84,
-   "text": [{"s": "新闻 · 经济指标 · 央行 · 谣言 · 散户情绪，都会推动价格", "scale": 4, "pos": [0.5, 0.94], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "dialogue", "type": "clip", "clip": "dialogue", "from": 284, "speed": 1.0, "d": 2.485, "inset": 0.84,
-   "text": [{"s": "剧情模式：跟着漫画逐卷改编，全 15 章", "scale": 4, "pos": [0.5, 0.94], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "friends", "type": "grid", "d": 1.857, "stagger": 0.2,
-   "portraits": [{"id": "kurumi_happy", "name": "久留美", "color": "#ff5da0"},
-                 {"id": "mochiko_smile", "name": "萌智子", "color": "#d49cff"},
-                 {"id": "mebuki_happy", "name": "芽吹", "color": "#ffd76e"},
-                 {"id": "yasuko_normal", "name": "やす子", "color": "#9cd8ff"}]},
-
-  {"id": "map", "type": "clip", "clip": "map", "from": 40, "speed": 1.0, "d": 2.485, "inset": 0.84, "zoom": [1.0, 1.12], "center": [[0.5, 0.5], [0.4, 0.5]],
-   "text": [{"s": "肉鸽模式：3 幕 · 分叉地图 · 精英与 Boss", "scale": 4, "pos": [0.5, 0.94], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "icons", "type": "grid", "d": 1.881, "tint": "#ffd76e", "cols": 7, "icon_scale": 5, "stagger": 0.045, "icons_y": 450,
-   "icons": ["rocket", "crystal_ball", "bollinger", "rsi_gauge", "ma_chart", "candlestick_gold", "econ_calendar",
-             "omamori", "fortune_slip", "black_card", "handcuffs_money", "energy_drink", "headset", "monitors",
-             "piggy_bank", "dice", "shield", "white_cat", "hourglass", "binoculars", "megaphone"],
-   "text": [{"s": "手法 · 道具 · 诅咒 · 仲间 · FX业者 —— 组成你的构筑", "scale": 4, "pos": [0.5, 0.9], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "meta", "type": "clip", "clip": "meta", "from": 60, "speed": 1.0, "d": 2.696, "inset": 0.84, "fade_out": 0.25,
-   "text": [{"s": "局外养成「相場勘」 · 无尽模式 · 挑战度 1~10", "scale": 4, "pos": [0.5, 0.94], "in": 0.0, "rise": false, "fade": 0.1}]},
-
-  {"id": "date_2015", "type": "black", "d": 2.4,
-   "fx": {"glitch": [[0.8, 0.95, 0.6], [1.4, 1.5, 0.5], [2.2, 2.4, 0.8]]},
-   "text": [{"s": "2015.01.15  18:30", "scale": 9, "pos": "center", "typewriter": true, "cps": 18, "in": 0.1, "rise": false},
-            {"s": "EUR/CHF", "scale": 4, "color": "#ff5d73", "pos": [0.5, 0.63], "in": 0.8}]},
-
-  {"id": "snb_calm", "type": "clip", "clip": "snb", "from": 200, "speed": 1.0, "d": 3.0, "inset": 0.84, "tint": "#ff3050",
-   "text": [{"s": "三年未破的 1.20 下限——人人都说「绝对安全」。", "scale": 4, "pos": [0.5, 0.94], "in": 0.1}]},
-
-  {"id": "snb_tv", "type": "clip", "clip": "snb", "from": 300, "speed": 1.0, "d": 1.8, "zoom": [1.0, 1.25], "center": [[0.5, 0.5], [0.45, 0.6]], "ease": "in"},
-
-  {"id": "snb_crash", "type": "clip", "clip": "snb", "from": 374, "speed": 0.12, "d": 3.0, "zoom": [1.12, 1.0], "center": [[0.35, 0.35], [0.5, 0.5]], "ease": "out",
-   "fx": {"flash": [[0.0, 0.35, "#ff2040"]], "shake": [[0.0, 1.2, 34]], "glitch": [[0.0, 0.3, 1.0], [1.5, 1.6, 0.6]]}},
-
-  {"id": "snb_stopout", "type": "clip", "clip": "snb", "from": 389, "speed": 0.4, "d": 2.4, "zoom": [1.0, 1.35], "center": [[0.5, 0.5], [0.42, 0.62]], "ease": "inout",
-   "fx": {"shake": [[0.0, 0.5, 14]]}},
-
-  {"id": "shock", "type": "still", "src": "hires:cg_shock", "d": 2.2, "zoom": [1.0, 1.15], "center": [[0.6, 0.45], [0.72, 0.38]], "grade": "vignette",
-   "fx": {"glitch": [[0.0, 0.25, 0.9], [1.9, 2.2, 0.7]], "flash": [[0.0, 0.2, "#ff2040"]]}, "fade_out": 0.3},
-
-  {"id": "this_time", "type": "black", "d": 2.5,
-   "text": [{"s": "这一次——", "scale": 7, "pos": "center", "typewriter": true, "cps": 8, "in": 0.3, "rise": false}]},
-
-  {"id": "your_turn", "type": "still", "src": "pv:pv_key", "d": 2.5, "zoom": [1.0, 1.12], "center": [[0.5, 0.5], [0.47, 0.42]], "grade": "dim", "fade_in": 0.3,
-   "text": [{"s": "轮到你来交易。", "scale": 7, "pos": "bottom", "in": 0.4, "box": true}]},
-
-  {"id": "counter", "type": "still", "src": "hires:cg_win", "d": 4.0, "zoom": [1.0, 1.12], "center": [[0.5, 0.45], [0.5, 0.38]],
-   "fx": {"flash": [[0.0, 0.3], [2.3, 0.35, "#ffe08a"]]},
-   "text": [{"s": "目标", "scale": 4, "color": "#ffd76e", "pos": [0.5, 0.67], "in": 0.1, "rise": false}],
-   "counter": {"from": 300000, "to": 20000000, "fmt": "{:,.0f}円", "in": 0.2, "out_at": 2.3, "scale": 11, "y": 0.82}},
-
-  {"id": "end", "type": "grid", "d": 5.5, "fade_in": 0.3, "fade_out": 0.8,
-   "text": [{"s": "FX战士久留美", "scale": 11, "color": "#ff5da0", "outline": "#1a0820", "pos": [0.5, 0.3], "in": 0.0, "rise": false, "fade": 0.3},
-            {"s": "同人 · 2000万之路", "scale": 5, "pos": [0.5, 0.45], "in": 0.2},
-            {"s": "剧情模式 · 肉鸽模式 · 经典战役 · 图鉴", "scale": 3, "color": "#6ee6ff", "pos": [0.5, 0.57], "in": 0.5},
-            {"s": "开发中 · Godot 4.7", "scale": 3, "color": "#a89cc8", "pos": [0.5, 0.63], "in": 0.6},
-            {"s": "非官方同人游戏　原作《FX戦士くるみちゃん》でむにゃん / 炭酸だいすき（KADOKAWA）", "scale": 2, "color": "#d8cff0", "pos": [0.5, 0.82], "in": 0.8},
-            {"s": "画面为实机录制，行情由算法生成；第1、11章为参照真实事件的示意走势。投资有风险，本作不构成任何投资建议。", "scale": 2, "color": "#a89cc8", "pos": [0.5, 0.87], "in": 0.8},
-            {"s": "插画：Anima + 角色 LoRA（AI 生成）　音乐：YuE2（AI 生成）　字体：Fusion Pixel Font（OFL）", "scale": 2, "color": "#a89cc8", "pos": [0.5, 0.92], "in": 0.8}]}
+  {
+   "id": "open_2008",
+   "at": 0.0,
+   "layers": [
+    {
+     "type": "text",
+     "s": "2008年 秋",
+     "scale": 3,
+     "y": 160,
+     "typewriter": true,
+     "cps": 6,
+     "t": [
+      0.3,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "雷曼兄弟破产，金融危机席卷全世界。",
+     "color": "#a89cc8",
+     "y": 204,
+     "t": [
+      1.4,
+      null
+     ],
+     "fi": 0.4
+    }
+   ]
+  },
+  {
+   "id": "lehman",
+   "at": 3.2,
+   "in": {
+    "type": "slash",
+    "d": 0.35,
+    "color": "#ff3050"
+   },
+   "layers": [
+    {
+     "type": "fill",
+     "color": "#0b0814"
+    },
+    {
+     "type": "stripes",
+     "colors": [
+      "#120a1e",
+      "#170e26"
+     ],
+     "w": 10,
+     "speed": 16
+    },
+    {
+     "type": "clip",
+     "clip": "lehman",
+     "from": 30,
+     "speed": 4.0,
+     "crop": [
+      0,
+      22,
+      400,
+      300
+     ],
+     "anchor": "tl",
+     "x": 6,
+     "y": 38,
+     "poly": [
+      [
+       6,
+       40
+      ],
+      [
+       392,
+       40
+      ],
+      [
+       350,
+       320
+      ],
+      [
+       6,
+       320
+      ]
+     ],
+     "border": "#ffffff",
+     "ox": [
+      [
+       0,
+       -420
+      ],
+      [
+       0.35,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "grad": [
+        "#2a0410",
+        "#c02040"
+       ],
+       "grad_y": [
+        40,
+        320
+       ]
+      },
+      {
+       "type": "focus",
+       "color": "#ff7a90",
+       "cx": 510,
+       "cy": 170,
+       "r": 70,
+       "n": 40
+      },
+      {
+       "type": "img",
+       "src": "portrait:kozue_normal",
+       "scale": 2,
+       "anchor": "b",
+       "x": 505,
+       "y": 322
+      },
+      {
+       "type": "text",
+       "s": "母亲 · 梢",
+       "x": 622,
+       "y": 58,
+       "align": "r",
+       "color": "#e8c0a0"
+      }
+     ],
+     "poly": [
+      [
+       400,
+       40
+      ],
+      [
+       634,
+       40
+      ],
+      [
+       634,
+       320
+      ],
+      [
+       358,
+       320
+      ]
+     ],
+     "border": "#ffffff",
+     "ox": [
+      [
+       0.45,
+       300
+      ],
+      [
+       0.8,
+       0,
+       "out"
+      ]
+     ],
+     "t": [
+      0.45,
+      null
+     ]
+    },
+    {
+     "type": "letterbox",
+     "h": 36
+    },
+    {
+     "type": "text",
+     "s": "母亲瞒着所有人，把家里的钱投进了 FX。",
+     "y": 342,
+     "t": [
+      0.2,
+      2.6
+     ],
+     "fi": 0.15
+    },
+    {
+     "type": "text",
+     "s": "2000万円，在暴跌中消失殆尽。",
+     "y": 342,
+     "t": [
+      2.7,
+      null
+     ],
+     "fi": 0.15,
+     "color": "#ff7a90"
+    }
+   ],
+   "fx": {
+    "glitch": [
+     [
+      2.65,
+      2.8,
+      0.5
+     ]
+    ],
+    "flash": [
+     [
+      2.65,
+      0.15,
+      "#ff3050"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "living",
+   "at": 8.4,
+   "in": {
+    "type": "dither",
+    "d": 0.6
+   },
+   "layers": [
+    {
+     "type": "img",
+     "src": "bg:bg_living_dim",
+     "scale": 2
+    },
+    {
+     "type": "particles",
+     "kind": "dust",
+     "n": 26,
+     "color": "#7080b0",
+     "seed": 4
+    },
+    {
+     "type": "vignette",
+     "strength": 0.7
+    },
+    {
+     "type": "letterbox",
+     "h": 36
+    },
+    {
+     "type": "text",
+     "s": "四个月后，母亲离开了这个世界。",
+     "y": 342,
+     "t": [
+      0.6,
+      null
+     ],
+     "fi": 0.15
+    }
+   ]
+  },
+  {
+   "id": "rain",
+   "at": 12.4,
+   "in": {
+    "type": "pixelate",
+    "d": 0.5
+   },
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:pv_rain_bg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       323
+      ],
+      [
+       5.4,
+       317,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "particles",
+     "kind": "rain",
+     "n": 90,
+     "color": "#3c5878",
+     "vel": [
+      -40,
+      380
+     ],
+     "len": 6,
+     "seed": 21
+    },
+    {
+     "type": "img",
+     "src": "px:pv_rain_fg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       316
+      ],
+      [
+       5.4,
+       323,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "particles",
+     "kind": "rain",
+     "n": 45,
+     "color": "#9cc0e8",
+     "vel": [
+      -70,
+      700
+     ],
+     "len": 14,
+     "seed": 22
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         236
+        ],
+        [
+         214,
+         236
+        ],
+        [
+         200,
+         268
+        ],
+        [
+         0,
+         268
+        ]
+       ],
+       "color": "#ff5da0"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         268
+        ],
+        [
+         200,
+         268
+        ],
+        [
+         194,
+         282
+        ],
+        [
+         0,
+         282
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "福賀 久留美",
+       "scale": 2,
+       "x": 14,
+       "y": 252,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "FUKUGA KURUMI",
+       "x": 14,
+       "y": 275,
+       "align": "l",
+       "color": "#6ee6ff",
+       "outline": null
+      }
+     ],
+     "t": [
+      1.0,
+      3.1
+     ],
+     "fo": 0.2,
+     "ox": [
+      [
+       1.0,
+       -260
+      ],
+      [
+       1.25,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "letterbox",
+     "h": 36
+    },
+    {
+     "type": "text",
+     "s": "她的女儿——",
+     "y": 342,
+     "t": [
+      0.6,
+      2.9
+     ],
+     "fi": 0.15
+    },
+    {
+     "type": "text",
+     "s": "她决定，用同样的 FX……",
+     "y": 342,
+     "t": [
+      3.0,
+      null
+     ],
+     "fi": 0.15
+    }
+   ]
+  },
+  {
+   "id": "resolve",
+   "at": 17.8,
+   "in": {
+    "type": "dither",
+    "d": 0.4
+   },
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:pv_resolve_bg",
+     "scale": 2
+    },
+    {
+     "type": "particles",
+     "kind": "rain",
+     "n": 30,
+     "color": "#28485a",
+     "vel": [
+      -20,
+      300
+     ],
+     "len": 5,
+     "seed": 31,
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       300,
+       0
+      ],
+      [
+       300,
+       230
+      ],
+      [
+       0,
+       230
+      ]
+     ]
+    },
+    {
+     "type": "img",
+     "src": "px:pv_resolve_fg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       326
+      ],
+      [
+       2.4,
+       318,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "letterbox",
+     "h": 36
+    },
+    {
+     "type": "text",
+     "s": "「把 2000万円 取回来！」",
+     "scale": 2,
+     "y": 290,
+     "color": "#ff5da0",
+     "outline": "#1a0820",
+     "slam": [
+      5,
+      0.12
+     ],
+     "t": [
+      0.6,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "shake": [
+     [
+      0.6,
+      0.85,
+      3
+     ]
+    ]
+   }
+  },
+  {
+   "id": "eyes",
+   "at": 20.2,
+   "layers": [
+    {
+     "type": "fill",
+     "color": "#000000"
+    },
+    {
+     "type": "fill",
+     "grad": [
+      "#3a0a24",
+      "#ff5da0"
+     ],
+     "grad_y": [
+      130,
+      230
+     ],
+     "poly": [
+      [
+       0,
+       132
+      ],
+      [
+       640,
+       132
+      ],
+      [
+       640,
+       228
+      ],
+      [
+       0,
+       228
+      ]
+     ]
+    },
+    {
+     "type": "speedlines",
+     "color": "#ffd0e4",
+     "n": 18,
+     "band": [
+      134,
+      226
+     ],
+     "speed": 1400
+    },
+    {
+     "type": "img",
+     "src": "portrait:kurumi_focus",
+     "crop": [
+      38,
+      34,
+      52,
+      18
+     ],
+     "scale": 5,
+     "x": [
+      [
+       0,
+       330
+      ],
+      [
+       0.6,
+       314,
+       "linear"
+      ]
+     ],
+     "poly": [
+      [
+       0,
+       134
+      ],
+      [
+       640,
+       134
+      ],
+      [
+       640,
+       226
+      ],
+      [
+       0,
+       226
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "2008 → 2014",
+     "x": 626,
+     "y": 244,
+     "align": "r",
+     "color": "#ffb0d0",
+     "outline": null
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "crash_flash",
+   "at": 20.81,
+   "layers": [
+    {
+     "type": "fill",
+     "color": "#120006"
+    },
+    {
+     "type": "focus",
+     "color": "#ff3050",
+     "r": 130,
+     "n": 70
+    },
+    {
+     "type": "text",
+     "s": "2000万円",
+     "scale": 6,
+     "y": 176,
+     "outline": "#ff3050",
+     "slam": [
+      9,
+      0.1
+     ]
+    },
+    {
+     "type": "text",
+     "s": "−20,000,000",
+     "scale": 2,
+     "y": 232,
+     "color": "#ff7a90",
+     "t": [
+      0.15,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "shake": [
+     [
+      0,
+      0.3,
+      6
+     ]
+    ],
+    "flash": [
+     [
+      0,
+      0.08,
+      "#ff3050"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "burst",
+   "at": 21.43,
+   "layers": [
+    {
+     "type": "burst",
+     "colors": [
+      "#ff5da0",
+      "#ff8cc0"
+     ],
+     "cy": 200,
+     "speed": 60
+    },
+    {
+     "type": "img",
+     "src": "portrait:kurumi_angry",
+     "scale": 3,
+     "anchor": "b",
+     "x": 320,
+     "y": [
+      [
+       0,
+       400
+      ],
+      [
+       0.12,
+       372,
+       "out"
+      ]
+     ],
+     "silhouette": "#1a0820"
+    }
+   ]
+  },
+  {
+   "id": "white",
+   "at": 21.74,
+   "layers": [
+    {
+     "type": "fill",
+     "color": "#ffffff"
+    },
+    {
+     "type": "img",
+     "src": "px:pv_key_fg",
+     "scale": 2,
+     "silhouette": "#ff5da0",
+     "y": [
+      [
+       0,
+       186
+      ],
+      [
+       0.3,
+       180
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "logo",
+   "at": 22.06,
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:pv_key_bg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       320
+      ],
+      [
+       2.5,
+       324,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "particles",
+     "kind": "sparkle",
+     "n": 26,
+     "color": "#ffffff",
+     "ymax": 0.6,
+     "seed": 8
+    },
+    {
+     "type": "text",
+     "s": "FX战士久留美",
+     "scale": 6,
+     "y": 96,
+     "color": "#ff5da0",
+     "outline": "#1a0820",
+     "slam": [
+      10,
+      0.16
+     ],
+     "t": [
+      0.04,
+      null
+     ]
+    },
+    {
+     "type": "particles",
+     "kind": "coins_burst",
+     "n": 34,
+     "origin": [
+      320,
+      380
+     ],
+     "speed": [
+      320,
+      600
+     ],
+     "cone": 70,
+     "gravity": 520,
+     "spread_t": 0.3
+    },
+    {
+     "type": "img",
+     "src": "px:pv_key_fg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       320
+      ],
+      [
+       2.5,
+       316,
+       "linear"
+      ]
+     ],
+     "y": [
+      [
+       0,
+       214
+      ],
+      [
+       0.28,
+       180,
+       "back"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         286
+        ],
+        [
+         640,
+         270
+        ],
+        [
+         640,
+         318
+        ],
+        [
+         0,
+         334
+        ]
+       ],
+       "alpha": 0.9,
+       "color": "#0b0814"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         334
+        ],
+        [
+         640,
+         318
+        ],
+        [
+         640,
+         322
+        ],
+        [
+         0,
+         338
+        ]
+       ],
+       "color": "#ff5da0"
+      },
+      {
+       "type": "text",
+       "s": "同人 · 2000万之路",
+       "scale": 2,
+       "y": 296
+      },
+      {
+       "type": "text",
+       "s": "FX戦士くるみちゃん  Fan Game",
+       "y": 319,
+       "color": "#6ee6ff"
+      }
+     ],
+     "ox": [
+      [
+       0.25,
+       660
+      ],
+      [
+       0.45,
+       0,
+       "out"
+      ]
+     ],
+     "t": [
+      0.25,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.3
+     ]
+    ],
+    "shake": [
+     [
+      0,
+      0.35,
+      8
+     ]
+    ]
+   }
+  },
+  {
+   "id": "cut_kurumi",
+   "at": 24.57,
+   "in": {
+    "type": "slash",
+    "d": 0.2,
+    "color": "#ffffff"
+   },
+   "layers": [
+    {
+     "type": "stripes",
+     "colors": [
+      "#ff5da0",
+      "#ff74ae"
+     ],
+     "w": 14,
+     "speed": 140
+    },
+    {
+     "type": "speedlines",
+     "color": "#ffffff",
+     "n": 28,
+     "speed": 1100,
+     "seed": 9
+    },
+    {
+     "type": "fill",
+     "poly": [
+      [
+       0,
+       64
+      ],
+      [
+       372,
+       64
+      ],
+      [
+       300,
+       292
+      ],
+      [
+       0,
+       292
+      ]
+     ],
+     "ox": [
+      [
+       0,
+       -400
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ],
+     "color": "#1a0820"
+    },
+    {
+     "type": "fill",
+     "poly": [
+      [
+       0,
+       292
+      ],
+      [
+       300,
+       292
+      ],
+      [
+       297,
+       300
+      ],
+      [
+       0,
+       300
+      ]
+     ],
+     "ox": [
+      [
+       0.05,
+       -400
+      ],
+      [
+       0.25,
+       0,
+       "out"
+      ]
+     ],
+     "color": "#6ee6ff"
+    },
+    {
+     "type": "img",
+     "src": "portrait:kurumi_happy",
+     "scale": 3,
+     "anchor": "b",
+     "x": [
+      [
+       0,
+       780
+      ],
+      [
+       0.22,
+       468,
+       "out"
+      ],
+      [
+       2.48,
+       460,
+       "linear"
+      ]
+     ],
+     "y": 376,
+     "ghost": [
+      3,
+      0.035
+     ]
+    },
+    {
+     "type": "text",
+     "s": "福賀 久留美",
+     "scale": 4,
+     "x": 24,
+     "y": 112,
+     "align": "l",
+     "ox": [
+      [
+       0.1,
+       -380
+      ],
+      [
+       0.3,
+       0,
+       "out"
+      ]
+     ],
+     "t": [
+      0.1,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "FUKUGA KURUMI",
+     "x": 28,
+     "y": 150,
+     "align": "l",
+     "color": "#6ee6ff",
+     "outline": null,
+     "t": [
+      0.3,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "大学生 · 20岁",
+     "x": 28,
+     "y": 190,
+     "align": "l",
+     "color": "#ffd76e",
+     "t": [
+      0.45,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "勤奋好学，擅长冷静分析——",
+     "x": 28,
+     "y": 216,
+     "align": "l",
+     "t": [
+      0.6,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "但图表一乱，就会暴走。",
+     "x": 28,
+     "y": 236,
+     "align": "l",
+     "color": "#ff9cc6",
+     "t": [
+      0.75,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "f01_market",
+   "at": 27.05,
+   "in": {
+    "type": "diamond",
+    "d": 0.3
+   },
+   "layers": [
+    {
+     "type": "grid",
+     "speed": 30
+    },
+    {
+     "type": "clip",
+     "clip": "trade",
+     "from": 208,
+     "speed": 1.5,
+     "crop": [
+      0,
+      14,
+      430,
+      276
+     ],
+     "anchor": "tl",
+     "x": 200,
+     "y": 62,
+     "poly": [
+      [
+       200,
+       62
+      ],
+      [
+       630,
+       62
+      ],
+      [
+       630,
+       338
+      ],
+      [
+       200,
+       338
+      ]
+     ],
+     "border": "#ff5da0",
+     "ox": [
+      [
+       0,
+       460
+      ],
+      [
+       0.25,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         12
+        ],
+        [
+         236,
+         12
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         0,
+         46
+        ]
+       ],
+       "color": "#ff5da0"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         46
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         214,
+         58
+        ],
+        [
+         0,
+         58
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "01",
+       "scale": 2,
+       "x": 10,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "行情",
+       "scale": 2,
+       "x": 52,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "MARKET",
+       "x": 130,
+       "y": 30,
+       "align": "l",
+       "color": "#1a0820",
+       "outline": null
+      }
+     ],
+     "t": [
+      0.0,
+      null
+     ],
+     "ox": [
+      [
+       0.0,
+       -280
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "多因子算法\n实时生成行情",
+     "scale": 2,
+     "x": 12,
+     "y": 110,
+     "align": "l",
+     "t": [
+      0.15,
+      null
+     ],
+     "ox": [
+      [
+       0.15,
+       -200
+      ],
+      [
+       0.3,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ff5da0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "最高 888 倍杠杆",
+     "scale": 2,
+     "x": 12,
+     "y": 178,
+     "align": "l",
+     "t": [
+      0.77,
+      null
+     ],
+     "ox": [
+      [
+       0.77,
+       -200
+      ],
+      [
+       0.92,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ff5da0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "拖动 SL/TP 线\n直接改单",
+     "scale": 2,
+     "x": 12,
+     "y": 240,
+     "align": "l",
+     "t": [
+      1.4,
+      null
+     ],
+     "ox": [
+      [
+       1.4,
+       -200
+      ],
+      [
+       1.5499999999999998,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ff5da0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    }
+   ]
+  },
+  {
+   "id": "f02_news",
+   "at": 29.54,
+   "in": {
+    "type": "slash",
+    "d": 0.2,
+    "color": "#6ee6ff"
+   },
+   "layers": [
+    {
+     "type": "grid",
+     "speed": -30,
+     "tint": "#0040a0"
+    },
+    {
+     "type": "clip",
+     "clip": "trade",
+     "from": 420,
+     "speed": 1.2,
+     "crop": [
+      0,
+      14,
+      430,
+      276
+     ],
+     "anchor": "tl",
+     "x": 10,
+     "y": 62,
+     "poly": [
+      [
+       10,
+       62
+      ],
+      [
+       440,
+       62
+      ],
+      [
+       440,
+       338
+      ],
+      [
+       10,
+       338
+      ]
+     ],
+     "border": "#6ee6ff",
+     "ox": [
+      [
+       0,
+       -460
+      ],
+      [
+       0.25,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         12
+        ],
+        [
+         236,
+         12
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         0,
+         46
+        ]
+       ],
+       "color": "#6ee6ff"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         46
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         214,
+         58
+        ],
+        [
+         0,
+         58
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "02",
+       "scale": 2,
+       "x": 10,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "事件",
+       "scale": 2,
+       "x": 52,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "NEWS",
+       "x": 130,
+       "y": 30,
+       "align": "l",
+       "color": "#1a0820",
+       "outline": null
+      }
+     ],
+     "t": [
+      0.0,
+      null
+     ],
+     "ox": [
+      [
+       0.0,
+       -280
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "新闻速报",
+     "scale": 2,
+     "x": 628,
+     "y": 92,
+     "align": "r",
+     "t": [
+      0.15,
+      null
+     ],
+     "ox": [
+      [
+       0.15,
+       200
+      ],
+      [
+       0.3,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#6ee6ff",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "经济指标",
+     "scale": 2,
+     "x": 628,
+     "y": 136,
+     "align": "r",
+     "t": [
+      0.55,
+      null
+     ],
+     "ox": [
+      [
+       0.55,
+       200
+      ],
+      [
+       0.7000000000000001,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ffd76e",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "央行决议",
+     "scale": 2,
+     "x": 628,
+     "y": 180,
+     "align": "r",
+     "t": [
+      0.95,
+      null
+     ],
+     "ox": [
+      [
+       0.95,
+       200
+      ],
+      [
+       1.0999999999999999,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ff5da0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "谣言",
+     "scale": 2,
+     "x": 628,
+     "y": 224,
+     "align": "r",
+     "t": [
+      1.35,
+      null
+     ],
+     "ox": [
+      [
+       1.35,
+       200
+      ],
+      [
+       1.5,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#b48cff",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "散户情绪",
+     "scale": 2,
+     "x": 628,
+     "y": 268,
+     "align": "r",
+     "t": [
+      1.75,
+      null
+     ],
+     "ox": [
+      [
+       1.75,
+       200
+      ],
+      [
+       1.9,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#7cffa0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "text",
+     "s": "都会推动价格",
+     "x": 628,
+     "y": 320,
+     "align": "r",
+     "color": "#6ee6ff",
+     "t": [
+      2.0,
+      null
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f03_story",
+   "at": 32.02,
+   "in": {
+    "type": "pixelate",
+    "d": 0.3
+   },
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "dialogue",
+     "from": 292,
+     "speed": 1.0
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         12
+        ],
+        [
+         236,
+         12
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         0,
+         46
+        ]
+       ],
+       "color": "#ffd76e"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         46
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         214,
+         58
+        ],
+        [
+         0,
+         58
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "03",
+       "scale": 2,
+       "x": 10,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "剧情",
+       "scale": 2,
+       "x": 52,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "STORY",
+       "x": 130,
+       "y": 30,
+       "align": "l",
+       "color": "#1a0820",
+       "outline": null
+      }
+     ],
+     "t": [
+      0.0,
+      null
+     ],
+     "ox": [
+      [
+       0.0,
+       -280
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "跟着漫画逐卷改编 · 全 15 章",
+     "x": 628,
+     "y": 66,
+     "align": "r",
+     "t": [
+      0.3,
+      null
+     ],
+     "ox": [
+      [
+       0.3,
+       300
+      ],
+      [
+       0.5,
+       0,
+       "out"
+      ]
+     ],
+     "box": {
+      "bar": "#ffd76e",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    }
+   ]
+  },
+  {
+   "id": "friends",
+   "at": 34.5,
+   "layers": [
+    {
+     "type": "fill",
+     "color": "#0b0814"
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "grad": [
+        "#1c1030",
+        "#6a4aa0"
+       ]
+      },
+      {
+       "type": "speedlines",
+       "color": "#b48cff",
+       "n": 14,
+       "speed": 300,
+       "seed": 110,
+       "alpha": 0.5
+      },
+      {
+       "type": "img",
+       "src": "portrait:mochiko_smile",
+       "scale": 2,
+       "anchor": "b",
+       "x": 110,
+       "y": [
+        [
+         0.0,
+         352
+        ],
+        [
+         2.5,
+         346
+        ]
+       ]
+      },
+      {
+       "type": "text",
+       "s": "萌智子",
+       "scale": 3,
+       "x": 12,
+       "y": 34,
+       "align": "l",
+       "t": [
+        0.08,
+        null
+       ]
+      },
+      {
+       "type": "text",
+       "s": "同校的投资朋友",
+       "x": 8,
+       "y": 300,
+       "align": "l",
+       "t": [
+        0.15,
+        null
+       ],
+       "box": {
+        "bar": "#b48cff",
+        "pad": 4
+       }
+      },
+      {
+       "type": "text",
+       "s": "总资产 1000万円以上",
+       "x": 8,
+       "y": 322,
+       "align": "l",
+       "t": [
+        0.2,
+        null
+       ],
+       "box": {
+        "bar": "#b48cff",
+        "pad": 4
+       }
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       236,
+       0
+      ],
+      [
+       196,
+       360
+      ],
+      [
+       0,
+       360
+      ]
+     ],
+     "border": "#ffffff",
+     "t": [
+      0.0,
+      null
+     ],
+     "oy": [
+      [
+       0.0,
+       -370
+      ],
+      [
+       0.16,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "grad": [
+        "#2a2008",
+        "#a08030"
+       ]
+      },
+      {
+       "type": "speedlines",
+       "color": "#ffd76e",
+       "n": 14,
+       "speed": 300,
+       "seed": 320,
+       "alpha": 0.5
+      },
+      {
+       "type": "img",
+       "src": "portrait:mebuki_happy",
+       "scale": 2,
+       "anchor": "b",
+       "x": 320,
+       "y": [
+        [
+         0.62,
+         352
+        ],
+        [
+         3.12,
+         346
+        ]
+       ]
+      },
+      {
+       "type": "text",
+       "s": "芽吹",
+       "scale": 3,
+       "x": 252,
+       "y": 34,
+       "align": "l",
+       "t": [
+        0.7,
+        null
+       ]
+      },
+      {
+       "type": "text",
+       "s": "憧憬萌智子而开始 FX",
+       "x": 218,
+       "y": 300,
+       "align": "l",
+       "t": [
+        0.77,
+        null
+       ],
+       "box": {
+        "bar": "#ffd76e",
+        "pad": 4
+       }
+      },
+      {
+       "type": "text",
+       "s": "开朗随性，乐观过头",
+       "x": 216,
+       "y": 322,
+       "align": "l",
+       "t": [
+        0.8200000000000001,
+        null
+       ],
+       "box": {
+        "bar": "#ffd76e",
+        "pad": 4
+       }
+      }
+     ],
+     "poly": [
+      [
+       244,
+       0
+      ],
+      [
+       436,
+       0
+      ],
+      [
+       396,
+       360
+      ],
+      [
+       204,
+       360
+      ]
+     ],
+     "border": "#ffffff",
+     "t": [
+      0.62,
+      null
+     ],
+     "oy": [
+      [
+       0.62,
+       370
+      ],
+      [
+       0.78,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "grad": [
+        "#2a0814",
+        "#a03048"
+       ]
+      },
+      {
+       "type": "speedlines",
+       "color": "#ff5d73",
+       "n": 14,
+       "speed": 300,
+       "seed": 528,
+       "alpha": 0.5
+      },
+      {
+       "type": "img",
+       "src": "portrait:yasuko_happy",
+       "scale": 2,
+       "anchor": "b",
+       "x": 528,
+       "y": [
+        [
+         1.25,
+         352
+        ],
+        [
+         3.75,
+         346
+        ]
+       ]
+      },
+      {
+       "type": "text",
+       "s": "やす子",
+       "scale": 3,
+       "x": 452,
+       "y": 34,
+       "align": "l",
+       "t": [
+        1.33,
+        null
+       ]
+      },
+      {
+       "type": "text",
+       "s": "投资博主「あふぃちゃん」",
+       "x": 418,
+       "y": 300,
+       "align": "l",
+       "t": [
+        1.4,
+        null
+       ],
+       "box": {
+        "bar": "#ff5d73",
+        "pad": 4
+       }
+      },
+      {
+       "type": "text",
+       "s": "嘴毒，但很会照顾人",
+       "x": 416,
+       "y": 322,
+       "align": "l",
+       "t": [
+        1.45,
+        null
+       ],
+       "box": {
+        "bar": "#ff5d73",
+        "pad": 4
+       }
+      }
+     ],
+     "poly": [
+      [
+       444,
+       0
+      ],
+      [
+       640,
+       0
+      ],
+      [
+       640,
+       360
+      ],
+      [
+       404,
+       360
+      ]
+     ],
+     "border": "#ffffff",
+     "t": [
+      1.25,
+      null
+     ],
+     "oy": [
+      [
+       1.25,
+       -370
+      ],
+      [
+       1.41,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         240
+        ],
+        [
+         640,
+         232
+        ],
+        [
+         640,
+         276
+        ],
+        [
+         0,
+         284
+        ]
+       ],
+       "alpha": 0.95,
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "仲间 —— 加入你的构筑",
+       "scale": 2,
+       "y": 258
+      }
+     ],
+     "t": [
+      1.87,
+      null
+     ],
+     "ox": [
+      [
+       1.87,
+       -640
+      ],
+      [
+       2.02,
+       0,
+       "out"
+      ]
+     ]
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.08
+     ],
+     [
+      0.62,
+      0.08
+     ],
+     [
+      1.25,
+      0.08
+     ],
+     [
+      1.87,
+      0.1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "f04_rogue",
+   "at": 37.01,
+   "in": {
+    "type": "diamond",
+    "d": 0.3
+   },
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "map",
+     "from": 40,
+     "speed": 1.0
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         12
+        ],
+        [
+         236,
+         12
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         0,
+         46
+        ]
+       ],
+       "color": "#ff9c5d"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         46
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         214,
+         58
+        ],
+        [
+         0,
+         58
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "04",
+       "scale": 2,
+       "x": 10,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "肉鸽",
+       "scale": 2,
+       "x": 52,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "ROGUELIKE",
+       "x": 130,
+       "y": 30,
+       "align": "l",
+       "color": "#1a0820",
+       "outline": null
+      }
+     ],
+     "t": [
+      0.0,
+      null
+     ],
+     "ox": [
+      [
+       0.0,
+       -280
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "3 幕 · 分叉地图 · 精英与 Boss",
+     "x": 12,
+     "y": 338,
+     "align": "l",
+     "t": [
+      0.2,
+      null
+     ],
+     "box": {
+      "bar": "#ff9c5d",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "stripes",
+       "colors": [
+        "#140c22",
+        "#1a1030"
+       ],
+       "w": 10,
+       "speed": 30
+      },
+      {
+       "type": "icons",
+       "icons": [
+        "rocket",
+        "crystal_ball",
+        "bollinger",
+        "rsi_gauge",
+        "omamori",
+        "fortune_slip",
+        "black_card",
+        "handcuffs_money",
+        "energy_drink",
+        "headset",
+        "monitors",
+        "piggy_bank",
+        "dice",
+        "shield",
+        "white_cat",
+        "hourglass"
+       ],
+       "cols": 4,
+       "scale": 2,
+       "cell": 70,
+       "x": 468,
+       "y": 158,
+       "stagger": 0.045,
+       "t": [
+        1.3,
+        null
+       ]
+      },
+      {
+       "type": "text",
+       "s": "手法 · 道具 · 诅咒 · 仲间 · FX业者",
+       "x": 462,
+       "y": 316,
+       "t": [
+        1.6,
+        null
+       ]
+      }
+     ],
+     "poly": [
+      [
+       300,
+       0
+      ],
+      [
+       640,
+       0
+      ],
+      [
+       640,
+       360
+      ],
+      [
+       260,
+       360
+      ]
+     ],
+     "border": "#ffd76e",
+     "t": [
+      1.245,
+      null
+     ],
+     "ox": [
+      [
+       1.245,
+       400
+      ],
+      [
+       1.4,
+       0,
+       "out"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f05_meta",
+   "at": 39.5,
+   "in": {
+    "type": "pixelate",
+    "d": 0.25
+   },
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "meta",
+     "from": 60,
+     "speed": 1.0
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         12
+        ],
+        [
+         236,
+         12
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         0,
+         46
+        ]
+       ],
+       "color": "#7cffa0"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         46
+        ],
+        [
+         220,
+         46
+        ],
+        [
+         214,
+         58
+        ],
+        [
+         0,
+         58
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "05",
+       "scale": 2,
+       "x": 10,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "养成",
+       "scale": 2,
+       "x": 52,
+       "y": 29,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "META",
+       "x": 130,
+       "y": 30,
+       "align": "l",
+       "color": "#1a0820",
+       "outline": null
+      }
+     ],
+     "t": [
+      0.0,
+      null
+     ],
+     "ox": [
+      [
+       0.0,
+       -280
+      ],
+      [
+       0.2,
+       0,
+       "out"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "局外养成「相場勘」 · 无尽模式 · 挑战度 1~10",
+     "y": 342,
+     "t": [
+      0.2,
+      null
+     ],
+     "box": {
+      "bar": "#7cffa0",
+      "pad": 6,
+      "alpha": 0.95
+     }
+    },
+    {
+     "type": "img",
+     "src": "chibi:kurumi_chibi",
+     "scale": 2,
+     "anchor": "b",
+     "t": [
+      0.3,
+      null
+     ],
+     "x": [
+      [
+       0,
+       700
+      ],
+      [
+       0.3,
+       572,
+       "out"
+      ]
+     ],
+     "y": [
+      [
+       0,
+       350
+      ],
+      [
+       0.155625,
+       340,
+       "out"
+      ],
+      [
+       0.46687500000000004,
+       350,
+       "in"
+      ],
+      [
+       0.7781250000000001,
+       340,
+       "out"
+      ],
+      [
+       1.089375,
+       350,
+       "in"
+      ],
+      [
+       1.4006250000000002,
+       340,
+       "out"
+      ],
+      [
+       1.711875,
+       350,
+       "in"
+      ],
+      [
+       2.0231250000000003,
+       340,
+       "out"
+      ],
+      [
+       2.334375,
+       350,
+       "in"
+      ],
+      [
+       2.6456250000000003,
+       340,
+       "out"
+      ],
+      [
+       2.9568750000000006,
+       350,
+       "in"
+      ]
+     ]
+    }
+   ],
+   "fx": {
+    "glitch": [
+     [
+      2.2,
+      2.48,
+      0.6
+     ]
+    ],
+    "fade_out": 0.12
+   }
+  },
+  {
+   "id": "date_2015",
+   "at": 41.98,
+   "layers": [
+    {
+     "type": "text",
+     "s": "2015.01.15  18:30",
+     "scale": 4,
+     "y": 160,
+     "typewriter": true,
+     "cps": 18,
+     "t": [
+      0.1,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "EUR/CHF",
+     "scale": 2,
+     "color": "#ff5d73",
+     "y": 212,
+     "t": [
+      0.8,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "glitch": [
+     [
+      0.8,
+      0.95,
+      0.6
+     ],
+     [
+      1.4,
+      1.5,
+      0.5
+     ],
+     [
+      2.2,
+      2.49,
+      0.8
+     ]
+    ]
+   }
+  },
+  {
+   "id": "snb_calm",
+   "at": 44.47,
+   "in": {
+    "type": "dither",
+    "d": 0.3
+   },
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "snb",
+     "from": 200,
+     "speed": 1.0
+    },
+    {
+     "type": "vignette",
+     "strength": 0.55,
+     "color": "#30000c"
+    },
+    {
+     "type": "letterbox",
+     "h": 34
+    },
+    {
+     "type": "text",
+     "s": "三年未破的 1.20 下限——人人都说「绝对安全」。",
+     "y": 342,
+     "t": [
+      0.1,
+      null
+     ],
+     "fi": 0.15
+    }
+   ]
+  },
+  {
+   "id": "snb_tv",
+   "at": 47.4,
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "snb",
+     "from": 300,
+     "speed": 0.5,
+     "punch": [
+      [
+       0,
+       320,
+       180,
+       1
+      ],
+      [
+       0.8,
+       278,
+       178,
+       2
+      ],
+      [
+       1.43,
+       255,
+       178,
+       3
+      ]
+     ]
+    },
+    {
+     "type": "letterbox",
+     "h": 34
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0.8,
+      0.12,
+      "#ff3050"
+     ],
+     [
+      1.43,
+      0.12,
+      "#ff3050"
+     ]
+    ],
+    "shake": [
+     [
+      0.8,
+      0.95,
+      3
+     ],
+     [
+      1.43,
+      1.6,
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "id": "impact",
+   "at": 49.44,
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "snb",
+     "from": 374,
+     "speed": 0.0
+    }
+   ],
+   "fx": {
+    "impact": [
+     [
+      0,
+      1,
+      "neg"
+     ]
+    ],
+    "shake": [
+     [
+      0,
+      0.17,
+      10
+     ]
+    ]
+   }
+  },
+  {
+   "id": "snb_crash",
+   "at": 49.61,
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "snb",
+     "from": 374,
+     "speed": 0.12
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.25,
+      "#ff2040"
+     ]
+    ],
+    "shake": [
+     [
+      0,
+      1.1,
+      7
+     ]
+    ],
+    "glitch": [
+     [
+      0,
+      0.3,
+      1.0
+     ],
+     [
+      1.2,
+      1.32,
+      0.6
+     ]
+    ]
+   }
+  },
+  {
+   "id": "snb_stopout",
+   "at": 51.32,
+   "layers": [
+    {
+     "type": "clip",
+     "clip": "snb",
+     "from": 389,
+     "speed": 0.4,
+     "punch": [
+      [
+       0,
+       320,
+       180,
+       1
+      ],
+      [
+       0.3,
+       228,
+       199,
+       2
+      ]
+     ]
+    }
+   ],
+   "fx": {
+    "shake": [
+     [
+      0.3,
+      0.6,
+      6
+     ]
+    ],
+    "flash": [
+     [
+      0.3,
+      0.1,
+      "#ff3050"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "shock",
+   "at": 52.55,
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:cg_shock",
+     "scale": 2
+    },
+    {
+     "type": "focus",
+     "color": "#ff2040",
+     "cx": 470,
+     "cy": 120,
+     "r": 150,
+     "n": 50,
+     "alpha": 0.8
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         252
+        ],
+        [
+         640,
+         236
+        ],
+        [
+         640,
+         300
+        ],
+        [
+         0,
+         316
+        ]
+       ],
+       "alpha": 0.9,
+       "color": "#000000"
+      },
+      {
+       "type": "text",
+       "s": "不足金",
+       "scale": 2,
+       "x": 60,
+       "y": 278,
+       "align": "l"
+      },
+      {
+       "type": "text",
+       "s": "1.22亿円",
+       "scale": 4,
+       "x": 150,
+       "y": 276,
+       "align": "l",
+       "color": "#ff3050",
+       "outline": "#1a0820",
+       "slam": [
+        7,
+        0.12
+       ],
+       "t": [
+        0.18,
+        null
+       ]
+      }
+     ],
+     "ox": [
+      [
+       0.1,
+       -640
+      ],
+      [
+       0.22,
+       0,
+       "out"
+      ]
+     ],
+     "t": [
+      0.1,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.2,
+      "#ff2040"
+     ]
+    ],
+    "glitch": [
+     [
+      0,
+      0.2,
+      0.9
+     ],
+     [
+      1.6,
+      1.88,
+      0.7
+     ]
+    ]
+   }
+  },
+  {
+   "id": "aftermath",
+   "at": 54.43,
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:cg_shock",
+     "scale": 2,
+     "grade": "mono+dark"
+    },
+    {
+     "type": "vignette",
+     "strength": 0.9
+    },
+    {
+     "type": "text",
+     "s": "超过 1亿円 的负债。",
+     "y": 300,
+     "t": [
+      0.4,
+      2.2
+     ],
+     "fi": 0.3,
+     "fo": 0.3
+    }
+   ],
+   "fx": {
+    "fade_out": 0.6
+   }
+  },
+  {
+   "id": "this_time",
+   "at": 56.91,
+   "layers": [
+    {
+     "type": "text",
+     "s": "这一次——",
+     "scale": 3,
+     "y": 180,
+     "typewriter": true,
+     "cps": 8,
+     "t": [
+      0.3,
+      null
+     ]
+    }
+   ]
+  },
+  {
+   "id": "your_turn",
+   "at": 59.4,
+   "in": {
+    "type": "iris",
+    "d": 0.45,
+    "center": [
+     330,
+     150
+    ]
+   },
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:pv_key_bg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       318
+      ],
+      [
+       2.5,
+       322,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "particles",
+     "kind": "sparkle",
+     "n": 20,
+     "color": "#ffffff",
+     "ymax": 0.6,
+     "seed": 18
+    },
+    {
+     "type": "img",
+     "src": "px:pv_key_fg",
+     "scale": 2,
+     "x": [
+      [
+       0,
+       324
+      ],
+      [
+       2.5,
+       316,
+       "linear"
+      ]
+     ]
+    },
+    {
+     "type": "group",
+     "layers": [
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         262
+        ],
+        [
+         640,
+         246
+        ],
+        [
+         640,
+         302
+        ],
+        [
+         0,
+         318
+        ]
+       ],
+       "color": "#ff5da0"
+      },
+      {
+       "type": "fill",
+       "poly": [
+        [
+         0,
+         318
+        ],
+        [
+         640,
+         302
+        ],
+        [
+         640,
+         308
+        ],
+        [
+         0,
+         324
+        ]
+       ],
+       "color": "#0b0814"
+      },
+      {
+       "type": "text",
+       "s": "轮到你来交易。",
+       "scale": 3,
+       "y": 282,
+       "outline": "#1a0820",
+       "slam": [
+        5,
+        0.1
+       ],
+       "t": [
+        0.55,
+        null
+       ]
+      }
+     ],
+     "ox": [
+      [
+       0.45,
+       660
+      ],
+      [
+       0.62,
+       0,
+       "out"
+      ]
+     ],
+     "t": [
+      0.45,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "shake": [
+     [
+      0.55,
+      0.75,
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "id": "counter",
+   "at": 61.9,
+   "layers": [
+    {
+     "type": "img",
+     "src": "px:cg_win",
+     "scale": 2
+    },
+    {
+     "type": "particles",
+     "kind": "coins_fall",
+     "n": 26,
+     "speed": [
+      70,
+      150
+     ],
+     "seed": 41
+    },
+    {
+     "type": "fill",
+     "poly": [
+      [
+       0,
+       252
+      ],
+      [
+       640,
+       252
+      ],
+      [
+       640,
+       336
+      ],
+      [
+       0,
+       336
+      ]
+     ],
+     "alpha": 0.8,
+     "color": "#0b0814"
+    },
+    {
+     "type": "text",
+     "s": "目标",
+     "scale": 2,
+     "y": 268,
+     "color": "#ffd76e",
+     "t": [
+      0.1,
+      null
+     ]
+    },
+    {
+     "type": "counter",
+     "from": 300000,
+     "to": 20000000,
+     "fmt": "{:,.0f}円",
+     "t_in": 0.2,
+     "out_at": 2.49,
+     "scale": 4,
+     "y": 306
+    }
+   ],
+   "fx": {
+    "flash": [
+     [
+      0,
+      0.3
+     ],
+     [
+      2.49,
+      0.35,
+      "#ffe08a"
+     ]
+    ],
+    "shake": [
+     [
+      2.49,
+      2.7,
+      5
+     ]
+    ]
+   }
+  },
+  {
+   "id": "end",
+   "at": 65.9,
+   "d": 5.5,
+   "in": {
+    "type": "dither",
+    "d": 0.4
+   },
+   "layers": [
+    {
+     "type": "img",
+     "src": "bg:bg_city_night",
+     "scale": 2,
+     "grade": "dark"
+    },
+    {
+     "type": "vignette",
+     "strength": 0.8
+    },
+    {
+     "type": "text",
+     "s": "FX战士久留美",
+     "scale": 5,
+     "y": 54,
+     "color": "#ff5da0",
+     "outline": "#1a0820"
+    },
+    {
+     "type": "text",
+     "s": "同人 · 2000万之路",
+     "scale": 2,
+     "y": 104,
+     "t": [
+      0.2,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "剧情模式 · 肉鸽模式 · 经典战役 · 图鉴",
+     "y": 134,
+     "color": "#6ee6ff",
+     "t": [
+      0.5,
+      null
+     ]
+    },
+    {
+     "type": "img",
+     "src": "chibi:kurumi_chibi",
+     "scale": 2,
+     "anchor": "b",
+     "t": [
+      0.3,
+      null
+     ],
+     "x": [
+      [
+       0,
+       320
+      ],
+      [
+       0.01,
+       320,
+       "out"
+      ]
+     ],
+     "y": [
+      [
+       0,
+       246
+      ],
+      [
+       0.155625,
+       236,
+       "out"
+      ],
+      [
+       0.46687500000000004,
+       246,
+       "in"
+      ],
+      [
+       0.7781250000000001,
+       236,
+       "out"
+      ],
+      [
+       1.089375,
+       246,
+       "in"
+      ],
+      [
+       1.4006250000000002,
+       236,
+       "out"
+      ],
+      [
+       1.711875,
+       246,
+       "in"
+      ],
+      [
+       2.0231250000000003,
+       236,
+       "out"
+      ],
+      [
+       2.334375,
+       246,
+       "in"
+      ],
+      [
+       2.6456250000000003,
+       236,
+       "out"
+      ],
+      [
+       2.9568750000000006,
+       246,
+       "in"
+      ],
+      [
+       3.2681250000000004,
+       236,
+       "out"
+      ],
+      [
+       3.579375,
+       246,
+       "in"
+      ],
+      [
+       3.8906250000000004,
+       236,
+       "out"
+      ],
+      [
+       4.201875,
+       246,
+       "in"
+      ],
+      [
+       4.513125,
+       236,
+       "out"
+      ],
+      [
+       4.824375,
+       246,
+       "in"
+      ]
+     ]
+    },
+    {
+     "type": "text",
+     "s": "开发中 · Godot 4.7",
+     "y": 264,
+     "color": "#a89cc8",
+     "t": [
+      0.6,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "非官方同人游戏　原作《FX戦士くるみちゃん》でむにゃん / 炭酸だいすき（KADOKAWA）",
+     "y": 284,
+     "color": "#d8cff0",
+     "t": [
+      0.8,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "画面为实机录制，行情由算法生成；第1、11章为参照真实事件的示意走势。",
+     "y": 299,
+     "color": "#a89cc8",
+     "t": [
+      0.8,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "投资有风险，本作不构成任何投资建议。",
+     "y": 314,
+     "color": "#a89cc8",
+     "t": [
+      0.8,
+      null
+     ]
+    },
+    {
+     "type": "text",
+     "s": "插画：Anima + 角色 LoRA（AI 生成）　音乐：YuE2（AI 生成）　字体：Fusion Pixel Font（OFL）",
+     "y": 329,
+     "color": "#a89cc8",
+     "t": [
+      0.8,
+      null
+     ]
+    }
+   ],
+   "fx": {
+    "fade_out": 0.8
+   }
+  }
  ]
 }
