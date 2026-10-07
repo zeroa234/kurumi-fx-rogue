@@ -221,7 +221,7 @@ TradeScreen(界面) ──持有── TradeSession
 | `tutorial_driver.tscn [-- --chapter=chNN]` | 是 | 按每一步 until 模拟玩家操作，检查教学/剧情步骤能否走完（默认只跑教程章节） |
 | `autoplay_check.tscn` | 是 | 真实时间、不按速度键，确认自动播放段（ch01/ch04/ch11/ch12）不会被自动暂停卡住 |
 | `touch_check.tscn [-- --shots=<绝对目录>]` | 是 | 注入 `InputEventScreenTouch`：对话框轻点只前进一句、长按快进、「跳过」；长按看说明且不触发按钮；返回键开关剧情菜单/交易暂停菜单。`--shots` 顺便存三张截图 |
-| `result_check.tscn [-- --shots=<绝对目录>]` | 是 | 肉鸽结算画面 5 种结局的弹窗与按钮都在 640×360 内；相場勘防刷规则（0 节点 / 0 交易得 0 点、作废节点不计数）（会写存档，结束时还原本机存档文件） |
+| `result_check.tscn [-- --shots=<绝对目录>]` | 是 | 肉鸽结算画面 5 种结局的弹窗与按钮都在 640×360 内、小立绘保持 64×64；交易节点满仓被强平后的「交易结束」弹窗不出屏；相場勘防刷规则（0 节点 / 0 交易得 0 点、作废节点不计数）（会写存档，结束时还原本机存档文件） |
 | `bgm_check.tscn` | 否 | BGM：每个曲目 id 都能找到并加载成循环 OGG、章节引用的 id 都在 `tracks.json`、play/overlay/clear/stop 状态切换 |
 
 全部跑一遍（约 5 分钟）：
