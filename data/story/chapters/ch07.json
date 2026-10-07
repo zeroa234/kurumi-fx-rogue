@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_daily",
    "text": "第7章",
    "sub": "复归的战士",
    "bg": "bg_campus",
@@ -67,7 +67,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "trade_main",
    "config": {
     "seed": 20140901,
     "start_date": "2014-09-01",
@@ -212,7 +212,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_daily",
    "bg": "bg_room_day",
    "lines": [
     {

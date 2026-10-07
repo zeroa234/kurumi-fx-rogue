@@ -11,7 +11,7 @@
   "requires": ["ch05"],
   "unlock_on_clear": ["roguelike", "friend_mochiko", "friend_mebuki"],
   "scenes": [
-    {"type": "title_card", "text": "第6章", "sub": "萌智子与芽吹", "hold": 1.4},
+    {"type": "title_card", "bgm": "story_daily", "text": "第6章", "sub": "萌智子与芽吹", "hold": 1.4},
     {"type": "dialogue", "bg": "bg_campus", "lines": [
       {"who": "mochiko", "face": "normal", "text": "福賀久留美同学？听说你在做FX。"},
       {"who": "kurumi", "face": "worried", "text": "……已经不做了。"},
@@ -24,7 +24,7 @@
       {"who": "kurumi", "face": "shock", "text": "动机也太直白了吧！？"},
       {"who": "mebuki", "face": "normal", "text": "久留美学姐是投资的前辈吧？教教我嘛～"}
     ]},
-    {"type": "trade",
+    {"type": "trade", "bgm": "trade_tutorial",
      "config": {
        "seed": 20140613, "start_date": "2014-06-13", "days": 2, "warmup_days": 6, "balance": 200000,
        "broker": {"name": "芽吹的账户（海外FX）", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8},

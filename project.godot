@@ -23,6 +23,7 @@ DB="*res://src/core/db.gd"
 Save="*res://src/core/save.gd"
 UI="*res://src/ui/ui_theme.gd"
 Sfx="*res://src/ui/sfx.gd"
+Bgm="*res://src/ui/bgm.gd"
 Game="*res://src/core/game.gd"
 
 [display]

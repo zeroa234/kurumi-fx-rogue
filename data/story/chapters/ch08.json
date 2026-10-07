@@ -9,7 +9,7 @@
   "tutorial": false,
   "requires": ["ch07"],
   "scenes": [
-    {"type": "title_card", "text": "第8章", "sub": "四人的决斗", "bg": "bg_cafe", "hold": 1.4},
+    {"type": "title_card", "bgm": "story_daily", "text": "第8章", "sub": "四人的决斗", "bg": "bg_cafe", "hold": 1.4},
     {"type": "dialogue", "bg": "bg_cafe", "lines": [
       {"who": "mochiko", "face": "normal", "text": "那么，提议。四人各自用自己的账户，比一个月的损益率。"},
       {"who": "yasuko", "face": "angry", "text": "我有说不的权利吗。"},
@@ -19,7 +19,7 @@
       {"who": "narrator", "text": "FX投资竞赛，开始了。四个账户，四条曲线，一条暗流。"},
       {"who": "yasuko", "face": "normal", "text": "我早就受过市场的毒打……这次安全地小赚就退场，当个裁判。"}
     ]},
-    {"type": "trade",
+    {"type": "trade", "bgm": "trade_main",
      "config": {
        "seed": 20141006, "start_date": "2014-10-06", "days": 3, "warmup_days": 6, "balance": 5600000,
        "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},
@@ -60,7 +60,7 @@
        {"who": "kurumi", "face": "angry", "text": "……下次绝对翻过来。"},
        {"who": "note", "text": "提示：竞赛比的是损益率。仓位控制比方向更重要。"}
      ]},
-    {"type": "dialogue", "bg": "bg_campus", "lines": [
+    {"type": "dialogue", "bgm": "story_night", "bg": "bg_campus", "lines": [
       {"who": "mebuki", "face": "normal", "text": "久留美学姐，我决定了。我要一个人交易。这种一寸一寸磨的打法，不适合我。"},
       {"who": "kurumi", "face": "worried", "text": "……芽吹，稍微再观望一下，"},
       {"who": "mebuki", "face": "happy", "text": "观望就是输！看好了，我要一口气冲上去！"},

@@ -10,7 +10,7 @@
   "wip": true,
   "requires": ["ch14"],
   "scenes": [
-    {"type": "title_card", "text": "第15章", "sub": "新人的交易（连载中）", "bg": "bg_office", "hold": 1.6},
+    {"type": "title_card", "bgm": "story_office", "text": "第15章", "sub": "新人的交易（连载中）", "bg": "bg_office", "hold": 1.6},
     {"type": "dialogue", "bg": "bg_office", "lines": [
       {"who": "narrator", "name": "きずな", "text": "いなご酱，手机里有多余的1万円吧？那就足够开户了。"},
       {"who": "narrator", "name": "いなご", "text": "又来了……きずなさん这周已经劝了我四次了……"},
@@ -20,7 +20,7 @@
       {"who": "narrator", "name": "なな", "text": "别叫我ばなな……！"},
       {"who": "mochiko", "face": "normal", "text": "顺带一提——下周，法国大选。月森さん，据说要在『欧元』上动手。"}
     ]},
-    {"type": "trade",
+    {"type": "trade", "bgm": "trade_tutorial",
      "config": {
        "seed": 20170421, "start_date": "2017-04-21", "days": 2, "warmup_days": 4, "balance": 50000,
        "broker": {"name": "国内大手FX", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": false, "spread_mult": 1.0, "slip_mult": 1.0},

@@ -24,6 +24,11 @@ var controls := {}
 var finished := false
 var auto_close_on_finish := true
 var hold_for_objective := false
+## BGM（docs/bgm.md）：暴走或维持率低于告警线时临时覆盖 bgm_danger（"" = 关闭）；
+## 下限撤销（peg_broken）后基础曲换成 bgm_peg_break（"" = 不换），之后不再触发危机覆盖。
+var bgm_danger := "trade_danger"
+var bgm_peg_break := ""
+var _bgm_danger_on := false
 
 # 节点
 var _top_date: Label
@@ -406,7 +411,13 @@ func _connect() -> void:
 	session.kurumi.tilt_changed.connect(func(on): _portrait_frame.add_theme_stylebox_override("panel", UI.box(Color("2a0f1c") if on else Color("1d1530"), UI.UP if on else UI.PINK, 1, 1)))
 	session.account.opened.connect(func(_p): _tab_dirty = true; Sfx.play("open"); objective_event.emit("open", {"pos": _p}))
 	session.account.closed.connect(_on_pos_closed)
-	session.market.peg_broken.connect(func(_s): chart.shake(6.0); chart.flash(UI.UP))
+	session.market.peg_broken.connect(func(_s):
+		chart.shake(6.0)
+		chart.flash(UI.UP)
+		if bgm_peg_break != "":
+			bgm_danger = ""
+			_set_bgm_danger(false)
+			Bgm.play(bgm_peg_break, 0.3))
 	chart.sl_tp_dragged.connect(_on_line_dragged)
 	chart.price_clicked.connect(_on_price_picked)
 
@@ -497,6 +508,7 @@ func _on_script_signal(name_: String, e: Dictionary) -> void:
 
 func _on_finished(result: Dictionary) -> void:
 	finished = true
+	_set_bgm_danger(false)
 	_set_speed(0, true)
 	if auto_close_on_finish:
 		session.close_out()
@@ -527,6 +539,29 @@ func _on_price_picked(price: float) -> void:
 		tp_pips = roundf(d)
 	_refresh_order()
 
+# ================================================================ BGM
+
+## 进入：暴走，或维持率 < 告警线；退出：不暴走且（无持仓或维持率 > 告警线×1.2）——留回差免得来回切
+func _update_bgm_danger() -> void:
+	if bgm_danger == "":
+		return
+	var acc := session.account
+	var ml := acc.margin_level()
+	var warn := float(acc.broker.margin_call)
+	if session.kurumi.tilt or (ml != INF and ml < warn):
+		_set_bgm_danger(true)
+	elif ml == INF or ml > warn * 1.2:
+		_set_bgm_danger(false)
+
+func _set_bgm_danger(on: bool) -> void:
+	if on == _bgm_danger_on:
+		return
+	_bgm_danger_on = on
+	if on:
+		Bgm.overlay(bgm_danger, 0.6)
+	else:
+		Bgm.clear_overlay()
+
 # ================================================================ 输入
 
 func _process(delta: float) -> void:
@@ -547,6 +582,8 @@ func _process(delta: float) -> void:
 	if _ui_dirty:
 		_ui_dirty = false
 		_refresh_all()
+	if not finished:
+		_update_bgm_danger()
 	if finished or _modal_open or speed == 0:
 		return
 	_acc += delta * SPEEDS[speed]
@@ -1184,5 +1221,6 @@ func _on_impulse(kind: String) -> void:
 	Sfx.play("alarm")
 
 func _exit_tree() -> void:
+	_set_bgm_danger(false)
 	if session:
 		session.dispose()

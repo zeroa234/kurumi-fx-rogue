@@ -2,6 +2,7 @@ extends Control
 ## 调试沙盒：直接进入一段交易，所有情报能力全开。
 
 func _ready() -> void:
+	Bgm.play("trade_main")
 	var mods := Mods.new()
 	mods.set_layer("debug", {"ind_ma": 1, "ind_bb": 1, "ind_rsi": 1, "show_fair": 1, "show_clusters": 1, "show_sentiment": 1, "trailing": 1, "forecast_acc": 0.5})
 	var s := TradeSession.new({

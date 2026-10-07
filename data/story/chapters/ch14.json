@@ -9,7 +9,7 @@
   "tutorial": false,
   "requires": ["ch13"],
   "scenes": [
-    {"type": "title_card", "text": "第14章", "sub": "もちもち企画", "bg": "bg_office", "hold": 1.6},
+    {"type": "title_card", "bgm": "story_office", "text": "第14章", "sub": "もちもち企画", "bg": "bg_office", "hold": 1.6},
     {"type": "dialogue", "bg": "bg_office", "lines": [
       {"who": "narrator", "text": "2017年。「株式会社もちもち企画」——社长小金萌智子，创业中。"},
       {"who": "narrator", "text": "编制很小：总务是入社1年目的福賀久留美；漫画家高根やす子，连人带案头住在这里；创作者善波なな，やす子的大学好友、从家里蹲时代被拉出来的、爱称「ばなな」。"},

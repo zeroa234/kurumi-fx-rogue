@@ -13,7 +13,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_ominous",
    "text": "第11章",
    "sub": "2015年1月15日 18:30",
    "bg": "bg_room_day",
@@ -54,7 +54,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "story_ominous", "bgm_danger": "", "bgm_peg_break": "snb_shock",
    "config": {
     "seed": 20150112,
     "start_date": "2015-01-12",

@@ -9,7 +9,7 @@
   "tutorial": true,
   "requires": ["ch02"],
   "scenes": [
-    {"type": "title_card", "text": "2014年 2月", "sub": "久留美，二十岁", "hold": 1.6},
+    {"type": "title_card", "bgm": "story_daily", "text": "2014年 2月", "sub": "久留美，二十岁", "hold": 1.6},
     {"type": "dialogue", "bg": "bg_campus", "lines": [
       {"who": "narrator", "text": "2014年。久留美二十岁，是一名大学二年级的特待生。"},
       {"who": "kurumi", "face": "normal", "text": "打工攒下的钱，一共30万円。"},
@@ -17,7 +17,7 @@
       {"who": "kurumi", "face": "happy", "text": "所以我选了海外FX！超高杠杆，而且有「零cut」——就算亏了，也不会亏得比入金更多。"},
       {"who": "kurumi", "face": "smug", "text": "杠杆在手，没问题的♪"}
     ]},
-    {"type": "trade",
+    {"type": "trade", "bgm": "trade_tutorial",
      "config": {
        "seed": 20140203, "start_date": "2014-02-03", "days": 3, "warmup_days": 6, "balance": 300000,
        "broker": {"name": "海外FX", "leverage": 888.0, "stopout": 20.0, "margin_call": 50.0, "zero_cut": true, "spread_mult": 1.8, "slip_mult": 1.6},

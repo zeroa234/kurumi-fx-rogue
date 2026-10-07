@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_tragedy",
    "text": "第13章",
    "sub": "坦白与破产",
    "bg": "bg_room_night",
@@ -79,7 +79,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_family",
    "bg": "bg_living",
    "lines": [
     {
@@ -118,7 +118,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_hope",
    "bg": "bg_gov_office",
    "lines": [
     {

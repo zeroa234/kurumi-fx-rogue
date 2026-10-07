@@ -9,7 +9,7 @@
   "tutorial": true,
   "requires": ["ch04"],
   "scenes": [
-    {"type": "title_card", "text": "第5章", "sub": "父亲的眼泪", "hold": 1.4},
+    {"type": "title_card", "bgm": "story_family", "text": "第5章", "sub": "父亲的眼泪", "hold": 1.4},
     {"type": "dialogue", "bg": "bg_living", "lines": [
       {"who": "narrator", "text": "父亲·郁夫出差回来了。"},
       {"who": "narrator", "text": "他很快就发现，壁橱里的存款被人动过。"},
@@ -21,7 +21,7 @@
       {"who": "ikuo", "face": "normal", "text": "……我已经失去了你妈妈。我不想再失去你了。"},
       {"who": "narrator", "text": "父亲流着泪斥责了她。那是久留美第一次看见父亲哭。"}
     ]},
-    {"type": "dialogue", "bg": "bg_room_day", "lines": [
+    {"type": "dialogue", "bgm": "story_night", "bg": "bg_room_day", "lines": [
       {"who": "kurumi", "face": "normal", "text": "……我不做FX了。"},
       {"who": "narrator", "text": "久留美删掉了交易软件，开始尝试别的爱好。"},
       {"who": "narrator", "text": "读书、散步、和同学出去玩——普通大学生的生活。"},

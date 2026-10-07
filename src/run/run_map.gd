@@ -29,6 +29,7 @@ func _ready() -> void:
 	bg.texture = UI.tex("res://assets/sprites/bg/bg_city_night.png")
 	bg.modulate = Color(0.35, 0.32, 0.45)
 	add_child(bg)
+	Bgm.play("map")
 	_build()
 	_refresh()
 	if Game.params.get("intro", false):
@@ -269,11 +270,18 @@ func _choose(id: String) -> void:
 			run.in_node = id
 			run.save()
 			Game.goto("res://src/run/run_trade.tscn", {"node": id})
-		"event": _open_event(n)
-		"shop": _open_shop()
-		"rest": _open_rest()
+		"event":
+			Bgm.overlay("event")
+			_open_event(n)
+		"shop":
+			Bgm.overlay("shop")
+			_open_shop()
+		"rest":
+			Bgm.overlay("rest")
+			_open_rest()
 
 func _finish_node() -> void:
+	Bgm.clear_overlay()
 	run.complete_current()
 	var f := run.check_fail()
 	if f != "":
@@ -516,6 +524,7 @@ func _boss_clear(n: Dictionary) -> void:
 		_act_intro())
 
 func _victory() -> void:
+	Bgm.play("victory")
 	run.victory = true
 	run.save()
 	var v := UI.modal(self, UI.PINK, 420)
@@ -535,6 +544,7 @@ func _victory() -> void:
 		run.next_act()
 		run.save()
 		UI.close_modal(v)
+		Bgm.play("map")
 		_refresh()
 		_act_intro()))
 	v.add_child(h)

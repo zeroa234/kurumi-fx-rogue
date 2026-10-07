@@ -19,7 +19,7 @@ func _ready() -> void:
 	var h := UI.hbox(6)
 	_slider(h, "音效音量", "sfx", 0.8, func(): Sfx.play("click"))
 	h.add_child(UI.label("  "))
-	_slider(h, "音乐音量", "bgm", 0.6) # 开场 PV（以后的 BGM 也读这个）
+	_slider(h, "音乐音量", "bgm", 0.6, func(): Bgm.apply_volume()) # BGM 与开场 PV 共用
 	v.add_child(h)
 	if Opening.available():
 		var hp := UI.hbox(6)

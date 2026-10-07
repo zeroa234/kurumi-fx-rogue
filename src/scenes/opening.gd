@@ -29,6 +29,7 @@ static func should_autoplay() -> bool:
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	Bgm.stop(0.3) # 视频自带配乐
 	_next = Game.params.get("next", TITLE)
 	var bg := ColorRect.new()
 	bg.color = Color.BLACK

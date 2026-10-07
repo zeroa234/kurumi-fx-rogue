@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_family",
    "text": "第10章",
    "sub": "「安全」的选择",
    "bg": "bg_cafe",
@@ -58,7 +58,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_daily",
    "bg": "bg_room_day",
    "lines": [
     {
@@ -88,7 +88,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_ominous",
    "bg": "bg_finance",
    "lines": [
     {
@@ -118,7 +118,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "trade_main",
    "config": {
     "seed": 20141209,
     "start_date": "2014-12-09",
@@ -270,7 +270,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_ominous",
    "bg": "bg_room_day",
    "lines": [
     {

@@ -12,6 +12,7 @@ func _ready() -> void:
 		Game.goto("res://src/scenes/title.tscn")
 		return
 	var victory := run.end_reason == "victory"
+	Bgm.play("victory" if victory else "gameover")
 	var bg := TextureRect.new()
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

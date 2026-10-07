@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "last_gamble",
    "text": "第12章",
    "sub": "最后的100万円",
    "bg": "bg_room_night",
@@ -52,7 +52,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm_danger": "",
    "config": {
     "seed": 20150219,
     "start_date": "2015-02-19",

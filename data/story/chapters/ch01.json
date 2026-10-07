@@ -10,7 +10,7 @@
  "requires": [],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_ominous",
    "text": "2008年 秋",
    "sub": "雷曼危机",
    "hold": 1.8
@@ -38,7 +38,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "replay_2008", "bgm_danger": "",
    "config": {
     "seed": 20081001,
     "start_date": "2008-10-01",
@@ -189,7 +189,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_tragedy",
    "bg": "bg_living_dim",
    "lines": [
     {
@@ -215,7 +215,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_night",
    "bg": "bg_room_night",
    "lines": [
     {
@@ -245,7 +245,7 @@
    ]
   },
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "title",
    "text": "FX战士久留美",
    "sub": "—— 2000万之路 ——",
    "hold": 2.2,

@@ -7,6 +7,7 @@ var info: RichTextLabel
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	Bgm.play("menu")
 	var fill := ColorRect.new()
 	fill.color = UI.BG
 	fill.set_anchors_preset(Control.PRESET_FULL_RECT)

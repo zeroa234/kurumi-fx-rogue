@@ -20,6 +20,7 @@ func _ready() -> void:
 	var cfg := run.trade_config(node)
 	session = TradeSession.new(cfg, run.mods)
 	screen = TradeScreen.new(session)
+	_setup_bgm()
 	add_child(screen)
 	screen._set_speed(0, true)
 	screen.session_done.connect(_on_done)
@@ -28,6 +29,15 @@ func _ready() -> void:
 	session.account.opened.connect(func(_p): _had_position_today = true)
 	_add_friend_buttons()
 	_intro()
+
+## 按节点类型选曲（docs/bgm.md §3）；第 3 幕及无尽模式的 Boss 用 boss_final；带下限的 Boss（黑色星期四）撤销后换 snb_shock
+func _setup_bgm() -> void:
+	match String(node.type):
+		"elite": Bgm.play("trade_elite")
+		"boss": Bgm.play("boss_final" if run.act >= 3 else "boss")
+		_: Bgm.play("trade_main")
+	if node.type == "boss":
+		screen.bgm_peg_break = "snb_shock"
 
 ## Game.back()：返回键 / 弹窗中的 Esc → 交易画面的暂停菜单
 func _on_back() -> bool:

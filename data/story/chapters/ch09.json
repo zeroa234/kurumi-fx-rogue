@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_family",
    "text": "第9章",
    "sub": "积小胜，一朝天崩",
    "bg": "bg_cafe",
@@ -54,7 +54,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "trade_main",
    "config": {
     "seed": 20141110,
     "start_date": "2014-11-10",
@@ -280,7 +280,7 @@
    ]
   },
   {
-   "type": "dialogue",
+   "type": "dialogue", "bgm": "story_daily",
    "bg": "bg_campus",
    "lines": [
     {

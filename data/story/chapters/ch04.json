@@ -12,7 +12,7 @@
  ],
  "scenes": [
   {
-   "type": "title_card",
+   "type": "title_card", "bgm": "story_ominous",
    "text": "第4章",
    "sub": "壁橱里的300万円",
    "hold": 1.4
@@ -37,7 +37,7 @@
    ]
   },
   {
-   "type": "trade",
+   "type": "trade", "bgm": "trade_tutorial",
    "config": {
     "seed": 20140310,
     "start_date": "2014-03-10",

@@ -61,6 +61,7 @@ func _next() -> void:
 		_chapter_done()
 		return
 	var s: Dictionary = scenes[idx]
+	_apply_bgm()
 	match String(s.get("type", "dialogue")):
 		"title_card": _play_title_card(s)
 		"dialogue": _play_dialogue(s)
@@ -68,6 +69,13 @@ func _next() -> void:
 		"trade": _play_trade(s)
 		"unlock": _play_unlock(s)
 		_: _next()
+
+## 向前找最近一个带 bgm 字段的场景（--scene-index 跳转、经典战役、重试都能对上）；"" = 静音；都没有就不动
+func _apply_bgm() -> void:
+	for i in range(idx, -1, -1):
+		if (scenes[i] as Dictionary).has("bgm"):
+			Bgm.play(String(scenes[i].bgm))
+			return
 
 func _clear_layer() -> void:
 	for c in layer.get_children():
@@ -174,6 +182,8 @@ func _play_trade(s: Dictionary) -> void:
 	trade_screen = TradeScreen.new(session)
 	menu_btn.visible = false
 	trade_screen.auto_close_on_finish = bool(s.get("close_at_end", true))
+	trade_screen.bgm_danger = String(s.get("bgm_danger", chapter.get("bgm_danger", "trade_danger")))
+	trade_screen.bgm_peg_break = String(s.get("bgm_peg_break", ""))
 	trade_screen.exit_label = "返回章节选择"
 	trade_screen.exit_cb = func(): Game.goto("res://src/scenes/chapter_select.tscn")
 	layer.add_child(trade_screen)

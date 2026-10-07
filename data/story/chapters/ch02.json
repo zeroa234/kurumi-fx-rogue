@@ -9,7 +9,7 @@
   "tutorial": true,
   "requires": ["ch01"],
   "scenes": [
-    {"type": "title_card", "text": "第2章", "sub": "久留美的FX笔记", "hold": 1.4},
+    {"type": "title_card", "bgm": "story_night", "text": "第2章", "sub": "久留美的FX笔记", "hold": 1.4},
     {"type": "dialogue", "bg": "bg_room_night", "lines": [
       {"who": "narrator", "text": "那之后的五年，久留美把所有时间都给了学习。"},
       {"who": "narrator", "text": "没有社团，没有约会，没有普通少女的生活。只有书、图表，和一本越写越厚的笔记。"},
@@ -17,7 +17,7 @@
       {"who": "kurumi", "face": "young", "text": "杠杆……用少量的钱，动大量的钱……"},
       {"who": "note", "text": "（以下是游戏原创的教学段落：久留美在模拟账户上练习。）"}
     ]},
-    {"type": "trade",
+    {"type": "trade", "bgm": "trade_tutorial",
      "config": {
        "seed": 20110606, "start_date": "2011-06-06", "days": 2, "warmup_days": 5, "balance": 1000000,
        "broker": {"name": "模拟账户", "leverage": 25.0, "stopout": 100.0, "margin_call": 150.0, "zero_cut": true},
