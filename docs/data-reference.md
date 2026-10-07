@@ -200,7 +200,9 @@ Boss/精英 `script[]` 条目同剧情时间线（见 story-format.md），额�
 | `post` | 后期：目标响度 `lufs`、`true_peak`、淡入淡出秒数、`max_seconds`、OGG 质量、采样率 |
 | `cues[]` | `id`（= `assets/bgm/<id>.ogg`）、`label`、`uses`（说明）、`style`、`seed`；可选 `request`（覆盖请求字段）、`lyrics` |
 
-成品记录 `assets/bgm/index.json` → `tracks{id: {label, uses, style, job_id, seed, raw_seconds, seconds, input_lufs, qa, …}}`。
+开源曲：`config/bgm-oss.json` → `sources{id: {title, author, license, page, url, member?}}`、`cues{曲目 id: source id}`、`post`；生成 `assets/bgm/tracks.json`（`cues` 映射 + `sources` 出处/时长/增益），`Bgm` 按它找文件。
+
+YuE2 成品记录 `assets/bgm/index.json` → `tracks{id: {label, uses, style, job_id, seed, raw_seconds, seconds, input_lufs, qa, …}}`。
 
 ## 6. 素材清单 `config/asset-manifest.json`
 

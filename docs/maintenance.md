@@ -182,9 +182,9 @@ TradeScreen(界面) ──持有── TradeSession
 抠图走 AI 蒙版（art-pipeline.md「抠图」节）：只改了像素化参数时用 `--pix-only`，不需要重画原图；抠图有问题先看 `output/masks/<id>.png`。
 
 ### 4.6.1 加/换 BGM
-1. `config/bgm-cues.json` 加一条（或改 style / seed），`python scripts/gen_bgm.py submit <id>` → `fetch <id> --wait` → `qa <id>` → 试听 → `post <id>`（流程与判定见 `docs/bgm.md`）。
+1. 开源曲：`config/bgm-oss.json` 加 source 并在 `cues` 里映射 → `python scripts/import_oss_bgm.py`。自制曲：`config/bgm-cues.json` → `scripts/gen_bgm.py`（并从 bgm-oss 的 cues 删掉该 id）。见 `docs/bgm.md`。
 2. 在用的地方调用：场景代码 `Bgm.play("<id>")`；剧情场景写 `"bgm": "<id>"`；临时盖在上面用 `Bgm.overlay()` / `Bgm.clear_overlay()`。缺 ogg 时静音不报错。
-3. `$G --headless --path . --import` 后跑 compile_check / smoke_ui。
+3. `$G --headless --path . --import` 后跑 bgm_check / compile_check / smoke_ui。
 
 ### 4.7 加品种 / 货币 / 经济指标 / 新闻
 - 货币：`data/market/units.json`；品种：`instruments.json`（要解锁的写 `unlock` 并在 meta.json 加研究节点）。
@@ -216,11 +216,13 @@ TradeScreen(界面) ──持有── TradeSession
 | `tutorial_driver.tscn [-- --chapter=chNN]` | 是 | 按每一步 until 模拟玩家操作，检查教学/剧情步骤能否走完（默认只跑教程章节） |
 | `autoplay_check.tscn` | 是 | 真实时间、不按速度键，确认自动播放段（ch01/ch04/ch11/ch12）不会被自动暂停卡住 |
 | `touch_check.tscn [-- --shots=<绝对目录>]` | 是 | 注入 `InputEventScreenTouch`：对话框轻点只前进一句、长按快进、「跳过」；长按看说明且不触发按钮；返回键开关剧情菜单/交易暂停菜单。`--shots` 顺便存三张截图 |
+| `bgm_check.tscn` | 否 | BGM：每个曲目 id 都能找到并加载成循环 OGG、章节引用的 id 都在 `tracks.json`、play/overlay/clear/stop 状态切换 |
 
 全部跑一遍（约 5 分钟）：
 ```bash
 for t in test_market compile_check test_save; do $G --headless --path . res://tests/$t.tscn; done
 for t in smoke_ui tutorial_driver autoplay_check touch_check; do $G --path . res://tests/$t.tscn; done
+$G --headless --path . res://tests/bgm_check.tscn   # BGM 清单/文件/状态切换 → "BGM CHECK: 0 failures"
 ```
 判定：test_market 末尾 `== 失败 0 ==`；compile_check `0 failures`；test_save `SAVE ROUNDTRIP OK`；
 smoke `SMOKE DONE` 且无 `SCRIPT ERROR`；tutorial_driver 每个场景「步骤 n/n」；autoplay_check `0 stalled`；touch_check `0 failures`。

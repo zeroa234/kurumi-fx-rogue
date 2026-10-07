@@ -1,0 +1,202 @@
+{
+ "_doc": "由 scripts/import_oss_bgm.py 生成（来源 config/bgm-oss.json）。cues：曲目 id → assets/bgm/ 下的文件名（不含 .ogg）；sources：每个文件的出处与许可证。",
+ "cues": {
+  "title": "junkala_stage1",
+  "menu": "junkala_stage_select",
+  "story_daily": "owlish_happy_clappy",
+  "story_night": "joth_jrpg_piano",
+  "story_tragedy": "extenz_piano_loop",
+  "story_family": "joth_eye_of_the_storm",
+  "story_ominous": "joth_contemplation",
+  "story_hope": "dizzycrow_valentin",
+  "story_office": "owlish_happy_clappy",
+  "trade_tutorial": "junkala_level3",
+  "trade_main": "junkala_level1",
+  "trade_danger": "tapatilorenzo_tension",
+  "trade_elite": "junkala_level2",
+  "boss": "junkala_boss_fight",
+  "boss_final": "hydrogene_strong_boss",
+  "replay_2008": "joth_contemplation",
+  "snb_shock": "yatsura_distress",
+  "last_gamble": "umplix_tension",
+  "map": "junkala_stage2",
+  "shop": "junkala_title",
+  "rest": "joth_jrpg_piano",
+  "event": "junkala_stage_select",
+  "victory": "junkala_ending",
+  "gameover": "extenz_piano_loop"
+ },
+ "sources": {
+  "dizzycrow_valentin": {
+   "title": "Piano & Drums, positive melancholy",
+   "author": "Dizzy Crow",
+   "license": "CC0",
+   "page": "https://opengameart.org/node/87531",
+   "seconds": 63.99,
+   "input_lufs": -11.62,
+   "gain_db": -6.38
+  },
+  "extenz_piano_loop": {
+   "title": "Emotional Piano Loop",
+   "author": "extenz",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/emotional-piano-loop",
+   "seconds": 27.84,
+   "input_lufs": -28.35,
+   "gain_db": 10.35
+  },
+  "hydrogene_strong_boss": {
+   "title": "8-bit Danger!! Strong Boss",
+   "author": "HydroGene",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/8-bit-danger-strong-boss",
+   "seconds": 133.72,
+   "input_lufs": -11.49,
+   "gain_db": -6.51
+  },
+  "joth_contemplation": {
+   "title": "Contemplation",
+   "author": "Joth",
+   "license": "CC0",
+   "page": "https://opengameart.org/node/85636",
+   "seconds": 120.06,
+   "input_lufs": -26.76,
+   "gain_db": 8.76
+  },
+  "joth_eye_of_the_storm": {
+   "title": "Eye of the Storm",
+   "author": "Joth",
+   "license": "CC0",
+   "page": "https://opengameart.org/node/64421",
+   "seconds": 46.13,
+   "input_lufs": -17.13,
+   "gain_db": -0.87
+  },
+  "joth_jrpg_piano": {
+   "title": "JRPG Piano",
+   "author": "Joth",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/jrpg-piano",
+   "seconds": 24.89,
+   "input_lufs": -23.18,
+   "gain_db": 5.18
+  },
+  "junkala_boss_fight": {
+   "title": "Boss Fight",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/4-chiptunes-adventure",
+   "seconds": 71.72,
+   "input_lufs": -11.45,
+   "gain_db": -6.55
+  },
+  "junkala_ending": {
+   "title": "Ending",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/5-chiptunes-action",
+   "seconds": 44.65,
+   "input_lufs": -12.53,
+   "gain_db": -5.47
+  },
+  "junkala_level1": {
+   "title": "Level 1",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/5-chiptunes-action",
+   "seconds": 74.25,
+   "input_lufs": -7.14,
+   "gain_db": -10.86
+  },
+  "junkala_level2": {
+   "title": "Level 2",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/5-chiptunes-action",
+   "seconds": 72.8,
+   "input_lufs": -6.9,
+   "gain_db": -11.1
+  },
+  "junkala_level3": {
+   "title": "Level 3",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/5-chiptunes-action",
+   "seconds": 81.9,
+   "input_lufs": -7.11,
+   "gain_db": -10.89
+  },
+  "junkala_stage1": {
+   "title": "Stage 1",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/4-chiptunes-adventure",
+   "seconds": 41.14,
+   "input_lufs": -11.79,
+   "gain_db": -6.21
+  },
+  "junkala_stage2": {
+   "title": "Stage 2",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/4-chiptunes-adventure",
+   "seconds": 56.1,
+   "input_lufs": -11.28,
+   "gain_db": -6.72
+  },
+  "junkala_stage_select": {
+   "title": "Stage Select",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/4-chiptunes-adventure",
+   "seconds": 21.33,
+   "input_lufs": -13.21,
+   "gain_db": -4.79
+  },
+  "junkala_title": {
+   "title": "Title Screen",
+   "author": "Juhani Junkala (SubspaceAudio)",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/5-chiptunes-action",
+   "seconds": 11.29,
+   "input_lufs": -8.3,
+   "gain_db": -9.7
+  },
+  "owlish_happy_clappy": {
+   "title": "Happy Clappy Loop",
+   "author": "OwlishMedia",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/happy-clappy-loop",
+   "seconds": 17.44,
+   "input_lufs": -21.45,
+   "gain_db": 3.45
+  },
+  "tapatilorenzo_tension": {
+   "title": "Tension",
+   "author": "tapatilorenzo",
+   "license": "CC0",
+   "page": "https://opengameart.org/node/137025",
+   "seconds": 51.23,
+   "input_lufs": -16.97,
+   "gain_db": -1.03
+  },
+  "umplix_tension": {
+   "title": "Tension Theme",
+   "author": "Umplix",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/tension-theme",
+   "seconds": 43.0,
+   "input_lufs": -16.88,
+   "gain_db": -1.12
+  },
+  "yatsura_distress": {
+   "title": "tension and distress",
+   "author": "Allen Yatsura",
+   "license": "CC0",
+   "page": "https://opengameart.org/content/tension-and-distress",
+   "seconds": 121.49,
+   "input_lufs": -15.23,
+   "gain_db": -2.77
+  }
+ }
+}

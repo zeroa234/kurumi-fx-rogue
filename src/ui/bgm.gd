@@ -1,5 +1,5 @@
 extends Node
-## 背景音乐：assets/bgm/<id>.ogg，循环播放，换曲时交叉淡入淡出；没有文件就静音。
+## 背景音乐：曲目 id → assets/bgm/tracks.json 的 cues 映射到文件（多个 id 可共用一首；没映射就找 <id>.ogg），循环播放，换曲时交叉淡入淡出；没有文件就静音。
 ## 两层：基础曲 play()（场景/剧情决定）与临时覆盖 overlay()（商店/事件/休息、交易危机）。
 ## 覆盖期间基础曲暂停，clear_overlay() 后从暂停处淡入继续。曲目清单见 config/bgm-cues.json 与 docs/bgm.md。
 
@@ -14,7 +14,10 @@ var _cache := {}
 func play(id: String, fade := FADE) -> void:
 	if id == base_id:
 		return
+	var same_file := _base != null and id != "" and base_id != "" and _path(id) == _path(base_id)
 	base_id = id
+	if same_file: # 不同 id 共用同一首：接着放
+		return
 	if _base:
 		_fade_out(_base, fade, true)
 		_base = null
@@ -62,7 +65,14 @@ func volume() -> float:
 	return float(Save.setting("bgm", 0.6))
 
 func has_track(id: String) -> bool:
-	return id != "" and ResourceLoader.exists("res://assets/bgm/%s.ogg" % id)
+	return id != "" and ResourceLoader.exists(_path(id))
+
+var _map = null
+
+func _path(id: String) -> String:
+	if _map == null:
+		_map = DB.get_json("res://assets/bgm/tracks.json").get("cues", {}) if FileAccess.file_exists("res://assets/bgm/tracks.json") else {}
+	return "res://assets/bgm/%s.ogg" % String(_map.get(id, id))
 
 # ---------------------------------------------------------------- 内部
 
@@ -71,7 +81,7 @@ func _stream(id: String) -> AudioStream:
 		return _cache[id]
 	var s: AudioStream = null
 	if has_track(id):
-		s = load("res://assets/bgm/%s.ogg" % id)
+		s = load(_path(id))
 		if s is AudioStreamOggVorbis:
 			(s as AudioStreamOggVorbis).loop = true
 		_cache[id] = s # 缺文件不缓存：补进 ogg 后不用重启

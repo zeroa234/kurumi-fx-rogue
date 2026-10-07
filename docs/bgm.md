@@ -1,8 +1,43 @@
 # 背景音乐（BGM）
 
-> **状态：接入已完成；24 首正在生成（2026-10-07）**。进度见文末「§6 进度」。
+> **状态（2026-10-07）：游戏内现用 19 首 CC0 开源曲（OpenGameArt），24 个曲目 id 复用映射；YuE2 自制曲暂停**（加长后会出人声，见 §2）。
 
-所有 BGM 由本地 **YuE2-T8**（`D:\YuE2-T8-Local-v1.4.17-CSD-Trained-20260915`，服务 `http://127.0.0.1:8189`，版本 1.6.9）以**纯器乐模式**生成，
+## 0. 现用：CC0 开源曲
+- 清单 `config/bgm-oss.json`：`sources`（下载地址、作者、许可证、出处页）+ `cues`（曲目 id → source）。
+- 导入 `python scripts/import_oss_bgm.py`：下载到 `output/bgm/oss/src/`（不入库）→ 只做整体增益（-18 LUFS、真峰值 ≤ -1.5 dB）→ `assets/bgm/<source>.ogg`，
+  并写 `assets/bgm/tracks.json`（`cues` 映射 + `sources` 出处）。**不淡入淡出、不裁剪**，保留原曲的无缝循环。
+- 播放器按 `tracks.json` 的 `cues` 找文件，没映射的 id 才找 `assets/bgm/<id>.ogg`（YuE2 管线的产出）。
+  以后要换成自制曲：把该 id 从 `bgm-oss.json` 的 `cues` 删掉并重跑导入，再放 `<id>.ogg`。
+- 不同 id 共用同一首时，切换不会重头播放（如第 1 章 story_ominous → replay_2008）。
+- 选曲依据：原作者的描述/标签 + qa 测得的速度（`output/bgm/oss/qa.json`），**未经人耳逐首确认**，需要试听后调整映射。
+- MP3 来源的曲子解码后首尾可能有几十毫秒编码器填充，循环点可能有轻微停顿（待试听）。
+
+| 曲目 id | 曲子 | 作者 | 时长 |
+|---|---|---|---|
+| title | Stage 1（Chiptune Adventures） | Juhani Junkala | 41 s |
+| menu、event | Stage Select（Chiptune Adventures） | Juhani Junkala | 21 s |
+| map | Stage 2（Chiptune Adventures） | Juhani Junkala | 56 s |
+| boss | Boss Fight（Chiptune Adventures） | Juhani Junkala | 72 s |
+| trade_main | Level 1（Retro Game Music Pack） | Juhani Junkala | 74 s |
+| trade_elite | Level 2（Retro Game Music Pack） | Juhani Junkala | 73 s |
+| trade_tutorial | Level 3（Retro Game Music Pack） | Juhani Junkala | 82 s |
+| shop | Title Screen（Retro Game Music Pack） | Juhani Junkala | 11 s |
+| victory | Ending（Retro Game Music Pack） | Juhani Junkala | 45 s |
+| boss_final | 8-bit Danger!! Strong Boss | HydroGene | 134 s |
+| trade_danger | Tension | tapatilorenzo | 51 s |
+| snb_shock | tension and distress | Allen Yatsura | 121 s |
+| last_gamble | Tension Theme | Umplix | 43 s |
+| story_ominous、replay_2008 | Contemplation | Joth | 120 s |
+| story_family | Eye of the Storm | Joth | 46 s |
+| story_night、rest | JRPG Piano | Joth | 25 s |
+| story_tragedy、gameover | Emotional Piano Loop | extenz | 28 s |
+| story_hope | Piano & Drums, positive melancholy | Dizzy Crow | 64 s |
+| story_daily、story_office | Happy Clappy Loop | OwlishMedia | 17 s |
+
+出处页见 `config/bgm-oss.json` 的 `page`。全部 CC0 1.0（公有领域，无需署名），仍在此与 README 致谢。
+
+---
+以下为 YuE2 自制管线（暂停）。由本地 **YuE2-T8**（`D:\YuE2-T8-Local-v1.4.17-CSD-Trained-20260915`，服务 `http://127.0.0.1:8189`，版本 1.6.9）以**纯器乐模式**生成，
 提示词写法遵循 `extensions/skills/yue2-prompt`，服务调用遵循 `extensions/skills/yue2-workbench`。
 
 ## 1. 文件
@@ -28,7 +63,9 @@ style 末尾统一加 `style_suffix`（"long extended full-length arrangement, i
 | `instrumental:true`（原样） | 57.8 秒 | 无人声（试听 + demucs 人声声部能量≈0），但太短 |
 | 不开 instrumental，自带 no-vocals 前缀 + 空乐段标签歌词 `[Intro][Verse][Chorus]…` | 147.5 秒 | **有人声**（vocal_ratio 0.11）；demucs 去掉人声声部后发糊 → 弃用 |
 | `instrumental:true` + `semantic_sampling.min_tokens:3000` | 141.4 秒 | 中段 11.5 秒静音、之后出人声（vocal_ratio 0.10）——强制推迟结束 token，模型在「曲子已完」之后接着写 → 弃用 |
-| `instrumental:true` + style 长编曲后缀 | 待批量结果 | 当前做法 |
+| `instrumental:true` + style 长编曲后缀（"long extended full-length arrangement, intro, main theme, development section and reprise, about 3 minutes long"） | 210.9 秒（自然结束） | vocal_ratio 0.26、vocal_active 0.51，疑似有人声（未逐段确认）→ 批量已取消 |
+
+结论：迄今只有原样（约 58 秒）的结果是干净的；凡是让曲子变长的做法都出了人声。待查：人声是否集中在 ~60 秒之后（区分「长度本身」与「后缀用词」两种原因）。
 
 经验：YuE2 每秒约 25 个语义 token；qa 的 `vocal_ratio`（demucs 人声声部能量 / 混音能量）在干净的器乐上≈0，出人声时约 0.1。
 合格线（批量用）：`vocal_ratio ≤ 0.02`、`vocal_active ≤ 0.05`、`longest_gap ≤ 4` 秒；不合格换种子（+100、+200）重生。
@@ -89,9 +126,11 @@ style 末尾统一加 `style_suffix`（"long extended full-length arrangement, i
 | ch15 | 0 story_office → 2 trade_tutorial |
 
 ## 5. 测试
-接入后（尚无 ogg 时）compile_check / smoke_ui / autoplay_check / touch_check / tutorial_driver 全过。有成品后需再跑一遍并实机听切换。
+`tests/bgm_check.tscn`（headless，不写存档）：每个曲目 id 都能找到并加载成循环 OGG、章节里引用的 id 都在清单里、play/overlay/clear/stop 与共用文件的状态切换 → `BGM CHECK: 0 failures`。
+导入开源曲后 compile_check / test_market / test_save / smoke_ui / autoplay_check / touch_check / tutorial_driver / opening_check 全过。尚未实机试听各场景切换。
 
 ## 6. 进度
 - [x] 曲目规划、管线脚本、播放器、接入、文档。
-- [ ] 24 首生成 → qa → post（pi 子 agent 执行中，2026-10-07 13:56 提交）。
-- [ ] 有成品后：重跑测试、实机听、提交 `assets/bgm/`。
+- [x] 开源 CC0 曲导入并接入（19 首）。
+- [ ] 试听开源曲与各场景是否搭配，调整 `bgm-oss.json` 的 `cues`。
+- [ ] YuE2 自制曲：批量（带长编曲后缀）已于 14:05 取消，只有 title 生成完（`output/bgm/listen/title.flac`，疑似人声）；需先查清加长与人声的关系再继续。
