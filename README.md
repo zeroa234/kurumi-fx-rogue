@@ -173,6 +173,7 @@ $G --path . res://tests/smoke_ui.tscn                    # 界面冒烟（需要
 $G --path . res://tests/tutorial_driver.tscn             # 教程自动通关 → 每章 "步骤 n/n"
 $G --path . res://tests/autoplay_check.tscn              # 自动播放段不卡死 → "0 stalled"
 $G --path . res://tests/touch_check.tscn                 # 触屏：轻点/长按/返回键 → "TOUCH CHECK: 0 failures"
+$G --path . res://tests/result_check.tscn                 # 肉鸽结算弹窗不出屏（结束时还原本机存档）→ "RESULT CHECK: 0 failures"
 $G --path . res://tests/opening_check.tscn               # 开场 PV 跳过逻辑（结束时还原本机存档）→ "OPENING CHECK OK"
 $G --headless --path . res://tests/bgm_check.tscn        # BGM 清单/文件/切换 → "BGM CHECK: 0 failures"
 $G --headless --path . res://tests/sim_balance.tscn -- --runs=16 --meta=3 --risk=0.1 --oracle   # 平衡模拟

@@ -24,7 +24,11 @@ func _ready() -> void:
 	add_child(bg)
 	asc = int(Save.data.meta.get("max_ascension", 0))
 	var rd: Dictionary = Save.data.get("run", {})
-	if not rd.is_empty() and not rd.get("ended", false):
+	if not rd.is_empty() and rd.get("ended", false) and not rd.get("used_specials", {}).get("points_paid", false):
+		# 局已结束、但没走到结算画面就退出了（结算才发相場勘并清空存档）：补一次结算
+		Game.run = RunState.from_dict(rd)
+		Game.goto("res://src/run/run_result.tscn")
+	elif not rd.is_empty() and not rd.get("ended", false):
 		_show_continue(rd)
 	else:
 		_show_setup()

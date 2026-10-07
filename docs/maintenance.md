@@ -143,6 +143,8 @@ TradeScreen(界面) ──持有── TradeSession
     - **代码创建的全屏控件**在 `_ready`（已进树）里要用 `set_anchors_and_offsets_preset(PRESET_FULL_RECT)`；
       只用 `set_anchors_preset` 会保持 0×0——收不到点击、子弹窗的遮罩也不显示（DialogueBox / TradeScreen 曾经如此）。
       进树前（`add_child` 之前）调用 `set_anchors_preset` 没问题。
+    - **`UI.rich()` 放进 HBox 时必须给 `custom_minimum_size.x`**：它开了自动换行，最小宽度是 0，HBox 不给宽度就逐字换行，
+      弹窗被撑到上千像素高（肉鸽结算画面曾经如此，见 `tests/result_check`）。直接放进 `UI.modal` 的 VBox 没问题（VBox 给满宽）。
     改输入相关代码后至少跑 `touch_check`、`smoke_ui` 与 `tutorial_driver`。
 
 ---
@@ -216,12 +218,13 @@ TradeScreen(界面) ──持有── TradeSession
 | `tutorial_driver.tscn [-- --chapter=chNN]` | 是 | 按每一步 until 模拟玩家操作，检查教学/剧情步骤能否走完（默认只跑教程章节） |
 | `autoplay_check.tscn` | 是 | 真实时间、不按速度键，确认自动播放段（ch01/ch04/ch11/ch12）不会被自动暂停卡住 |
 | `touch_check.tscn [-- --shots=<绝对目录>]` | 是 | 注入 `InputEventScreenTouch`：对话框轻点只前进一句、长按快进、「跳过」；长按看说明且不触发按钮；返回键开关剧情菜单/交易暂停菜单。`--shots` 顺便存三张截图 |
+| `result_check.tscn [-- --shots=<绝对目录>]` | 是 | 肉鸽结算画面 5 种结局的弹窗与按钮都在 640×360 内（会写存档，结束时还原本机存档文件） |
 | `bgm_check.tscn` | 否 | BGM：每个曲目 id 都能找到并加载成循环 OGG、章节引用的 id 都在 `tracks.json`、play/overlay/clear/stop 状态切换 |
 
 全部跑一遍（约 5 分钟）：
 ```bash
 for t in test_market compile_check test_save; do $G --headless --path . res://tests/$t.tscn; done
-for t in smoke_ui tutorial_driver autoplay_check touch_check; do $G --path . res://tests/$t.tscn; done
+for t in smoke_ui tutorial_driver autoplay_check touch_check result_check; do $G --path . res://tests/$t.tscn; done
 $G --headless --path . res://tests/bgm_check.tscn   # BGM 清单/文件/状态切换 → "BGM CHECK: 0 failures"
 ```
 判定：test_market 末尾 `== 失败 0 ==`；compile_check `0 failures`；test_save `SAVE ROUNDTRIP OK`；

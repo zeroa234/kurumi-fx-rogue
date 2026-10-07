@@ -243,7 +243,13 @@ func _build_right() -> void:
 	controls["lots"] = hl2
 	# SL / TP
 	var hs := UI.hbox(2)
-	hs.add_child(_fixed(UI.label("止损", Color("ff9f43")), 26))
+	var sl_l := UI.label("止损", Color("ff9f43"))
+	sl_l.mouse_filter = Control.MOUSE_FILTER_PASS # Label 默认 IGNORE，看不到说明
+	sl_l.tooltip_text = "止损：离开仓价多少 pips 自动认亏平仓（方向按买卖自动定）
+买（做多）：价格跌到 开仓价−pips 时平仓
+卖（做空）：价格涨到 开仓价+pips 时平仓
+可能有滑点；跳空时按开盘价成交，可能亏得比设定多"
+	hs.add_child(_fixed(sl_l, 26))
 	hs.add_child(_small_btn("-", func(): _change_pips("sl", -1)))
 	_sl_lbl = UI.label("无", UI.TEXT)
 	_sl_lbl.custom_minimum_size.x = 56
@@ -256,7 +262,13 @@ func _build_right() -> void:
 	v.add_child(hs)
 	controls["sl"] = hs
 	var ht := UI.hbox(2)
-	ht.add_child(_fixed(UI.label("止盈", UI.CYAN), 26))
+	var tp_l := UI.label("止盈", UI.CYAN)
+	tp_l.mouse_filter = Control.MOUSE_FILTER_PASS
+	tp_l.tooltip_text = "止盈：离开仓价多少 pips 自动落袋平仓（方向按买卖自动定）
+买（做多）：价格涨到 开仓价+pips 时平仓
+卖（做空）：价格跌到 开仓价−pips 时平仓
+按设定价成交，无滑点"
+	ht.add_child(_fixed(tp_l, 26))
 	ht.add_child(_small_btn("-", func(): _change_pips("tp", -1)))
 	_tp_lbl = UI.label("无", UI.TEXT)
 	_tp_lbl.custom_minimum_size.x = 56

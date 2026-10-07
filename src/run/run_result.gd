@@ -53,10 +53,17 @@ func _ready() -> void:
 	t += "交易 %d 次 · 胜率 %d%% · 强平 %d 次\n" % [run.trades, int(100.0 * run.wins / maxf(1.0, run.trades)), run.stopouts]
 	t += "手法 %d 个 · 击败 Boss %d 个\n" % [run.relics.size(), run.bosses_beaten.size()]
 	t += "\n获得 [color=#ffd166]相場勘 %d 点[/color]（现有 %d）" % [pts, int(Save.data.meta.points)]
-	h.add_child(UI.rich(t))
+	# 富文本自动换行：放在 HBox 里必须给宽度，否则最小宽度为 0、逐字换行把弹窗撑出屏幕
+	var info := UI.rich(t)
+	info.custom_minimum_size.x = 328
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(info)
 	v.add_child(h)
 	if not victory:
-		v.add_child(UI.label(_tip(run), UI.DIM))
+		var tip := UI.label(_tip(run), UI.DIM)
+		tip.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		tip.custom_minimum_size.x = 400
+		v.add_child(tip)
 	var bh := UI.hbox(8)
 	bh.add_child(UI.button("局外养成", func(): Game.goto("res://src/run/meta_screen.tscn")))
 	bh.add_child(UI.button("再来一局", func(): Game.goto("res://src/run/run_hub.tscn")))
