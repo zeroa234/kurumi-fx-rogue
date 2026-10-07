@@ -53,6 +53,8 @@ func _ready() -> void:
 	t += "交易 %d 次 · 胜率 %d%% · 强平 %d 次\n" % [run.trades, int(100.0 * run.wins / maxf(1.0, run.trades)), run.stopouts]
 	t += "手法 %d 个 · 击败 Boss %d 个\n" % [run.relics.size(), run.bosses_beaten.size()]
 	t += "\n获得 [color=#ffd166]相場勘 %d 点[/color]（现有 %d）" % [pts, int(Save.data.meta.points)]
+	if pts == 0 and not victory:
+		t += "\n[color=#a89cc8]（至少完成 1 个节点、做过 1 笔交易才有相場勘）[/color]"
 	# 富文本自动换行：放在 HBox 里必须给宽度，否则最小宽度为 0、逐字换行把弹窗撑出屏幕
 	var info := UI.rich(t)
 	info.custom_minimum_size.x = 328

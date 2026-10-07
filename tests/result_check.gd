@@ -29,6 +29,7 @@ func _ready() -> void:
 			get_viewport().get_texture().get_image().save_png(shots.path_join("result_%s.png" % reason))
 		s.queue_free()
 		await get_tree().process_frame
+	_check_points()
 	if _backup == null:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(Save.PATH))
 	else:
@@ -53,6 +54,24 @@ func _check_layout(s: Control, reason: String) -> void:
 		if not screen.encloses((b as Control).get_global_rect()):
 			_fail(reason, "按钮「%s」在屏幕外 %s" % [b.text, b.get_global_rect()])
 	print("  %s: 弹窗 %s" % [reason, rect])
+
+## 相場勘：没完成节点或没做交易得 0 点（防刷）；作废节点不计数
+func _check_points() -> void:
+	var r := RunState.create({"broker": "overseas", "friends": [], "seed": 777})
+	r.end_reason = "abandon"
+	if r.meta_points() != 0:
+		_fail("points", "开局即放弃应为 0 点，实际 %d" % r.meta_points())
+	r.enter(r.available()[0])
+	r.complete_current(false)
+	if r.nodes_cleared != 0:
+		_fail("points", "作废节点不应计入完成数")
+	r.nodes_cleared = 1
+	if r.meta_points() != 0:
+		_fail("points", "挂机过节点（0 笔交易）应为 0 点，实际 %d" % r.meta_points())
+	r.trades = 1
+	if r.meta_points() != 10:
+		_fail("points", "1 节点 1 笔交易应为 10 点，实际 %d" % r.meta_points())
+	print("  points: ok")
 
 func _fail(reason: String, msg: String) -> void:
 	_fails += 1

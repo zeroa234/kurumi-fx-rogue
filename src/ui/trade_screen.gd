@@ -911,6 +911,11 @@ func _refresh_all() -> void:
 	if sl_pips > 0.0:
 		chart.preview_lines.append({"price": st.x, "color": Color(1, 0.62, 0.26, 0.4), "label": "-%d" % int(sl_pips)})
 		chart.preview_lines.append({"price": acc.bid(ins2) + sl_pips * ins2.pip, "color": Color(1, 0.62, 0.26, 0.25), "label": ""})
+	# 止盈：买单在上方（较实的线带标签），卖单在下方
+	if tp_pips > 0.0:
+		var tc := UI.CYAN
+		chart.preview_lines.append({"price": st.y, "color": Color(tc, 0.4), "label": "+%d" % int(tp_pips)})
+		chart.preview_lines.append({"price": acc.bid(ins2) - tp_pips * ins2.pip, "color": Color(tc, 0.25), "label": ""})
 	chart.queue_redraw()
 
 func _refresh_order() -> void:

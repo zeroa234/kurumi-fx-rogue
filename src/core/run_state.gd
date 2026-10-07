@@ -274,10 +274,12 @@ func enter(id: String) -> Dictionary:
 	layer = int(n.layer)
 	return n
 
-func complete_current() -> void:
+## counted=false：节点作废（交易途中退出后读档），标记已走过但不计入完成数（不给相場勘）
+func complete_current(counted := true) -> void:
 	var n := node(current)
 	n.done = true
-	nodes_cleared += 1
+	if counted:
+		nodes_cleared += 1
 	in_node = ""
 
 # ================================================================ 交易节点
@@ -619,6 +621,9 @@ func check_fail() -> String:
 	return ""
 
 func meta_points() -> int:
+	# 一个节点都没完成、或一笔交易都没做就结束（开局即放弃、挂机过节点再放弃）不给点数，防止反复开局刷相場勘
+	if (nodes_cleared <= 0 or trades <= 0) and not victory:
+		return 0
 	var acts_cleared := act - 1 + (1 if victory else 0)
 	var pts := 8.0 + nodes_cleared * 2.0 + acts_cleared * 25.0
 	pts += maxf(0.0, log(maxf(max_net, 1.0) / start_money) / log(2.0)) * 6.0

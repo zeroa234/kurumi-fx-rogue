@@ -48,12 +48,12 @@ func _show_continue(rd: Dictionary) -> void:
 	v.add_child(UI.label("有一局正在进行中", UI.PINK))
 	v.add_child(UI.label("第 %d 幕 · 资金 %s · 借金 %s · FP %d" % [int(rd.act), GameDate.yen(float(rd.money)), GameDate.yen(float(rd.debt)), int(rd.fp)], UI.TEXT))
 	if String(rd.get("in_node", "")) != "":
-		v.add_child(UI.label("（上次在交易途中退出：该节点视为放弃，メンタル -10）", UI.ORANGE))
+		v.add_child(UI.label("（上次在交易途中退出：该节点作废、不计入完成数，メンタル -10）", UI.ORANGE))
 	var h := UI.hbox(8)
 	h.add_child(UI.button("继续", func():
 		Game.run = RunState.from_dict(rd)
 		if Game.run.in_node != "":
-			Game.run.complete_current()
+			Game.run.complete_current(false)
 			Game.run.mental = maxf(1.0, Game.run.mental - 10.0)
 			Game.run.save()
 		Game.goto("res://src/run/run_map.tscn")))
