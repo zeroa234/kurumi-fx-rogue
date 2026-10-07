@@ -1,0 +1,52 @@
+{
+ "_doc": "PV 专用关键帧（不进游戏：本目录有 .gdignore）。全部由 ComfyUI 模板 anima-t2i（comfyui-contract MCP）生成，1536×864，LoRA kurumi.safetensors 强度 1.0 放在 quality 坑。negative 在清单 style.negative + cg.negativeExtra 基础上按条追加。",
+ "items": [
+  {
+   "id": "pv_resolve",
+   "label": "深夜决意（侧脸、屏幕冷光、雨窗）",
+   "seed": 46621001,
+   "job": "8fe6e878-8959-447d-b4a6-8c9e03ff4f43",
+   "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, large breasts, solo, close-up, face focus, from side, determined, serious, clenched teeth, night, dark room, monitor glow, rim light, reflection in eyes, rain on window, candlestick chart. A dramatic close-up of Kurumi's face in a dark room at night, lit only by the cold cyan and green glow of a trading monitor off to the side, green and red candlestick lines reflected in her pink eyes. Her expression is fierce and determined. Raindrops streak down the dark window behind her, city lights blurred. Cinematic anime key frame, strong contrast.",
+   "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad hands, extra fingers, multiple girls"
+  },
+  {
+   "id": "pv_key",
+   "label": "主视觉（指向镜头、上涨图表、金币）",
+   "seed": 46621012,
+   "job": "f6d0307b-3898-4f27-9d76-001ef931e006",
+   "note": "seed 46621002 的第一版把 K 线画成了真蜡烛，改提示词并加负面词 candle/fire/flame 后重画",
+   "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, large breasts, solo, upper body, from front, eye level, pointing at viewer, confident smile, stock chart, line graph, upward arrow, gold coins, holographic display, neon, city skyline, night. Key visual: Kurumi faces the viewer and points straight ahead with a bold grin. Behind her floats a huge glowing holographic financial chart with green bar candles and a bright line graph shooting steeply upward, a big upward arrow, over a neon city at night, golden coins sparkling. Dynamic heroic anime poster composition, vivid pink and cyan lighting.",
+   "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, multiple views, bad anatomy, bad hands, extra fingers, multiple girls, from below, upskirt, panties, candle, fire, flame"
+  },
+  {
+   "id": "pv_rain",
+   "label": "雨夜街头（握着手机、直视镜头）",
+   "seed": 46621013,
+   "job": "7d6beb63-0580-44ca-85c9-7a61bcad456c",
+   "note": "seed 46621003 的第一版手机悬空，改为双手握手机后重画",
+   "prompt": "masterpiece, very aesthetic, best quality, highres, fukuga kurumi \\(FXFXFX\\), 1girl, pink hair, short hair, bangs, pink eyes, white dress, short sleeves, red ribbon, red belt, large breasts, solo, cowboy shot, from front, eye level, holding phone, both hands, rain, wet hair, night, city street, neon signs, puddle reflections, determined, looking at viewer. Kurumi stands alone in a rainy neon-lit back street at night without an umbrella, soaked, holding a smartphone against her chest with both hands, its screen glowing. She looks straight at the viewer with quiet, unbreakable resolve. Pink and blue neon reflections shimmer on the wet street. Melancholic cinematic anime still.",
+   "negative": "worst quality, low quality, watermark, logo, text, signature, blurry, jpeg artifacts, 3d, realistic, nsfw, cleavage, see-through, multiple views, bad anatomy, bad hands, extra fingers, multiple girls, umbrella, from below, upskirt, pantyhose"
+  }
+ ],
+ "music": {
+  "id": "pv_theme",
+  "file": "pv_theme.ogg",
+  "source": "YuE2-T8 1.6.9 本地生成，作业 20261007-090157-74271115 的候选 1（seed 20261101），共 3 个候选（20261101/02/03），各 108 秒，semantic_truncated=true（在 max_tokens 2700 处截断，无自然收尾）",
+  "request": {
+   "kind": "generate",
+   "cot": "off",
+   "instrumental": true,
+   "cfg_scale": 1.01,
+   "backend": "torch-eager",
+   "memory_budget_gib": 14,
+   "offload_ar": true,
+   "semantic_sampling": {
+    "min_tokens": 2200,
+    "max_tokens": 2700
+   },
+   "style": "anime game trailer music, dramatic build-up from tense ticking piano and pulsing synth intro into explosive J-pop rock with bright 8-bit chiptune lead, driving electric guitars, punchy drums, orchestral hits, heroic determined climax, E minor, 150 BPM"
+  },
+  "post": "instrumental 模式仍唱了歌（scripts/pv/music_probe.py：whisper-small 在 demucs 人声声部里识别出成句的日语/英语歌词）。用 scripts/pv/strip_vocals.py 去掉人声声部（drums+bass+other），复检人声声部 −72 dB、识别结果为乱码；再 ffmpeg libvorbis -q:a 6 编码。",
+  "choice": "候选 1 的结构最贴合 PV：41~62 秒安静、58.8~60.4 秒换气、63.0 秒爆发、83.2 秒起断奏段、103 秒再推起。librosa 估计 95.7 BPM（拍长约 0.627 秒）。未经人耳试听。"
+ }
+}
