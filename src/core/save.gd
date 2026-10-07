@@ -12,7 +12,7 @@ func _ready() -> void:
 func _default() -> Dictionary:
 	return {
 		"version": VERSION,
-		"story": {"cleared": [], "current": "", "tutorial_done": false},
+		"story": {"cleared": [], "current": "", "tutorial_done": false, "opening_seen": false},
 		"meta": {"points": 0, "total_points": 0, "levels": {}, "unlocks": [], "ascension": 0, "max_ascension": 0},
 		"stats": {"runs": 0, "clears": 0, "best_equity": 0.0, "total_trades": 0, "deaths": {}},
 		"codex": {"events": [], "relics": [], "items": [], "bosses": []},

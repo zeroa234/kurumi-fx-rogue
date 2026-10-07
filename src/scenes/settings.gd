@@ -17,16 +17,18 @@ func _ready() -> void:
 	_toggle(v, "画面震动", "screen_shake", true)
 	_toggle(v, "国际配色（绿涨红跌，重启后生效）", "green_up", false)
 	var h := UI.hbox(6)
-	h.add_child(UI.label("音效音量", UI.TEXT))
-	var sl := HSlider.new()
-	sl.custom_minimum_size = Vector2(160, 12)
-	sl.min_value = 0.0
-	sl.max_value = 1.0
-	sl.step = 0.1
-	sl.value = float(Save.setting("sfx", 0.8))
-	sl.value_changed.connect(func(x): Save.data.settings.sfx = x; Sfx.play("click"))
-	h.add_child(sl)
+	_slider(h, "音效音量", "sfx", 0.8, func(): Sfx.play("click"))
+	h.add_child(UI.label("  "))
+	_slider(h, "音乐音量", "bgm", 0.6) # 开场 PV（以后的 BGM 也读这个）
 	v.add_child(h)
+	if Opening.available():
+		var hp := UI.hbox(6)
+		var c := _toggle(hp, "每次启动都播放开场 PV", "opening_every_launch", false)
+		c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		hp.add_child(UI.button("观看开场 PV", func():
+			Save.write()
+			Game.goto(Opening.SCENE, {"next": "res://src/scenes/settings.tscn"})))
+		v.add_child(hp)
 	if Game.touch:
 		v.add_child(UI.label("对话：轻点继续 · 长按快进 · 右上「快进」「跳过」", UI.DIM))
 		v.add_child(UI.label("交易：右上「菜单」或返回键＝暂停菜单 · 长按按钮看说明", UI.DIM))
@@ -51,15 +53,35 @@ func _ready() -> void:
 		h2.add_child(UI.button("取消", func(): UI.close_modal(m)))
 		m.add_child(h2))
 	danger.add_theme_color_override("font_color", UI.UP)
-	v.add_child(danger)
-	v.add_child(UI.button("← 返回", func():
+	# 返回与清档同一行（竖向放不下了），中间隔开，免得误点
+	var hb := UI.hbox(6)
+	hb.add_child(UI.button("← 返回", func():
 		Save.write()
-		Game.goto("res://src/scenes/title.tscn")))
+		Game.goto("res://src/scenes/title.tscn"), 120))
+	hb.add_child(UI.spacer())
+	hb.add_child(danger)
+	v.add_child(hb)
 
-func _toggle(v: VBoxContainer, text: String, key: String, def: bool) -> void:
+func _toggle(v: BoxContainer, text: String, key: String, def: bool) -> CheckButton:
 	var c := CheckButton.new()
 	c.text = text
 	c.focus_mode = Control.FOCUS_NONE
 	c.button_pressed = bool(Save.setting(key, def))
 	c.toggled.connect(func(on): Save.data.settings[key] = on; Save.write())
 	v.add_child(c)
+	return c
+
+func _slider(h: HBoxContainer, text: String, key: String, def: float, on_change := Callable()) -> void:
+	h.add_child(UI.label(text, UI.TEXT))
+	var sl := HSlider.new()
+	sl.custom_minimum_size = Vector2(120, 12)
+	sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	sl.min_value = 0.0
+	sl.max_value = 1.0
+	sl.step = 0.1
+	sl.value = float(Save.setting(key, def))
+	sl.value_changed.connect(func(x):
+		Save.data.settings[key] = x
+		if on_change.is_valid():
+			on_change.call())
+	h.add_child(sl)

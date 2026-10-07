@@ -719,11 +719,12 @@ def build_timeline(cfg: dict):
     return out, t
 
 
-def frame_at(tl, t: float, fno: int) -> Image.Image:
+def frame_at(tl, t: float, fno: int, up: int = UP) -> Image.Image:
+    """up=1 直接返回 640×360 画布（游戏内开场用），默认 ×3 最近邻放大。"""
     idx = max((i for i, (s, _) in enumerate(tl) if s <= t), default=0)
     s, sh = tl[idx]
     if t >= s + sh["d"]:
-        return Image.new("RGB", (W, H))
+        return Image.new("RGB", (CW * up, CH * up))
     lt = t - s
     im = render_shot(sh, lt, fno)
     tr = sh.get("in")
@@ -747,7 +748,7 @@ def frame_at(tl, t: float, fno: int) -> Image.Image:
             if edge is not None:
                 out.paste(hexcol(tr.get("color"), WHITE), (0, 0), edge)
             im = out
-    return im.resize((W, H), Image.NEAREST)
+    return im if up == 1 else im.resize((CW * up, CH * up), Image.NEAREST)
 
 
 # ---------------------------------------------------------------- 音频
@@ -781,6 +782,8 @@ def mix_audio(cfg: dict, total: float, t_from: float, dst: Path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preview", action="store_true", help="1280×720、快速编码")
+    ap.add_argument("--game", action="store_true",
+                    help="游戏内开场：640×360 画布原样 → Theora(yuv444p)+Vorbis → assets/video/opening.ogv")
     ap.add_argument("--stills", default="", help="逗号分隔的秒数，各出一张 1920×1080 PNG")
     ap.add_argument("--sheet", default="", help="逗号分隔的秒数，拼成一张 4 列总览（每格 640×360）")
     ap.add_argument("--from", dest="t_from", type=float, default=0.0)
@@ -817,18 +820,27 @@ def main():
     t_to = min(args.t_to or total, total)
     n0, n1 = int(round(args.t_from * FPS)), int(round(t_to * FPS))
     OUT.mkdir(parents=True, exist_ok=True)
-    out = Path(args.out) if args.out else OUT / ("preview.mp4" if args.preview else "kurumi-fx-rogue-pv.mp4")
+    if args.game:
+        out = Path(args.out) if args.out else ROOT / "assets/video/opening.ogv"
+        out.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        out = Path(args.out) if args.out else OUT / ("preview.mp4" if args.preview else "kurumi-fx-rogue-pv.mp4")
     wav = OUT / "_mix.wav"
     mix_audio(cfg, t_to, args.t_from, wav)
-    vw, vh = (1280, 720) if args.preview else (W, H)
-    venc = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "24"] if args.preview else \
-           ["-c:v", "libx264", "-preset", "slow", "-crf", "16", "-tune", "animation"]
+    vw, vh = (1280, 720) if args.preview else (CW, CH) if args.game else (W, H)
+    if args.game:
+        # 画布原生分辨率；4:4:4 免得 2×2 色度块让像素边缘串色。Godot 只能原生播放 Ogg Theora。
+        # q3 约 15 MB：q2 文字开始糊，q5 体积翻倍、肉眼看不出差别（抖动纹理很难压）
+        enc = ["-c:v", "libtheora", "-q:v", "3", "-pix_fmt", "yuv444p", "-c:a", "libvorbis", "-q:a", "4"]
+    else:
+        venc = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "24"] if args.preview else \
+               ["-c:v", "libx264", "-preset", "slow", "-crf", "16", "-tune", "animation"]
+        enc = [*venc, "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"]
     cmd = ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{vw}x{vh}", "-r", str(FPS),
-           "-i", "-", "-i", str(wav), *venc, "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k",
-           "-movflags", "+faststart", "-shortest", str(out)]
+           "-i", "-", "-i", str(wav), *enc, "-shortest", str(out)]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     for f in range(n0, n1):
-        im = frame_at(tl, f / FPS, f)
+        im = frame_at(tl, f / FPS, f, 1 if args.game else UP)
         if args.preview:
             im = im.resize((vw, vh), Image.NEAREST)
         proc.stdin.write(im.tobytes())
