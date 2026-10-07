@@ -21,12 +21,18 @@
 > 2008 年秋，母亲在雷曼冲击里亏掉了 **2000 万円**。
 > 大学生福賀久留美带着 30 万円，走进了外汇市场——这一次，轮到你来交易。
 
+<div align="center">
+<a href="https://www.bilibili.com/video/BV1U8pK6xE8L" title="在 bilibili 观看"><img src="docs/images/pv-cover.png" alt="在 bilibili 观看视频" width="80%"></a>
+<br><sub>▶ 点击封面在 bilibili 观看（<a href="https://www.bilibili.com/video/BV1U8pK6xE8L">BV1U8pK6xE8L</a>）</sub>
+</div>
+
 ## 下载
 
 | 平台 | 下载 | 说明 |
 |---|---|---|
 | **Windows** | [kurumi-fx-rogue-windows-x64.zip](https://github.com/zeroa234/kurumi-fx-rogue/releases/latest/download/kurumi-fx-rogue-windows-x64.zip) | 解压后双击 `kurumi-fx-rogue.exe`。未做代码签名，SmartScreen 提示时点「更多信息 → 仍要运行」 |
 | **Android** | [kurumi-fx-rogue-android.apk](https://github.com/zeroa234/kurumi-fx-rogue/releases/latest/download/kurumi-fx-rogue-android.apk) | 需要允许「安装未知来源应用」。横屏，arm64-v8a / armeabi-v7a |
+| **bilibili 视频** | [BV1U8pK6xE8L](https://www.bilibili.com/video/BV1U8pK6xE8L) | 在线观看 |
 | **宣传 PV** | [kurumi-fx-rogue-pv.mp4](https://github.com/zeroa234/kurumi-fx-rogue/releases/latest/download/kurumi-fx-rogue-pv.mp4) | 1080p，71 秒（游戏首次启动时也会播放，可跳过） |
 
 全部版本见 [Releases](https://github.com/zeroa234/kurumi-fx-rogue/releases)。
