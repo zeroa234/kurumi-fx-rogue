@@ -12,6 +12,7 @@ config_version=5
 
 config/name="FX战士久留美 同人 · 2000万之路"
 config/description="FX戦士くるみちゃん 非官方同人像素 FX 肉鸽"
+config/version="0.2.1"
 run/main_scene="res://src/scenes/boot.tscn"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"

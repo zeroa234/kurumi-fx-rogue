@@ -128,6 +128,7 @@ JAVA_HOME=D:/tools/jdk17/jdk-17.0.13+11 \
 $G --headless --path . --export-debug "Android" output/kurumi-fx-rogue.apk                     # debug 签名 APK
 $G --headless --path . --export-release "Web" output/web/index.html                            # 网页版（单线程，不需要 COOP/COEP 头）
 ```
+发版前改版本号：`project.godot` 的 `application/config/version`（标题画面右下角显示它）与 `export_presets.cfg` 的 `version/code`（+1）、`version/name`、`file_version`、`product_version`。
 需要对应的 4.7.2 导出模板（Windows `windows_*_x86_64*`、Web `web_nothreads_*`、Android `android_*`），依赖位置见 [维护手册 §7](docs/maintenance.md)。
 开场视频 `assets/video/opening.ogv` 由 `python scripts/pv/make_pv.py --game` 生成（见 [docs/pv.md](docs/pv.md) §7）。
 

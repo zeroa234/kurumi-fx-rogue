@@ -25,8 +25,9 @@ func _ready() -> void:
 	var foot := UI.label("非官方同人游戏 · 原作《FX戦士くるみちゃん》でむにゃん / 炭酸だいすき（KADOKAWA）", UI.DIM)
 	foot.position = Vector2(8, 344)
 	add_child(foot)
-	var ver := UI.label("v0.1", UI.MUTED)
-	ver.position = Vector2(608, 344)
+	var ver := UI.label("v" + String(ProjectSettings.get_setting("application/config/version", "?")), UI.MUTED)
+	ver.reset_size()
+	ver.position = Vector2(640 - 4 - ver.size.x, 344) # 右对齐，版本号变长也不出屏
 	add_child(ver)
 	Sfx.play("title")
 
